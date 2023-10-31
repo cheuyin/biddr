@@ -52,7 +52,7 @@ CREATE TABLE Joins(
 );
 
 CREATE TABLE Post(
-    postID INT PRIMARY KEY,
+    postID SERIAL PRIMARY KEY,
     postedEmail VARCHAR(256) NOT NULL,
     walletName VARCHAR(32) NOT NULL,
     walletEmail VARCHAR(256) NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE Post(
 );
 
 CREATE Table Auction(
-    postID INT,
+    postID SERIAL,
     minBid FLOAT,
     PRIMARY KEY(postID),
     FOREIGN KEY(postID) REFERENCES Post(postID)
