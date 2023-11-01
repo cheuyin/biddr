@@ -67,9 +67,75 @@ CREATE TABLE Post(
     FOREIGN KEY(communityName) REFERENCES Community(communityName)
 );
 
-CREATE Table Auction(
+CREATE TABLE Auction(
     postID SERIAL,
     minBid FLOAT,
     PRIMARY KEY(postID),
     FOREIGN KEY(postID) REFERENCES Post(postID)
 );
+
+-- Stanley's part
+CREATE TABLE Fundraiser(
+    postID SERIAL,
+    goal FLOAT,
+    PRIMARY KEY(postID),
+    FOREIGN KEY(postID) REFERENCES Post(postID)
+);
+
+CREATE TABLE Bid(
+    bidID SERIAL PRIMARY KEY,
+    walletName VARCHAR(32) NOT NULL,
+    email VARCHAR(256) NOT NULL,
+    postID INT NOT NULL,
+    amount FLOAT NOT NULL,
+    timeCreated TIMESTAMP NOT NULL,
+    status VARCHAR(16),
+    FOREIGN KEY (walletName, email) REFERENCES Wallet(walletName, email),
+    FOREIGN KEY (postID) REFERENCES Auction(postID)
+);
+
+CREATE TABLE Donation(
+    donationID SERIAL PRIMARY KEY,
+    walletName VARCHAR(32) NOT NULL,
+    email VARCHAR(256) NOT NULL,
+    postID SERIAL NOT NULL,
+    amount FLOAT NOT NULL,
+    timeCreated TIMESTAMP NOT NULL,
+    FOREIGN KEY (walletName, email) REFERENCES Wallet (walletName, email),
+    FOREIGN KEY (postID) REFERENCES Fundraiser (postID)
+);
+
+CREATE TABLE Comment(
+    commentID SERIAL PRIMARY KEY,
+    email VARCHAR(256) NOT NULL,
+    postID SERIAL NOT NULL,
+    text VARCHAR(256) NOT NULL,
+    timeSent TIMESTAMP NOT NULL,
+    FOREIGN KEY (email) REFERENCES User(email),
+    FOREIGN KEY (postID) REFERENCES Post(postID)
+);
+
+CREATE TABLE Chat(
+    chatID SERIAL PRIMARY KEY,
+    chatName VARCHAR(32)
+);
+
+CREATE TABLE PrivateMessage(
+    messageID SERIAL PRIMARY KEY,
+    email VARCHAR(256) NOT NULL,
+    chatID SERIAL NOT NULL,
+    text VARCHAR(256) NOT NULL,
+    timeSent TIMESTAMP NOT NULL,
+    FOREIGN KEY(email) REFERENCES User(email),
+    FOREIGN KEY(chatID) REFERENCES Chat(chatID) ON DELETE CASCADE
+);
+
+CREATE TABLE EngagedIn(
+    email VARCHAR(256),
+    chatID SERIAL,
+    PRIMARY KEY (email, chatID),
+    FOREIGN KEY (email) REFERENCES User(email),
+    FOREIGN KEY (chatID) REFERENCES Chat(chatID) ON DELETE CASCADE
+);
+
+
