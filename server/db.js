@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 
 config({
     override: true,
-    path: path.join(__dirname, "development.env"),
+    path: path.join(__dirname, ".env.development"),
 });
 
 const pool = new Pool({
@@ -21,7 +21,7 @@ const pool = new Pool({
     database: process.env.DB_NAME,
     ssl: {
         rejectUnauthorized: false,
-    },
+    }
 });
 
 export default async function query(text, params) {

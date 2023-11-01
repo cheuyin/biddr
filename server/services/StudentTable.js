@@ -7,7 +7,6 @@ export const QueryStudentByID = async (id) => {
         ]);
         return result;
     } catch (error) {
-        console.error("Error executing query:", error);
         throw error;
     }
 };
