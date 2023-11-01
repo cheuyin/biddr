@@ -1,3 +1,4 @@
-export const GetStudent = (req, res) => {
-    return res.send("Hello")
+export const GetStudentByID = (req, res) => {
+    const studentID = req.params.id;
+    return res.send("Hello. You asked for Student #: " + studentID)
 }
