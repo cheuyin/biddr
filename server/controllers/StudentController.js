@@ -1,4 +1,12 @@
-export const GetStudentByID = (req, res) => {
+import { QueryStudentByID } from "../services/StudentTable.js";
+
+export const GetStudentByID = async (req, res) => {
     const studentID = req.params.id;
-    return res.send("Hello. You asked for Student #: " + studentID)
-}
+
+    try {
+        const data = await QueryStudentByID(studentID);
+        res.status(200).json(data)
+    } catch (e) {
+        console.log("Error: Could not retrieve student.");
+    }
+};
