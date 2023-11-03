@@ -27,4 +27,4 @@ DB_USER=
 DB_PASSWORD=
 ```
 4. Start the server with `npm run dev`
-5. Head to http://localhost:3000/
+5. Head to http://localhost:8000/
