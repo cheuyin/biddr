@@ -61,6 +61,7 @@ export const PostWallet = async (req, res) => {
 };
 
 export const DeleteWallet = async (req, res) => {
+  console.log("DELETE CALLED");
   const { walletName, email } = req.body;
   if (!walletName || !email) {
     return res
