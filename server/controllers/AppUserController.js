@@ -13,10 +13,15 @@ export const GetAppUserByEmail = async (req, res) => {
 
 export const PostAppUser = async (req, res) => {
     const { email, username, fullName, hashedPassword, timeJoined } = req.body;
+    /*
+    These are the attributes labeled NOT NULL in the table creation script.
+    We are just checking here that they are not missing from the request.
+    */
     if(!email || !username || !fullName || !hashedPassword || !timeJoined) {
         return res.status(400).json({error: "Missing fields"})
     }
     try {
+        // Create hashed password and store in req.body - to unhash, call bcrypt.compareSync
         const hash = bcrypt.hashSync(hashedPassword, 10);
         req.body.hashedPassword = hash;
         await CreateAppUser(email, req.body)
