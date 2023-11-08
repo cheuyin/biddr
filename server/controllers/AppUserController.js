@@ -28,7 +28,7 @@ export const PostAppUser = async (req, res) => {
             const ageOfMajority = locationAgeOfMajority[0].ageofmajority;
             const userAge = getAge(dateOfBirth);
             const isLegalAge = userAge >= ageOfMajority;
-            // possibly return res.status(400).json({error: "User is not old enough to make an account"}); if not !isLegalAge
+            // possibly return res.status(400).json({error: "User is not old enough to make an account"}); if !isLegalAge
             await CreateLocationDateOfBirthIsLegalAge(location, dateOfBirth, isLegalAge);
         }
         // Create hashed password and store in req.body - to unhash, call bcrypt.compareSync
