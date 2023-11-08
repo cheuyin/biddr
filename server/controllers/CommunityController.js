@@ -1,4 +1,3 @@
-// import { QueryStudentByID } from "../services/StudentTable.js";
 import { QueryCommunityByName } from "../services/CommunityTable.js";
 import { QueryAllCommunityPostsByName } from "../services/CommunityTable.js";
 import { UpdateCommunity } from "../services/CommunityTable.js";
