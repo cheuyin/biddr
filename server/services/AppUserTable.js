@@ -21,3 +21,45 @@ export const CreateAppUser = async (email, data) => {
         throw error;
     }
 };
+
+export const CreateLocationDateOfBirthIsLegalAge = async (location, dateOfBirth, isLegalAge) => {
+    try {
+        return await query(
+            "INSERT INTO LocationDateOfBirthIsLegalAge (location, dateOfBirth, isLegalAge) VALUES ($1, $2. $3)",
+            [location, dateOfBirth, isLegalAge]
+        );
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const GetLocationAgeOfMajority = async (location) => {
+    try {
+        const result = await query("SELECT * FROM LocationAgeOfMajority WHERE location = $1", [location]);
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const UpdateAppUser = async(email, data) => {
+    try {
+        return await query(
+            "UPDATE AppUser SET username = $1, profilePicture = $2, fullName = $3, timeJoined = $4, bio = $5, dateOfBirth = $6, location = $7 WHERE email = $8",
+            [data.username, data.profilePicture, data.fullName, data.timeJoined, data.bio, data.dateOfBirth, data.location, email]
+        );
+    } catch (err) {
+        throw error;
+    }
+};
+
+export const UpdateAppUserPassword = async(email, data) => {
+    try {
+        return await query(
+            "UPDATE AppUser SET hashedPassword = $1 WHERE email = $2",
+            [data.password, email]
+        );
+    } catch (err) {
+        throw error;
+    }
+};
