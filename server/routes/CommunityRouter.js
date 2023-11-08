@@ -10,7 +10,7 @@ import { DeleteCommunity } from "../controllers/CommunityController.js";
 import { UserJoinCommunity } from "../controllers/CommunityController.js";
 import { UserLeaveCommunity } from "../controllers/CommunityController.js";
 
-router.use(express.json()); // Add this line to parse JSON data
+router.use(express.json());
 
 router.get("/:name", GetCommunityByName);
 router.get("/:name/posts", GetCommunityPosts);

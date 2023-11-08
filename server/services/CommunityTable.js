@@ -44,7 +44,7 @@ export const CreateCommunity = async (communityName, data) => {
   try {
     return await query(
       "INSERT INTO Community (communityName, email, longName, description) VALUES ($1, $2, $3, $4)",
-      [communityName, data.email, data.longname, data.description]
+      [communityName, data.email, data.longName, data.description]
     );
   } catch (error) {
     throw error;
