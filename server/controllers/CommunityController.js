@@ -4,6 +4,8 @@ import { QueryAllCommunityPostsByName } from "../services/CommunityTable.js";
 import { UpdateCommunity } from "../services/CommunityTable.js";
 import { CreateCommunity } from "../services/CommunityTable.js";
 import { BanishCommunity } from "../services/CommunityTable.js";
+import { CreateJoin } from "../services/CommunityTable.js";
+import { RemoveJoin } from "../services/CommunityTable.js";
 
 export const GetCommunityByName = async (req, res) => {
   const communityName = req.params.name;
@@ -64,6 +66,34 @@ export const DeleteCommunity = async (req, res) => {
   try {
     await BanishCommunity(communityName);
     res.status(200).json({ message: "Community destroyed" });
+  } catch (err) {
+    res.send(err.toString());
+  }
+};
+
+export const UserJoinCommunity = async (req, res) => {
+  const { communityname, email } = req.body;
+  if (!communityname || !email) {
+    return res.status(400).json({ error: "missing fields" });
+  }
+  try {
+    await CreateJoin(communityname, email);
+    res.status(201).json({ message: "Successfully joined!" });
+  } catch (err) {
+    res.send(err.toString());
+  }
+};
+
+export const UserLeaveCommunity = async (req, res) => {
+  const { communityname, email } = req.body;
+  if (!communityname || !email) {
+    return res.status(400).json({ error: "missing fields" });
+  }
+  try {
+    await RemoveJoin(communityname, email);
+    res
+      .status(201)
+      .json({ message: "Good for you, not the best community, eh" });
   } catch (err) {
     res.send(err.toString());
   }

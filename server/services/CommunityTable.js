@@ -60,3 +60,25 @@ export const BanishCommunity = async (communityName) => {
     throw error;
   }
 };
+
+export const CreateJoin = async (name, email) => {
+  try {
+    return await query(
+      "INSERT INTO Joins(communityName, email) VALUES ($1, $2)",
+      [name, email]
+    );
+  } catch (error) {
+    return error;
+  }
+};
+
+export const RemoveJoin = async (name, email) => {
+  try {
+    return await query(
+      "DELETE FROM Joins WHERE communityName = $1 AND email = $2",
+      [name, email]
+    );
+  } catch (error) {
+    return error;
+  }
+};
