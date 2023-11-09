@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { ChakraProvider } from "@chakra-ui/react";
 import SignUpForm from "./components/SignUpForm";
 
 function App() {
@@ -51,7 +51,11 @@ function App() {
     //   </div>
     // );
 
-    return <SignUpForm />;
+    return (
+        <ChakraProvider>
+            <SignUpForm />
+        </ChakraProvider>
+    );
 }
 
 export default App;
