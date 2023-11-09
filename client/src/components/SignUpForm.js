@@ -8,23 +8,46 @@ const SignUpForm = () => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = (data) => {
+        alert(JSON.stringify(data));
+    };
 
     console.log(watch("example")); // watch input value by passing the name of it
 
     return (
-        /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-        <form onSubmit={handleSubmit(onSubmit)}>
-            {/* register your input into the hook by invoking the "register" function */}
-            <input defaultValue="test" {...register("example")} />
+        <div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <input
+                    placeholder="Username"
+                    {...register("username", {
+                        required: "A username is required.",
+                        minLength: {
+                            value: 5,
+                            message: "Min length is 5",
+                        },
+                    })}
+                />
+                <p>{errors.username?.message}</p>
 
-            {/* include validation with required or other standard HTML validation rules */}
-            <input {...register("exampleRequired", { required: true })} />
-            {/* errors will return when field validation fails  */}
-            {errors.exampleRequired && <span>This field is required</span>}
+                <input
+                    placeholder="Email"
+                    {...register("email", {
+                        required: "An email is required.",
+                    })}
+                />
+                <p>{errors.email?.message}</p>
 
-            <input type="submit" />
-        </form>
+                <input
+                    placeholder="Full Name"
+                    {...register("fullName", {
+                        required: "Please enter your full name.",
+                    })}
+                />
+                <p>{errors.fullName?.message}</p>
+
+                <input type="submit" />
+            </form>
+        </div>
     );
 };
 
