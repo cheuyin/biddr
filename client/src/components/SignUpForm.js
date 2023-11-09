@@ -22,7 +22,7 @@ the password must meet the following requirements:
 const PASSWORD_REGEX =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-const Register = () => {
+const SignUpForm = () => {
     const usernameRef = useRef();
     const errorMessageRef = useRef();
 
@@ -80,6 +80,7 @@ const Register = () => {
             </p>
             <h1>Register</h1>
             <form>
+                {/* === username field === */}
                 <label htmlFor="username">
                     Username:
                     <span className={isValidName ? "valid" : "hide"}>
@@ -103,22 +104,34 @@ const Register = () => {
                     onFocus={() => setIsUserFocus(true)}
                     onBlur={() => setIsUserFocus(false)}
                 />
+                <p
+                    id="uidnote"
+                    className={
+                        isUserFocus && username && !isValidName
+                            ? "instructions"
+                            : "offscreen"
+                    }
+                >
+                    <FontAwesomeIcon icon={faInfoCircle} />
+                    4 to 24 characters. <br />
+                    Must begin with a letter. <br />
+                    Letters, numbers, underscores, hyphens allowed.
+                </p>
+
+                {/* === password field === */}
+                <label htmlfor="password">Password:</label>
+                <input
+                    type="password"
+                    id="password"
+                    autoComplete="off"
+                    onChange={(event) => setPassword(event.target.value)}
+                    required
+                    onFocus={() => setIsPasswordFocus(true)}
+                    onBlur={() => setIsPasswordFocus(false)}
+                />
             </form>
-            <p
-                id="uidnote"
-                className={
-                    isUserFocus && username && !isValidName
-                        ? "instructions"
-                        : "offscreen"
-                }
-            >
-                <FontAwesomeIcon icon={faInfoCircle} />
-                4 to 24 characters. <br />
-                Must begin with a letter. <br />
-                Letters, numbers, underscores, hyphens allowed.
-            </p>
         </section>
     );
 };
 
-export default Register;
+export default SignUpForm;
