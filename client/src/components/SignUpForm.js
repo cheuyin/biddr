@@ -10,6 +10,9 @@ import {
     Button,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+
+const API_URL = "http://localhost:8000/api/users";
 
 const SignUpForm = () => {
     const {
@@ -19,8 +22,35 @@ const SignUpForm = () => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
-        alert(JSON.stringify(data));
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const onSubmit = async (formData) => {
+        setIsSubmitting(true);
+
+        const { username, email, fullName, password, dateOfBirth, location } =
+            formData;
+
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username,
+                    email,
+                    fullName,
+                    password,
+                    dateOfBirth,
+                    location,
+                }),
+            });
+            console.log(response.text());
+        } catch (e) {
+            alert(e);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -37,7 +67,7 @@ const SignUpForm = () => {
                 </Heading>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <FormControl isInvalid={errors.username}>
-                        <FormLabel htmlfor="username">Username</FormLabel>
+                        <FormLabel htmlFor="username">Username</FormLabel>
                         <Input
                             id="username"
                             {...register("username", {
@@ -60,7 +90,7 @@ const SignUpForm = () => {
                     </FormControl>
 
                     <FormControl isInvalid={errors.email}>
-                        <FormLabel htmlfor="email">Email</FormLabel>
+                        <FormLabel htmlFor="email">Email</FormLabel>
                         <Input
                             id="email"
                             {...register("email", {
@@ -83,7 +113,7 @@ const SignUpForm = () => {
                     </FormControl>
 
                     <FormControl isInvalid={errors.fullName}>
-                        <FormLabel htmlfor="fullName">Full Name</FormLabel>
+                        <FormLabel htmlFor="fullName">Full Name</FormLabel>
                         <Input
                             id="fullName"
                             {...register("fullName", {
@@ -96,7 +126,7 @@ const SignUpForm = () => {
                     </FormControl>
 
                     <FormControl isInvalid={errors.password}>
-                        <FormLabel htmlfor="password">Password</FormLabel>
+                        <FormLabel htmlFor="password">Password</FormLabel>
                         <Input
                             id="password"
                             type="password"
@@ -104,12 +134,14 @@ const SignUpForm = () => {
                                 required: "Please enter a password.",
                                 minLength: {
                                     value: 8,
-                                    message: "Your password must be at least 8 characters long."
+                                    message:
+                                        "Your password must be at least 8 characters long.",
                                 },
                                 maxLength: {
                                     value: 24,
-                                    message: "Your password cannot be more than 24 characters long."
-                                }
+                                    message:
+                                        "Your password cannot be more than 24 characters long.",
+                                },
                             })}
                         />
                         <FormErrorMessage>
@@ -118,7 +150,7 @@ const SignUpForm = () => {
                     </FormControl>
 
                     <FormControl isInvalid={errors.confirmPassword}>
-                        <FormLabel htmlfor="confirmPassword">
+                        <FormLabel htmlFor="confirmPassword">
                             Confirm Password
                         </FormLabel>
                         <Input
@@ -126,11 +158,11 @@ const SignUpForm = () => {
                             type="password"
                             {...register("confirmPassword", {
                                 required: "Please confirm your password.",
-                                validate: val => {
+                                validate: (val) => {
                                     if (watch("password") !== val) {
-                                        return "Your passwords do not match."
+                                        return "Your passwords do not match.";
                                     }
-                                }
+                                },
                             })}
                         />
                         <FormErrorMessage>
@@ -139,7 +171,7 @@ const SignUpForm = () => {
                     </FormControl>
 
                     <FormControl isInvalid={errors.dateOfBirth}>
-                        <FormLabel htmlfor="dateOfBirth">
+                        <FormLabel htmlFor="dateOfBirth">
                             Date of Birth
                         </FormLabel>
                         <Input
@@ -153,7 +185,7 @@ const SignUpForm = () => {
                     </FormControl>
 
                     <FormControl isInvalid={errors.location}>
-                        <FormLabel htmlfor="location">Location</FormLabel>
+                        <FormLabel htmlFor="location">Location</FormLabel>
                         <Select placeholder="Select location">
                             <option value="canada">Canada</option>
                             <option value="mexico">Mexico</option>
@@ -164,7 +196,14 @@ const SignUpForm = () => {
                         </FormErrorMessage>
                     </FormControl>
 
-                    <Button width="100%" mt={4} type="submit">
+                    <Button
+                        isLoading={isSubmitting}
+                        loadingText="Submitting"
+                        spinnerPlacement="start"
+                        width="100%"
+                        mt={4}
+                        type="submit"
+                    >
                         Submit
                     </Button>
                 </form>
