@@ -17,10 +17,8 @@ export const PostAppUser = async (req, res) => {
     These are the attributes labeled NOT NULL in the table creation script.
     We are just checking here that they are not missing from the request.
     */
-
-    console.log(email, username, fullName, password, location, dateOfBirth);
-
-    if(!email || !username || !fullName || !password || !location || !dateOfBirth) {
+   
+    if (!email || !username || !fullName || !password || !location || !dateOfBirth) {
         return res.status(400).json({error: "Missing fields"})
     }
 
