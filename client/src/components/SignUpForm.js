@@ -45,9 +45,14 @@ const SignUpForm = () => {
                     location,
                 }),
             });
-            console.log(response.text());
-        } catch (e) {
-            alert(e);
+            const responseData = await response.json();
+            if (response.status === 200) {
+                console.log(responseData);
+            } else {
+                throw new Error(responseData.error);
+            }
+        } catch (error) {
+            console.log(error);
         } finally {
             setIsSubmitting(false);
         }
@@ -177,7 +182,7 @@ const SignUpForm = () => {
                         <Input
                             id="dateOfBirth"
                             type="date"
-                            {...register("date")}
+                            {...register("dateOfBirth")}
                         />
                         <FormErrorMessage>
                             {errors.dateOfBirth?.message}
@@ -186,7 +191,11 @@ const SignUpForm = () => {
 
                     <FormControl isInvalid={errors.location}>
                         <FormLabel htmlFor="location">Location</FormLabel>
-                        <Select placeholder="Select location">
+                        <Select
+                            id="location"
+                            {...register("location")}
+                            placeholder="Select location"
+                        >
                             <option value="canada">Canada</option>
                             <option value="mexico">Mexico</option>
                             <option value="unitedStates">United States</option>
