@@ -182,7 +182,9 @@ const SignUpForm = () => {
                         <Input
                             id="dateOfBirth"
                             type="date"
-                            {...register("dateOfBirth")}
+                            {...register("dateOfBirth", {
+                                required: "Please enter your date of birth.",
+                            })}
                         />
                         <FormErrorMessage>
                             {errors.dateOfBirth?.message}
@@ -193,7 +195,9 @@ const SignUpForm = () => {
                         <FormLabel htmlFor="location">Location</FormLabel>
                         <Select
                             id="location"
-                            {...register("location")}
+                            {...register("location", {
+                                required: "Please enter your location.",
+                            })}
                             placeholder="Select location"
                         >
                             <option value="canada">Canada</option>
