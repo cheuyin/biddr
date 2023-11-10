@@ -25,7 +25,13 @@ const SignUpForm = () => {
 
     return (
         <Container maxW="md" mt={10}>
-            <Box border="1px" p={4} borderColor={"gray.200"}>
+            <Box
+                border="1px"
+                p={4}
+                borderRadius="md"
+                boxShadow="sm"
+                borderColor={"gray.200"}
+            >
                 <Heading as="h1" size="lg" m={4} textAlign={"center"}>
                     Sign Up
                 </Heading>
@@ -37,8 +43,14 @@ const SignUpForm = () => {
                             {...register("username", {
                                 required: "A username is required.",
                                 minLength: {
-                                    value: 5,
-                                    message: "Min length is 5",
+                                    value: 3,
+                                    message:
+                                        "A username must be at least 3 characters long.",
+                                },
+                                maxLength: {
+                                    value: 32,
+                                    message:
+                                        "A username must be at most 32 characters long.",
                                 },
                             })}
                         />
@@ -52,7 +64,17 @@ const SignUpForm = () => {
                         <Input
                             id="email"
                             {...register("email", {
-                                required: "An email is required.",
+                                required: "Please enter your email.",
+                                pattern: {
+                                    value: /\S+@\S+\.\S+/,
+                                    message:
+                                        "Please enter a valid email address.",
+                                },
+                                maxLength: {
+                                    value: 256,
+                                    message:
+                                        "Your email cannot be more than 256 characters long.",
+                                },
                             })}
                         />
                         <FormErrorMessage>
@@ -80,6 +102,14 @@ const SignUpForm = () => {
                             type="password"
                             {...register("password", {
                                 required: "Please enter a password.",
+                                minLength: {
+                                    value: 8,
+                                    message: "Your password must be at least 8 characters long."
+                                },
+                                maxLength: {
+                                    value: 24,
+                                    message: "Your password cannot be more than 24 characters long."
+                                }
                             })}
                         />
                         <FormErrorMessage>
@@ -91,12 +121,16 @@ const SignUpForm = () => {
                         <FormLabel htmlfor="confirmPassword">
                             Confirm Password
                         </FormLabel>
-
                         <Input
                             id="confirmPassword"
                             type="password"
                             {...register("confirmPassword", {
                                 required: "Please confirm your password.",
+                                validate: val => {
+                                    if (watch("password") !== val) {
+                                        return "Your passwords do not match."
+                                    }
+                                }
                             })}
                         />
                         <FormErrorMessage>
