@@ -6,7 +6,8 @@ import { QueryAppUserByEmail,
     CreateLocationDateOfBirthIsLegalAge,
     GetLocationDateOfBirthIsLegalAge,
     GetLocationAgeOfMajority,
-    GetAllLocationAgeOfMajority } from "../services/AppUserTable.js";
+    GetAllLocationAgeOfMajority,
+    GetUserCommunities } from "../services/AppUserTable.js";
 import { getAge } from "../helpers/helpers.js";
 import bcrypt from "bcrypt"
 
@@ -65,7 +66,7 @@ export const PostAppUser = async (req, res) => {
     }
 };
 
-export const PutAppUser = async (req, res) => {
+export const ChangeAppUserInformation = async (req, res) => {
     const userEmail = req.params.email;
     const { email, username, fullName, timeJoined } = req.body;
     if(!email || !username || !fullName || !timeJoined) {
@@ -84,7 +85,7 @@ export const PutAppUser = async (req, res) => {
     }
 };
 
-export const PutAppUserPassword = async (req, res) => {
+export const ChangeAppUserPassword = async (req, res) => {
     const userEmail = req.params.email;
     const { email, password } = req.body;
     if(!email || !password) {
@@ -115,4 +116,14 @@ export const GetLocationAgeOfMajorityValues = async (req, res) => {
     } catch(err) {
         res.send(err.toString());
     }
-}
+};
+
+export const GetUserSubscribedCommunities = async (req, res) => {
+    const userEmail = req.params.email;
+    try {
+        const data = await GetUserCommunities(userEmail);
+        res.status(200).json(data);
+    } catch(err) {
+        res.send(err.toString());
+    }
+};
