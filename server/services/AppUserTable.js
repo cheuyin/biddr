@@ -14,8 +14,17 @@ export const QueryAppUserByEmail = async (email) => {
 export const CreateAppUser = async (email, data) => {
     try {
         return await query(
-            "INSERT INTO AppUser (email, username, profilePicture, fullName, hashedPassword, timeJoined,  bio, dateOfBirth, location) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
-            [email, data.username, data.profilePicture, data.fullName, data.hashedPassword, data.timeJoined, data.bio, data.dateOfBirth, data.location]
+            "INSERT INTO AppUser (email, username, profilePicture, fullName, hashedPassword, timeJoined,  bio, dateOfBirth, location) VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP, $6, $7, $8)",
+            [
+                email,
+                data.username,
+                data.profilePicture,
+                data.fullName,
+                data.hashedPassword,
+                data.bio,
+                data.dateOfBirth,
+                data.location,
+            ]
         );
     } catch (error) {
         throw error;
