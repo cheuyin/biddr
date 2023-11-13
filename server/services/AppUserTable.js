@@ -11,6 +11,17 @@ export const QueryAppUserByEmail = async (email) => {
     }
 };
 
+export const QueryAppUserByUsername = async (username) => {
+    try {
+        const result = await query("SELECT * FROM AppUser WHERE username = $1", [
+            username,
+        ]);
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export const CreateAppUser = async (email, data) => {
     try {
         return await query(
@@ -20,7 +31,7 @@ export const CreateAppUser = async (email, data) => {
                 data.username,
                 data.profilePicture,
                 data.fullName,
-                data.hashedPassword,
+                data.password,
                 data.bio,
                 data.dateOfBirth,
                 data.location,
@@ -34,9 +45,28 @@ export const CreateAppUser = async (email, data) => {
 export const CreateLocationDateOfBirthIsLegalAge = async (location, dateOfBirth, isLegalAge) => {
     try {
         return await query(
-            "INSERT INTO LocationDateOfBirthIsLegalAge (location, dateOfBirth, isLegalAge) VALUES ($1, $2. $3)",
+            "INSERT INTO LocationDateOfBirthLegalAge (location, dateOfBirth, isLegalAge) VALUES ($1, $2, $3)",
             [location, dateOfBirth, isLegalAge]
         );
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const GetLocationDateOfBirthIsLegalAge = async (location, dateOfBirth) => {
+    try {
+        const result = await query("SELECT * FROM LocationDateOfBirthLegalAge WHERE location = $1 AND dateOfBirth = $2", [location, dateOfBirth])
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+
+// Used to get all locations to display on sign-up form.
+export const GetAllLocationAgeOfMajority = async () => {
+    try {
+        const result = await query("SELECT * FROM LocationAgeOfMajority;", []);
+        return result;
     } catch (error) {
         throw error;
     }
@@ -49,7 +79,7 @@ export const GetLocationAgeOfMajority = async (location) => {
     } catch (error) {
         throw error;
     }
-}
+};
 
 export const UpdateAppUser = async(email, data) => {
     try {
