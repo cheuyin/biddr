@@ -1,5 +1,9 @@
 import query from "../db.js";
 
+/*
+GET
+*/
+
 export const QueryAppUserByEmail = async (email) => {
     try {
         const result = await query("SELECT * FROM AppUser WHERE email = $1", [
@@ -22,32 +26,12 @@ export const QueryAppUserByUsername = async (username) => {
     }
 };
 
-export const CreateAppUser = async (email, data) => {
+export const GetUserCommunities = async(email) => {
     try {
-        return await query(
-            "INSERT INTO AppUser (email, username, profilePicture, fullName, hashedPassword, timeJoined,  bio, dateOfBirth, location) VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP, $6, $7, $8)",
-            [
-                email,
-                data.username,
-                data.profilePicture,
-                data.fullName,
-                data.password,
-                data.bio,
-                data.dateOfBirth,
-                data.location,
-            ]
-        );
-    } catch (error) {
-        throw error;
-    }
-};
-
-export const CreateLocationDateOfBirthIsLegalAge = async (location, dateOfBirth, isLegalAge) => {
-    try {
-        return await query(
-            "INSERT INTO LocationDateOfBirthLegalAge (location, dateOfBirth, isLegalAge) VALUES ($1, $2, $3)",
-            [location, dateOfBirth, isLegalAge]
-        );
+        const result = await query("SELECT * FROM Joins WHERE email = $1", [
+            email,
+        ]);
+        return result;
     } catch (error) {
         throw error;
     }
@@ -82,6 +66,46 @@ export const GetLocationAgeOfMajority = async (location) => {
     }
 };
 
+/*
+POST
+*/
+
+
+export const CreateAppUser = async (email, data) => {
+    try {
+        return await query(
+            "INSERT INTO AppUser (email, username, profilePicture, fullName, hashedPassword, timeJoined,  bio, dateOfBirth, location) VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP, $6, $7, $8)",
+            [
+                email,
+                data.username,
+                data.profilePicture,
+                data.fullName,
+                data.password,
+                data.bio,
+                data.dateOfBirth,
+                data.location,
+            ]
+        );
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const CreateLocationDateOfBirthIsLegalAge = async (location, dateOfBirth, isLegalAge) => {
+    try {
+        return await query(
+            "INSERT INTO LocationDateOfBirthLegalAge (location, dateOfBirth, isLegalAge) VALUES ($1, $2, $3)",
+            [location, dateOfBirth, isLegalAge]
+        );
+    } catch (error) {
+        throw error;
+    }
+};
+
+/*
+PUT
+*/
+
 export const UpdateAppUser = async(email, data) => {
     try {
         return await query(
@@ -103,14 +127,3 @@ export const UpdateAppUserPassword = async(email, data) => {
         throw error;
     }
 };
-
-export const GetUserCommunities = async(email) => {
-    try {
-        const result = await query("SELECT * FROM Joins WHERE email = $1", [
-            email,
-        ]);
-        return result;
-    } catch (error) {
-        throw error;
-    }
-}
