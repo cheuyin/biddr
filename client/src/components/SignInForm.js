@@ -22,7 +22,6 @@ const SignInForm = () => {
     } = useForm();
 
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
 
     const onSubmit = async ({ email, password }) => {
         setIsSubmitting(true);
@@ -45,7 +44,7 @@ const SignInForm = () => {
                 alert("Authorized!");
             }
         } catch (error) {
-            setErrorMessage(error.message);
+            alert(error.message);
         } finally {
             setIsSubmitting(false);
         }
@@ -90,6 +89,7 @@ const SignInForm = () => {
                         <FormLabel htmlFor="password">Password</FormLabel>
                         <Input
                             id="password"
+                            type="password"
                             {...register("password", {
                                 required: "Please enter your password.",
                             })}
@@ -98,10 +98,6 @@ const SignInForm = () => {
                             {errors.password?.message}
                         </FormErrorMessage>
                     </FormControl>
-
-                    <Text color="tomato" m={3} textAlign={"center"}>
-                        {errorMessage}
-                    </Text>
 
                     <Button
                         isLoading={isSubmitting}
