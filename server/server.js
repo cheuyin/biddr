@@ -16,6 +16,8 @@ app.use("/api/users", AppUserRouter);
 app.use("/auth/", UserRouter);
 app.use("/api/wallets", WalletRouter);
 
+app.use("/auth/", UserRouter);
+
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
