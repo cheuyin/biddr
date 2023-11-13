@@ -3,27 +3,52 @@ import {
     Box,
     Heading,
     Input,
-    Select,
     FormErrorMessage,
     FormControl,
     FormLabel,
     Button,
+    Text,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+
+const BASE_URL = "http://localhost:8000/";
 
 const SignInForm = () => {
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm();
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async ({ email, password }) => {
+        setIsSubmitting(true);
+
+        try {
+            const response = await fetch(BASE_URL + "auth/signin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+            });
+            const responseData = await response.json();
+            if (responseData.error) {
+                throw new Error(responseData.error);
+            } else {
+                alert("Authorized!");
+            }
+        } catch (error) {
+            setErrorMessage(error.message);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -73,6 +98,10 @@ const SignInForm = () => {
                             {errors.password?.message}
                         </FormErrorMessage>
                     </FormControl>
+
+                    <Text color="tomato" m={3} textAlign={"center"}>
+                        {errorMessage}
+                    </Text>
 
                     <Button
                         isLoading={isSubmitting}

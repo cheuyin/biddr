@@ -16,6 +16,11 @@ router.post("/signin", async (req, res, next) => {
     let user;
     try {
         user = await QueryAppUserByEmail(email);
+        if (!user) {
+            return res
+                .status(404)
+                .json({ error: "User with that email does not exist." });
+        }
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
