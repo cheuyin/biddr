@@ -1,6 +1,7 @@
 import express from "express";
 import { QueryAppUserByEmail } from "../services/AppUserTable.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
@@ -28,7 +29,18 @@ router.post("/signin", async (req, res, next) => {
     const isCorrectPassword = bcrypt.compareSync(password, user.hashedpassword);
 
     if (isCorrectPassword) {
-        return res.status(200).json({ message: "Passwords match!" });
+        const token = jwt.sign(
+            {
+                email: email,
+            },
+            process.env.JWT_KEY,
+            {
+                expiresIn: "2 days",
+            }
+        );
+        return res
+            .status(200)
+            .json({ message: "Passwords match!", token: token });
     } else {
         return res.status(401).json({ error: "Password is incorrect." });
     }
