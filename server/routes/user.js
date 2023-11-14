@@ -57,23 +57,24 @@ router.post("/signin", async (req, res, next) => {
     // save refresh tokens in the database
     try {
         const result = await query(
-            "sELECT * FROM refreshtokens WHERE email = $1",
+            "SELECT * FROM refreshtokens WHERE email = $1",
             [user.email]
         );
         if (result.length === 0) {
             await query(
-                "INSERT INTO refreshtokens (email, token) VALUES ($1, $2);",
+                "INSERT INTO refreshtokens (email, refresh_token) VALUES ($1, $2);",
                 [user.email, refreshToken]
             );
         } else {
             await query(
-                "UPDATE refreshtokens SET token = $1 WHERE email = $2",
-                [user.refreshToken, user.email]
+                "UPDATE refreshtokens SET refresh_token = $1 WHERE email = $2",
+                [refreshToken, user.email]
             );
         }
     } catch (error) {
         return res.status(500).json({
             error: "There was an error saving refresh tokens in the database.",
+            message: error.message
         });
     }
 
