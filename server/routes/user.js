@@ -1,3 +1,6 @@
+// Source: https://www.youtube.com/watch?v=favjC6EKFgw
+// I used this series by Dave Lee to learn how to implement the authentication system
+
 import express from "express";
 import { QueryAppUserByEmail } from "../services/AppUserTable.js";
 import bcrypt from "bcrypt";
