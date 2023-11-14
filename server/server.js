@@ -17,6 +17,7 @@ app.use(cookieParser()); // Middleware for cookies
 
 app.use("/api/students", StudentRouter);
 app.use("/api/communities", CommunityRouter);
+app.use("/api/wallets", WalletRouter);
 app.use("/api/users", AppUserRouter);
 app.use("/auth", UserRouter);
 app.use("/refresh", RefreshTokenRouter)
