@@ -38,7 +38,7 @@ const RefreshController = async (req, res) => {
                     email: decoded.email,
                 },
                 process.env.JWT_ACCESS_TOKEN_KEY,
-                { expiresIn: 45 }
+                { expiresIn: 15 * 60 }
             );
 
             return res.status(200).json({ accessToken });
