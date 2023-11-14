@@ -21,7 +21,7 @@ const RefreshController = async (req, res) => {
         }
         userEmail = result[0].email;
     } catch (error) {
-        return res.status(500).json(error);
+        return res.status(500).json({error: error.message});
     }
 
     // If the refresh token matches the one stored in the db, then send user a new access token
