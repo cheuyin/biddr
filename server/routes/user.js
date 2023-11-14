@@ -74,11 +74,15 @@ router.post("/signin", async (req, res, next) => {
     } catch (error) {
         return res.status(500).json({
             error: "There was an error saving refresh tokens in the database.",
-            message: error.message
+            message: error.message,
         });
     }
 
     // return success result + access token to the user
+    res.cookie("jwt", refreshToken, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+    });
     return res
         .status(200)
         .json({ message: "Passwords match!", accessToken: accessToken });
