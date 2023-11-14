@@ -1,8 +1,6 @@
 import express from "express";
-
-const router = express.Router();
-
 import { GetAppUserByEmail, PostAppUser, ChangeAppUserInformation, ChangeAppUserPassword, GetLocationAgeOfMajorityValues, GetUserSubscribedCommunities } from "../controllers/AppUserController.js";
+const router = express.Router();
 
 router.get("/:email", GetAppUserByEmail);
 router.post("/", PostAppUser);
