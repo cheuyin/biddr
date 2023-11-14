@@ -44,7 +44,7 @@ router.post("/signin", async (req, res, next) => {
         },
         process.env.JWT_ACCESS_TOKEN_KEY,
         {
-            expiresIn: 15 * 60,
+            expiresIn: 45,
         }
     );
     const refreshToken = jwt.sign(
@@ -81,7 +81,7 @@ router.post("/signin", async (req, res, next) => {
         });
     }
 
-    // return success result + access token to the user
+    // return success result and give an access token to the user
     res.cookie("jwt", refreshToken, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,

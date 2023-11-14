@@ -8,6 +8,9 @@ import {
   PutWalletBalance,
 } from "../controllers/WalletController.js";
 import { GetAllWallets, GetWallet } from "../controllers/WalletController.js";
+import verifyJWT from "../middleware/verifyJWT.js";
+
+router.use(verifyJWT);
 
 router.post("/", PostWallet);
 router.delete("/", DeleteWallet);
