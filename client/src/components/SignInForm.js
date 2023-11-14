@@ -10,9 +10,10 @@ import {
     Text,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
-const BASE_URL = "http://localhost:8000/";
+import AuthContext from "../context/AuthProvider";
+import { signIn } from "../api/auth";
 
 const SignInForm = () => {
     const {
@@ -22,29 +23,24 @@ const SignInForm = () => {
     } = useForm();
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const { auth, setAuth } = useContext(AuthContext);
 
     const onSubmit = async ({ email, password }) => {
         setIsSubmitting(true);
 
         try {
-            const response = await fetch(BASE_URL + "auth/signin", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email,
-                    password,
-                }),
-            });
-            const responseData = await response.json();
-            if (responseData.error) {
-                throw new Error(responseData.error);
-            } else {
-                alert("Authorized!");
+            const { accessToken } = await signIn(email, password);
+            if (!accessToken) {
+                throw new Error("Access token not recieved");
             }
+            setAuth({
+                email,
+                password,
+                accessToken,
+            });
         } catch (error) {
-            alert(error.message);
+            alert(error.message || error);
         } finally {
             setIsSubmitting(false);
         }
@@ -62,6 +58,7 @@ const SignInForm = () => {
                 <Heading as="h1" size="lg" m={4} textAlign={"center"}>
                     Sign In
                 </Heading>
+                <Text>{"LOGGED IN USER: " + auth.email}</Text>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <FormControl isInvalid={errors.email}>
                         <FormLabel htmlFor="email">Email</FormLabel>
