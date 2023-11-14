@@ -5,7 +5,11 @@ import express from "express";
 import { QueryAppUserByEmail } from "../services/AppUserTable.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import query from "../db.js";
+import {
+    GetEmailByRefreshToken,
+    GetRefreshTokenByUserEmail,
+    SetRefreshTokenForUser,
+} from "../services/RefreshTokenService.js";
 
 const router = express.Router();
 
@@ -57,23 +61,9 @@ router.post("/signin", async (req, res, next) => {
         }
     );
 
-    // save refresh tokens in the database
+    // save a new refresh token in the appuser database table whenever a user logs in
     try {
-        const result = await query(
-            "SELECT * FROM refreshtokens WHERE email = $1",
-            [user.email]
-        );
-        if (result.length === 0) {
-            await query(
-                "INSERT INTO refreshtokens (email, refresh_token) VALUES ($1, $2);",
-                [user.email, refreshToken]
-            );
-        } else {
-            await query(
-                "UPDATE refreshtokens SET refresh_token = $1 WHERE email = $2",
-                [refreshToken, user.email]
-            );
-        }
+        await SetRefreshTokenForUser(user.email, refreshToken);
     } catch (error) {
         return res.status(500).json({
             error: "There was an error saving refresh tokens in the database.",
@@ -81,14 +71,18 @@ router.post("/signin", async (req, res, next) => {
         });
     }
 
-    // return success result and give an access token to the user
+    /*
+    if sign-in is successful, then do the following:
+        - send a refresh token to the client via http cookies
+        - send the access token to the client via a json response
+    */
     res.cookie("jwt", refreshToken, {
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000,
+        maxAge: 24 * 60 * 60 * 1000, // 24 hours
     });
     return res
         .status(200)
-        .json({ message: "Passwords match!", accessToken: accessToken });
+        .json({ message: "Passwords match!", accessToken });
 });
 
 export default router;
