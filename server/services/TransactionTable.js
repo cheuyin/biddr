@@ -38,10 +38,11 @@ export const QueryHighestBidForAuction = async (auctionId) => {
       "SELECT MAX(amount) FROM bid WHERE postId = $1",
       [auctionId]
     );
-    if (result.length === 0) {
+
+    if (result[0]["max"] === null) {
       return 0;
     }
-    return result;
+    return result[0]["max"];
   } catch (error) {
     throw error;
   }
@@ -60,65 +61,61 @@ export const CreateBid = async (
       [walletName, email, postId, amount, timeCreated, "highest"]
     );
     return await query(
-      "UPDATE bid SET status = NULL WHERE postID = $1 AND status = 'highest' AND bidID <> $2",
-      [postId, bidId]
+      "UPDATE bid SET status = NULL WHERE postID = $1 AND bidID <> $2",
+      [postId, bidId[0]["bidid"]]
     );
   } catch (error) {
     throw error;
   }
 };
 
-// export const UpdateWalletBalance = async (walletName, email, balance) => {
-//   try {
-//     return await query(
-//       "UPDATE Wallet SET balance = $1 WHERE walletName = $2 AND email = $3",
-//       [balance, walletName, email]
-//     );
-//   } catch (error) {
-//     throw error;
-//   }
-// };
+export const QueryDonation = async (donationId) => {
+  try {
+    const result = await query("SELECT * FROM donation WHERE donationID = $1", [
+      donationId,
+    ]);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
 
-// export const CreateWallet = async (walletName, email) => {
-//   try {
-//     return await query(
-//       "INSERT INTO Wallet (walletName, email, balance) VALUES ($1, $2, $3)",
-//       [walletName, email, 0]
-//     );
-//   } catch (error) {
-//     throw error;
-//   }
-// };
+export const QueryAllDonationsForFundraiser = async (donationId) => {
+  try {
+    const result = await query("SELECT * FROM donation WHERE postId = $1", [
+      donationId,
+    ]);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
 
-// export const BurnWallet = async (walletName, email) => {
-//   try {
-//     return await query(
-//       "DELETE FROM Wallet WHERE walletName = $1 AND email = $2",
-//       [walletName, email]
-//     );
-//   } catch (error) {
-//     throw error;
-//   }
-// };
+export const QueryAllDonationsForWallet = async (walletName, email) => {
+  try {
+    const result = await query(
+      "SELECT * FROM donation WHERE walletName = $1 AND email = $2",
+      [walletName, email]
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
 
-// export const CreateJoin = async (name, email) => {
-//   try {
-//     return await query("INSERT INTO Joins(walletName, email) VALUES ($1, $2)", [
-//       name,
-//       email,
-//     ]);
-//   } catch (error) {
-//     return error;
-//   }
-// };
-
-// export const RemoveJoin = async (name, email) => {
-//   try {
-//     return await query(
-//       "DELETE FROM Joins WHERE walletName = $1 AND email = $2",
-//       [name, email]
-//     );
-//   } catch (error) {
-//     return error;
-//   }
-// };
+export const CreateDonation = async (
+  walletName,
+  email,
+  postId,
+  amount,
+  timeCreated
+) => {
+  try {
+    return await query(
+      "INSERT INTO donation (walletName, email, postID, amount, timecreated) VALUES ($1, $2, $3, $4, $5)",
+      [walletName, email, postId, amount, timeCreated]
+    );
+  } catch (error) {
+    throw error;
+  }
+};
