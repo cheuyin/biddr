@@ -92,10 +92,10 @@ export const PostBid = async (req, res) => {
 };
 
 export const GetDonation = async (req, res) => {
-  const bidId = req.params.bidId;
+  const donationId = req.params.donationId;
 
   try {
-    const data = await QueryDonation(bidId);
+    const data = await QueryDonation(donationId);
     return res.status(200).json(data);
   } catch (err) {
     return res.send(err.toString());

@@ -132,3 +132,19 @@
 ```
 
 Note, this POST request return 422 error if price is not higher than existing biggest bid. It also updates all status of relevant bids to NULL and sets the new bid 'highest'.
+
+## Donations
+
+- GET all donations for a post: `http://localhost:8000/api/posts/11/donations`
+- GET all donations by wallet: `http://localhost:8000/api/wallets/chris36@example.net/help involve/donations`
+- GET donation by id: `http://localhost:8000/api/donations/4`
+- POST donation `http://localhost:8000/api/donations`
+
+```json
+{
+  "walletName": "help involve",
+  "email": "chris36@example.net",
+  "postId": 11,
+  "amount": 69.42
+}
+```
