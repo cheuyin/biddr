@@ -3,8 +3,10 @@ import {
   DeletePost,
   GetPost,
   PostPost,
+  PostLikes,
+  DeleteLikeOnPost,
+  GetNumLikesOnPost
 } from "../controllers/PostController.js";
-import { CancelPost } from "../services/PostTable.js";
 
 const router = express.Router();
 
@@ -12,5 +14,13 @@ const router = express.Router();
 router.get("/:postId", GetPost);
 router.post("/", PostPost);
 router.delete("/:postId", DeletePost);
+
+/*
+LIKES ROUTES
+*/
+router.post("/:postId/likes/", PostLikes);
+router.delete("/:postId/likes/:email", DeleteLikeOnPost);
+router.get("/:postId/likes/", GetNumLikesOnPost);
+
 
 export default router;

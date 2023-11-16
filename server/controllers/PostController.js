@@ -4,6 +4,9 @@ import {
   QueryPost,
   QueryPostsByUser,
   QueryPostsInCommunity,
+  CreateLikes,
+  DeleteLikes,
+  CountLikes
 } from "../services/PostTable.js";
 
 export const GetPost = async (req, res) => {
@@ -100,3 +103,42 @@ export const DeletePost = async (req, res) => {
     return res.send(err.toString());
   }
 };
+
+/*
+LIKES CONTROLLER
+*/
+
+export const PostLikes = async (req, res) => {
+  const postId = req.params.postId;
+  const { email } = req.body;
+  if (!email || !postId) {
+    return res.status(400).json({error: "Missing fields"});
+  }
+  try {
+    await CreateLikes(email, postId);
+    return res.status(200).json({message: "User successfully liked post"});
+  } catch (err) {
+    return res.send(err.toString());
+  }
+};
+
+export const DeleteLikeOnPost = async (req, res) => {
+  const postId = req.params.postId;
+  const email = req.params.email;
+  try {
+    await DeleteLikes(email, postId);
+    return res.status(200).json({message: "User successfully disliked post"})
+  } catch (err) {
+    return res.send(err.toString());
+  }
+};
+
+export const GetNumLikesOnPost = async (req, res) => {
+  const postId = req.params.postId;
+  try {
+    const likes = await CountLikes(postId);
+    return res.status(200).json(likes);
+  } catch (err) {
+    return res.send(err.toString());
+  }
+}

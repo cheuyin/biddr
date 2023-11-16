@@ -54,6 +54,19 @@
 
 - DELETE post by ID: `http://localhost:8000/api/posts/22`. NOTE: delete doesn't currently work because we have not implemented ON DELETE CASCADE
 
+## Likes (Within Post Code)
+
+- POST Like: `http://localhost:8000/api/posts/1/likes/`
+
+```json
+{
+  "email": "mattt@gmail.com"
+}
+```
+
+- DELETE Like: `http://localhost:8000/api/posts/1/likes/mattt@gmail.com`
+- GET number of likes on post: `http://localhost:8000/api/posts/1/likes/`
+
 ## Comment
 - Get Comment by ID: `http://localhost:8000/api/comments/1`
 - Get Comment by PostID: `http://localhost:8000/api/comments/post/1`
