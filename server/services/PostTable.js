@@ -87,3 +87,40 @@ export const CancelPost = async (postId) => {
     throw error;
   }
 };
+
+/*
+LIKES TABLE
+*/
+
+export const CreateLikes = async (email, postId) => {
+  try {
+      await query("INSERT INTO Likes (email, postId) VALUES ($1, $2)",
+      [
+          email,
+          postId
+      ]);
+  } catch (error) {
+      throw error;
+  }
+};
+
+export const DeleteLikes = async (email, postId) => {
+  try {
+    await query("DELETE FROM Likes WHERE email = $1 and postId = $2",
+    [
+      email,
+      postId
+    ]);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const CountLikes = async(postId) => {
+  try {
+    const numLikes = await query("SELECT count(email) FROM Likes WHERE postId = $1", [postId]);
+    return numLikes;
+  } catch (error) {
+    throw error;
+  }
+};
