@@ -54,6 +54,29 @@
 
 - DELETE post by ID: `http://localhost:8000/api/posts/22`. NOTE: delete doesn't currently work because we have not implemented ON DELETE CASCADE
 
+## Comment
+- Get Comment by ID: `http://localhost:8000/api/comments/1`
+- Get Comment by PostID: `http://localhost:8000/api/comments/post/1`
+- POST comment: `http://localhost:8000/api/comments/`
+
+```json
+{
+  "email": "mattt@gmail.com",
+  "postId": 5,
+  "text": "This is a comment"
+}
+```
+
+- PUT comment (update) by ID: `http://localhost:8000/api/comments/1`
+
+```json
+{
+  "text": "This an updated comment"
+}
+```
+
+- DELETE comment by ID: `http://localhost:8000/api/comments/1`
+
 ## App User
 - GET user by email: `http://localhost:8000/api/users/email@example.org`
 - POST new user: `http://localhost:8000/api/users/`

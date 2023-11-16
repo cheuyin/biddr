@@ -35,7 +35,8 @@ export const PostComment = async (req, res) => {
 };
 
 export const PutComment = async (req, res) => {
-    const { commentId, text }  = req.body;
+    const commentId = req.params.commentId;
+    const { text }  = req.body;
     if(!commentId || !text) {
         return res.status(400).json({error: "Missing fields"});
     }
