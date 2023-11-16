@@ -8,7 +8,6 @@ import {
 
 export const GetPost = async (req, res) => {
   const postId = req.params.postId;
-  console.log(new Date().toISOString().replace(/\.\d*Z/, ""));
 
   try {
     const data = await QueryPost(postId);
