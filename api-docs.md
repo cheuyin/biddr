@@ -30,6 +30,30 @@
 }
 ```
 
+## Posts
+
+- GET post by ID: `http://localhost:8000/api/posts/9`
+- GET posts by user: `http://localhost:8000/api/users/cgarza@example.org/posts`
+- GET posts in community: `http://localhost:8000/api/communities/beautiful/posts`
+- POST post (auction or fundraiser): `http://localhost:8000/api/posts`
+
+```json
+{
+  "type": "auction",
+  "postedEmail": "cgarza@example.org",
+  "walletName": "late themselves",
+  "walletEmail": "ronald84@example.org",
+  "communityName": "beautiful",
+  "expiryTime": "2007-04-17T08:21:49.000Z",
+  "text": "test post",
+  "image": null,
+  "title": "This is a test post by API",
+  "value": 6969.69
+}
+```
+
+- DELETE post by ID: `http://localhost:8000/api/posts/22`. NOTE: delete doesn't currently work because we have not implemented ON DELETE CASCADE
+
 ## App User
 - GET user by email: `http://localhost:8000/api/users/email@example.org`
 - POST new user: `http://localhost:8000/api/users/`

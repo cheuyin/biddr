@@ -12,17 +12,6 @@ export const QueryCommunityByName = async (communityName) => {
   }
 };
 
-export const QueryAllCommunityPostsByName = async (communityName) => {
-  try {
-    const result = await query("SELECT * FROM post WHERE communityName = $1", [
-      communityName,
-    ]);
-    return result;
-  } catch (error) {
-    throw error;
-  }
-};
-
 export const UpdateCommunity = async (
   communityName,
   email,
