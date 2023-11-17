@@ -28,7 +28,7 @@ export const QueryAppUserByUsername = async (username) => {
 
 export const GetUserCommunities = async(email) => {
     try {
-        const result = await query("SELECT * FROM Joins WHERE email = $1", [
+        const result = await query("SELECT * FROM Community WHERE communityName IN (SELECT communityName FROM Joins WHERE email = $1)", [
             email,
         ]);
         return result;
