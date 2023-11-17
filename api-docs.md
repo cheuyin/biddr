@@ -91,6 +91,7 @@
 - DELETE comment by ID: `http://localhost:8000/api/comments/1`
 
 ## App User
+
 - GET user by email: `http://localhost:8000/api/users/email@example.org`
 - POST new user: `http://localhost:8000/api/users/`
 
@@ -133,14 +134,53 @@
 - GET user communities: `http://localhost:8000/api/users/email@example.org/communities`
 
 ### Non-exposed AppUser endpoints
+
 - GET user by username (used to check if new username doesn't already exist when a user is created/changed)
 
 ### Non-exposed LocationDateOfBirthIsLegalAge endpoints
+
 - POST new LocationDateOfBirthIsLegalAge tuple (creates a new tuple in this table when a user signs up with a unique dateOfBirth/location pair)
 - GET LocationDateOfBirthIsLegal tuple by location/dateOfBirth (used during sign-up to check if there already exists a tuple with the same dateOfBirth/location pair)
 
 ## LocationAgeOfMajority
+
 - GET all LocationAgeOfMajority values: `http://localhost:8000/api/users/locations`
 
 ### Non-exposed LocationAgeOfMajority endpoints
+
 - GET LocationAgeOfMajority by location (used to access ageOfMajority when determining isLegalAge)
+
+## Bids
+
+- GET all bids by wallet: `http://localhost:8000/api/wallets/cgarza@example.org/official raise/bids`
+- GET bid by id: `http://localhost:8000/api/bids/10`
+- GET all bids for post: `http://localhost:8000/api/posts/8/bids`
+- GET highest bid amount for an auction: `http://localhost:8000/api/posts/8/bids/highest`
+- POST bid `http://localhost:8000/api/bids`
+
+```json
+{
+  "walletName": "official raise",
+  "email": "cgarza@example.org",
+  "postId": 8,
+  "amount": 5003
+}
+```
+
+Note, this POST request return 422 error if price is not higher than existing biggest bid. It also updates all status of relevant bids to NULL and sets the new bid 'highest'.
+
+## Donations
+
+- GET all donations for a post: `http://localhost:8000/api/posts/11/donations`
+- GET all donations by wallet: `http://localhost:8000/api/wallets/chris36@example.net/help involve/donations`
+- GET donation by id: `http://localhost:8000/api/donations/4`
+- POST donation `http://localhost:8000/api/donations`
+
+```json
+{
+  "walletName": "help involve",
+  "email": "chris36@example.net",
+  "postId": 11,
+  "amount": 69.42
+}
+```
