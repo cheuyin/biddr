@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import AuthContext from "../context/AuthProvider";
 import { signIn } from "../api/auth";
@@ -21,10 +22,10 @@ const SignInForm = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
-
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [success, setSuccess] = useState(false);
     const { auth, setAuth } = useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     const onSubmit = async ({ email, password }) => {
         setIsSubmitting(true);
@@ -39,6 +40,7 @@ const SignInForm = () => {
                 password,
                 accessToken,
             });
+            navigate("/", { state: { email: email } });
         } catch (error) {
             alert(error.message || error);
         } finally {
