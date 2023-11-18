@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 import { signIn } from "../api/auth";
 import useAuth from "../hooks/useAuth";
+import useRefreshToken from "../hooks/useRefreshToken";
 
 const SignInForm = () => {
     const {
@@ -23,7 +24,6 @@ const SignInForm = () => {
     } = useForm();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { setAuth } = useAuth();
-
     const navigate = useNavigate();
 
     const onSubmit = async ({ email, password }) => {

@@ -78,11 +78,12 @@ router.post("/signin", async (req, res, next) => {
     */
     res.cookie("jwt", refreshToken, {
         httpOnly: true,
+        sameSite: "None",
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
     });
     return res
         .status(200)
-        .json({ message: "Passwords match!", accessToken });
+        .json({ message: "Passwords match!", accessToken, refreshToken});
 });
 
 export default router;

@@ -3,6 +3,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 const app = express();
 
+import credentials from "./middleware/credentials.js";
+import corsOptions from "./config/corsOptions.js";
+
 import StudentRouter from "./routes/StudentRouter.js";
 import CommunityRouter from "./routes/CommunityRouter.js";
 import AppUserRouter from "./routes/AppUserRouter.js";
@@ -15,7 +18,11 @@ import BidRouter from "./routes/BidRouter.js";
 import DonationRouter from "./routes/DonationRouter.js";
 import CommentRouter from "./routes/CommentRouter.js"
 
-app.use(cors());
+// Tells the client whether their origin is allowed to make requests to the server
+app.use(credentials);
+// Enable only certain origins to make request to this server
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(cookieParser()); // Middleware for cookies
 
