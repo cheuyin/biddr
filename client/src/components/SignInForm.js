@@ -9,11 +9,11 @@ import {
     Text,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import AuthContext from "../context/AuthProvider";
 import { signIn } from "../api/auth";
+import useAuth from "../hooks/useAuth";
 
 const SignInForm = () => {
     const {
@@ -22,7 +22,7 @@ const SignInForm = () => {
         formState: { errors },
     } = useForm();
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const { auth, setAuth } = useContext(AuthContext);
+    const { setAuth } = useAuth();
 
     const navigate = useNavigate();
 

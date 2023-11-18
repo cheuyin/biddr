@@ -6,18 +6,28 @@ import SignUpForm from "./components/SignUpForm.js";
 import HomePage from "./pages/HomePage.js";
 import AuthPage from "./pages/AuthPage.js";
 import PageNotFound from "./pages/PageNotFound.js";
+import RequireAuth from "./components/RequireAuth.js";
+import TestPrivatePage from "./pages/TestPrivatePage.js";
 
 function App() {
     return (
         <ChakraProvider>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<HomePage />} />
+                    {/* Authentication pages */}
                     <Route path="/auth" element={<AuthPage />}>
                         <Route path="" element={<Navigate to="signin" />} />
                         <Route path="signin" element={<SignInForm />} />
                         <Route path="signup" element={<SignUpForm />} />
                     </Route>
+
+                    {/* Protected routes  */}
+                    <Route element={<RequireAuth />}>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/private" element={<TestPrivatePage />} />
+                    </Route>
+
+                    {/* Catches all invalid routes. */}
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
             </BrowserRouter>
