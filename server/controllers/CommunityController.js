@@ -1,5 +1,4 @@
 import { QueryCommunityByName } from "../services/CommunityTable.js";
-import { QueryAllCommunityPostsByName } from "../services/CommunityTable.js";
 import { UpdateCommunity } from "../services/CommunityTable.js";
 import { CreateCommunity } from "../services/CommunityTable.js";
 import { BanishCommunity } from "../services/CommunityTable.js";
@@ -10,16 +9,6 @@ export const GetCommunityByName = async (req, res) => {
   const communityName = req.params.name;
   try {
     const data = await QueryCommunityByName(communityName);
-    res.status(200).json(data);
-  } catch (err) {
-    res.send(err.toString());
-  }
-};
-
-export const GetCommunityPosts = async (req, res) => {
-  const communityName = req.params.name;
-  try {
-    const data = await QueryAllCommunityPostsByName(communityName);
     res.status(200).json(data);
   } catch (err) {
     res.send(err.toString());

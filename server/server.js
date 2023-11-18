@@ -9,7 +9,11 @@ import AppUserRouter from "./routes/AppUserRouter.js";
 import UserRouter from "./routes/user.js";
 import WalletRouter from "./routes/WalletRouter.js";
 import RefreshTokenRouter from "./routes/RefreshTokenRouter.js";
-import LogoutRouter from "./routes/LogoutRouter.js";
+import LogoutRouter from "./routes/LogoutRouter.js";;
+import PostRouter from "./routes/PostRouter.js";
+import BidRouter from "./routes/BidRouter.js";
+import DonationRouter from "./routes/DonationRouter.js";
+import CommentRouter from "./routes/CommentRouter.js"
 
 app.use(cors());
 app.use(express.json());
@@ -19,10 +23,13 @@ app.use("/api/students", StudentRouter);
 app.use("/api/communities", CommunityRouter);
 app.use("/api/wallets", WalletRouter);
 app.use("/api/users", AppUserRouter);
+app.use("/api/posts", PostRouter);
+app.use("/api/bids", BidRouter);
+app.use("/api/donations", DonationRouter);
+app.use("/api/comments", CommentRouter)
 app.use("/auth", UserRouter);
 app.use("/refresh", RefreshTokenRouter)
 app.use("/logout", LogoutRouter);
-app.use("/api/wallets", WalletRouter);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
