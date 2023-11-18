@@ -6,6 +6,8 @@ import {
     FormControl,
     FormLabel,
     Button,
+    Text,
+    Link,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -195,6 +197,13 @@ const SignUpForm = () => {
                         {errors.location?.message}
                     </FormErrorMessage>
                 </FormControl>
+
+                <Text my={3}>
+                    Already have an account? {" "}
+                    <Link color="blue.400" href="/auth/signin">
+                        Sign In
+                    </Link>
+                </Text>
 
                 <Button
                     isLoading={isSubmitting}
