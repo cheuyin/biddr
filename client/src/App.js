@@ -1,5 +1,6 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import SignUpForm from "./components/SignUpForm";
+import BiddrLayout from "./components/BiddrLayout";
 
 function App() {
     // const [user, setUser] = useState(false);
@@ -52,9 +53,9 @@ function App() {
     // );
 
     return (
-        <ChakraProvider>
-            <SignUpForm />
-        </ChakraProvider>
+            <BiddrLayout>
+                <SignUpForm />
+            </BiddrLayout>
     );
 }
 
