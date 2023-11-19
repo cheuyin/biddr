@@ -1,12 +1,8 @@
-import { Button, Container, Heading, Text } from "@chakra-ui/react";
-import { useLocation } from "react-router-dom";
+import { Container, Heading, Text } from "@chakra-ui/react";
 import useAuth from "../hooks/useAuth";
-import useRefreshToken from "../hooks/useRefreshToken";
 
 const HomePage = () => {
-    const location = useLocation();
-    const { auth, setAuth } = useAuth();
-    const refresh = useRefreshToken();
+    const { auth } = useAuth();
 
     return (
         <Container
@@ -18,8 +14,7 @@ const HomePage = () => {
         >
             <Heading>Home Page</Heading>
             <Text>If You're Reading This, You're Authenticated. </Text>
-            <Text>Email: {location.state?.email} </Text>
-            <Button onClick={refresh}>PRESS ME</Button>
+            <Text>Email: {auth.email} </Text>
         </Container>
     );
 };

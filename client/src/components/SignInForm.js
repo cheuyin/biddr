@@ -12,8 +12,8 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { signIn } from "../api/auth";
 import useAuth from "../hooks/useAuth";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const SignInForm = () => {
     const {
@@ -24,21 +24,26 @@ const SignInForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { setAuth } = useAuth();
     const navigate = useNavigate();
+    const axiosPrivate = useAxiosPrivate();
 
     const onSubmit = async ({ email, password }) => {
         setIsSubmitting(true);
 
         try {
-            const { accessToken } = await signIn(email, password);
-            if (!accessToken) {
-                throw new Error("Access token not recieved");
-            }
-            setAuth({
+            const response = await axiosPrivate.post("/auth/signin", {
                 email,
                 password,
-                accessToken,
             });
-            navigate("/", { state: { email: email } });
+
+            if (!response.data.accessToken) {
+                throw new Error("Access token not recieved");
+            }
+
+            setAuth({
+                accessToken: response.data.accessToken,
+            });
+
+            navigate("/");
         } catch (error) {
             alert(error.message || error);
         } finally {

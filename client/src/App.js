@@ -8,6 +8,7 @@ import AuthPage from "./pages/AuthPage.js";
 import PageNotFound from "./pages/PageNotFound.js";
 import RequireAuth from "./components/RequireAuth.js";
 import TestPrivatePage from "./pages/TestPrivatePage.js";
+import PersistLogin from "./components/PersistLogin.js";
 
 function App() {
     return (
@@ -22,9 +23,14 @@ function App() {
                     </Route>
 
                     {/* Protected routes  */}
-                    <Route element={<RequireAuth />}>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/private" element={<TestPrivatePage />} />
+                    <Route element={<PersistLogin />}>
+                        <Route element={<RequireAuth />}>
+                            <Route path="/" element={<HomePage />} />
+                            <Route
+                                path="/private"
+                                element={<TestPrivatePage />}
+                            />
+                        </Route>
                     </Route>
 
                     {/* Catches all invalid routes. */}

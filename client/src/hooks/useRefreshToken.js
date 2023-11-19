@@ -4,7 +4,7 @@ import useAuth from "./useAuth";
 import axios from "../api/axios";
 
 const useRefreshToken = () => {
-    const { setAuth } = useAuth();
+    const { auth, setAuth } = useAuth();
 
     // Ask for a new access token from the backend if the client's refresh token hasn't expired
     // Update access token to the response

@@ -8,7 +8,7 @@ import useAuth from "../hooks/useAuth";
 const RequireAuth = () => {
     const { auth } = useAuth();
 
-    return auth?.email ? <Outlet /> : <Navigate to="/auth/signin" />;
+    return auth?.accessToken ? <Outlet /> : <Navigate to="/auth/signin" />;
 };
 
 export default RequireAuth;
