@@ -9,6 +9,7 @@ import PageNotFound from "./pages/PageNotFound.js";
 import RequireAuth from "./components/RequireAuth.js";
 import TestPrivatePage from "./pages/TestPrivatePage.js";
 import PersistLogin from "./components/PersistLogin.js";
+import BiddrLayout from "./components/BiddrLayout";
 
 function App() {
     return (
