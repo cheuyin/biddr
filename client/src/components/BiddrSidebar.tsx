@@ -188,7 +188,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         aria-label="open menu"
         icon={<FiMenu />}
       />
-
       <Text
       fontSize="3xl"
       ml="8"
