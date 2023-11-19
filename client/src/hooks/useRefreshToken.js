@@ -10,17 +10,13 @@ const useRefreshToken = () => {
     // Update access token to the response
 
     const response = async () => {
-        try {
-            const response = await axios.get("/refresh", {
-                withCredentials: true,
-            });
+        const response = await axios.get("/refresh", {
+            withCredentials: true,
+        });
 
-            setAuth((prev) => {
-                return { ...prev, accessToken: response.data.accessToken };
-            });
-        } catch (error) {
-            alert(error.message);
-        }
+        setAuth((prev) => {
+            return { ...prev, accessToken: response.data.accessToken };
+        });
     };
 
     return response;
