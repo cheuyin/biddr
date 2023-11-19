@@ -15,6 +15,7 @@ import {
   useDisclosure,
   BoxProps,
   FlexProps,
+  keyframes,
 } from '@chakra-ui/react'
 import {
   FiHome,
@@ -70,6 +71,11 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const animation = keyframes`
+    to {
+      background-position: 200% center;
+    }
+  `
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -79,8 +85,17 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       pos="fixed"
       h="full"
       {...rest}>
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="3xl" fontFamily="inter" fontWeight="bold">
+      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between" >
+        <Text
+          fontSize="3xl"
+          fontFamily="inter"
+          fontWeight="bold"
+          backgroundSize= "200% auto"
+          _hover={{
+            bgGradient: "linear(to-l, #B2F5EA, cyan.400)",
+            bgClip: "text",
+            animation: `${animation} 1s linear infinite`
+          }}>
           biddr.
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
@@ -137,6 +152,11 @@ interface MobileProps extends FlexProps {
   onOpen: () => void
 }
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+  const animation = keyframes`
+    to {
+      background-position: 200% center;
+    }
+  `
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -155,7 +175,17 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         icon={<FiMenu />}
       />
 
-      <Text fontSize="3xl" ml="8" fontFamily="inter" fontWeight="bold">
+      <Text
+      fontSize="3xl"
+      ml="8"
+      fontFamily="inter"
+      fontWeight="bold"
+      backgroundSize= "200% auto"
+      _hover={{
+        bgGradient: "linear(to-l, #B2F5EA, cyan.400)",
+        bgClip: "text",
+        animation: `${animation} 1s linear infinite`
+      }}>
         biddr.
       </Text>
     </Flex>
