@@ -1,30 +1,19 @@
-import { BASE_URL } from "../services/constants.js";
+import axios from "./axios";
 
 export const signIn = async (email, password) => {
     try {
-        const response = await fetch(BASE_URL + "/auth/signin", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify({
-                email,
-                password,
-            }),
-        });
+        const response = await axios.post(
+            "/auth/signin",
+            { email, password },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            }
+        );
 
-        if (!response.ok) {
-            throw new Error(`HTTP Error: ${response.status}`);
-        }
-
-        const responseData = await response.json();
-
-        if (responseData.error) {
-            throw new Error(responseData.error);
-        }
-
-        return responseData;
+        return response.data;
     } catch (error) {
         throw error;
     }

@@ -44,7 +44,7 @@ router.post("/signin", async (req, res, next) => {
         },
         process.env.JWT_ACCESS_TOKEN_KEY,
         {
-            expiresIn: 15 * 60,
+            expiresIn: 15, // Expires in 15 seconds (for testing purposes)
         }
     );
     const refreshToken = jwt.sign(

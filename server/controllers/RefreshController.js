@@ -21,7 +21,7 @@ const RefreshController = async (req, res) => {
         }
         userEmail = result[0].email;
     } catch (error) {
-        return res.status(500).json({error: error.message});
+        return res.status(500).json({ error: error.message });
     }
 
     // If the refresh token matches the one stored in the db, then send user a new access token
@@ -38,7 +38,7 @@ const RefreshController = async (req, res) => {
                     email: decoded.email,
                 },
                 process.env.JWT_ACCESS_TOKEN_KEY,
-                { expiresIn: 15 * 60 }
+                { expiresIn: 15 } // Expires in 60 seconds (for testing purposes)
             );
 
             return res.status(200).json({ accessToken });
