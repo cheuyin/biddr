@@ -13,7 +13,8 @@ const useRefreshToken = () => {
         const response = await fetch(BASE_URL + "/refresh", {
             credentials: "include",
         });
-        console.log("REFRESH RESPONSE: ", response);
+
+        
     };
 
     return response;

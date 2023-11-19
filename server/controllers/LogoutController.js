@@ -40,7 +40,8 @@ const LogoutController = async (req, res) => {
     // Clear client cookies when refresh token is successfully deleted
     res.clearCookie("jwt", {
         httpOnly: true,
-        sameSite: "None",
+        sameSite: "none",
+        secure: true, // Must be set to true!
         maxAge: 24 * 60 * 60 * 1000,
     });
     return res.sendStatus(204);

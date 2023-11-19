@@ -5,11 +5,7 @@ import express from "express";
 import { QueryAppUserByEmail } from "../services/AppUserTable.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import {
-    GetEmailByRefreshToken,
-    GetRefreshTokenByUserEmail,
-    SetRefreshTokenForUser,
-} from "../services/RefreshTokenService.js";
+import { SetRefreshTokenForUser } from "../services/RefreshTokenService.js";
 
 const router = express.Router();
 
@@ -78,12 +74,12 @@ router.post("/signin", async (req, res, next) => {
     */
     res.cookie("jwt", refreshToken, {
         httpOnly: true,
-        sameSite: "None",
+        sameSite: "none",
+        secure: true, // Must be set to true if we use sameSite: "none"
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
     });
-    return res
-        .status(200)
-        .json({ message: "Passwords match!", accessToken, refreshToken});
+
+    return res.status(200).json({ message: "Passwords match!", accessToken });
 });
 
 export default router;
