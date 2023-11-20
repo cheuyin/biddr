@@ -15,7 +15,7 @@ import {
   useDisclosure,
   BoxProps,
   FlexProps,
-  keyframes,
+  // keyframes,
 } from '@chakra-ui/react'
 import {
   FiHome,
@@ -71,11 +71,11 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  const animation = keyframes`
-    to {
-      background-position: 200% center;
-    }
-  `
+  // const animation = keyframes`
+  //   to {
+  //     background-position: 200% center;
+  //   }
+  // `
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -168,11 +168,11 @@ interface MobileProps extends FlexProps {
   onOpen: () => void
 }
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
-  const animation = keyframes`
-    to {
-      background-position: 200% center;
-    }
-  `
+  // const animation = keyframes`
+  //   to {
+  //     background-position: 200% center;
+  //   }
+  // `
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
