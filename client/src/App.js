@@ -26,7 +26,7 @@ function App() {
                     {/* Protected routes  */}
                     <Route element={<PersistLogin />}>
                         <Route element={<RequireAuth />}>
-                            <Route path="/" element={<HomePage />} />
+                            <Route path="/" element={<BiddrLayout><HomePage /></BiddrLayout>} />
                             <Route
                                 path="/private"
                                 element={<TestPrivatePage />}
