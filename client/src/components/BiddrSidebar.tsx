@@ -144,7 +144,7 @@ const NavItem = ({ pageUrl, icon, children, ...rest }: NavItemProps) => {
         cursor="pointer"
         _hover={{
           // bg: '#B2F5EA',
-          bg: 'cyan.400',
+          bgGradient: "linear(to-l, #B2F5EA, cyan.400)",
           color: 'white',
         }}
         {...rest}>
