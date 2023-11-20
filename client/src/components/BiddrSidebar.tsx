@@ -42,6 +42,7 @@ const LinkItems: Array<LinkItemProps> = [
 
 export default function BiddrSidebar({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  window.addEventListener('resize', onClose);
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
       <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
