@@ -10,10 +10,9 @@ import {
     Link,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { BASE_URL } from "../services/constants";
-
-const API_URL = BASE_URL + "/api/users";
+import { useEffect, useState } from "react";
+import axios from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
     const {
@@ -24,6 +23,26 @@ const SignUpForm = () => {
     } = useForm();
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [locations, setLocations] = useState([]);
+    const navigate = useNavigate();
+
+    // For the drop-down menu for location, pull from the database for the list of locations.
+    useEffect(() => {
+        const getLocations = async () => {
+            try {
+                const response = await axios.get("/auth/locations");
+                // Set locations state to a sorted list of all the locations
+                setLocations(
+                    response.data.sort((a, b) =>
+                        a.location.localeCompare(b.location)
+                    )
+                );
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        getLocations();
+    }, []);
 
     const onSubmit = async (formData) => {
         setIsSubmitting(true);
@@ -32,28 +51,18 @@ const SignUpForm = () => {
             formData;
 
         try {
-            const response = await fetch(API_URL, {
-                method: "POST",
-                headers: {
+            await axios.post(
+                "/auth/signup",
+                { username, email, fullName, password, dateOfBirth, location },
+                {
                     "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    username,
-                    email,
-                    fullName,
-                    password,
-                    dateOfBirth,
-                    location,
-                }),
-            });
-            const responseData = await response.json();
-            if (response.status === 200) {
-                console.log(responseData);
-            } else {
-                throw new Error(responseData.error);
-            }
+                }
+            );
+            alert("Successful sign up!");
+            navigate("/auth/signin");
         } catch (error) {
             console.log(error);
+            alert(error.response?.data?.error);
         } finally {
             setIsSubmitting(false);
         }
@@ -189,9 +198,14 @@ const SignUpForm = () => {
                         })}
                         placeholder="Select location"
                     >
-                        <option value="canada">Canada</option>
-                        <option value="mexico">Mexico</option>
-                        <option value="unitedStates">United States</option>
+                        {locations.map((location) => (
+                            <option
+                                key={location.location + location.ageofmajority}
+                                value={location.location}
+                            >
+                                {location.location}
+                            </option>
+                        ))}
                     </Select>
                     <FormErrorMessage>
                         {errors.location?.message}
@@ -199,7 +213,7 @@ const SignUpForm = () => {
                 </FormControl>
 
                 <Text my={3}>
-                    Already have an account? {" "}
+                    Already have an account?{" "}
                     <Link color="blue.400" href="/auth/signin">
                         Sign In
                     </Link>

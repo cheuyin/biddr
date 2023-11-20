@@ -1,8 +1,17 @@
-import { Container, Heading, Text } from "@chakra-ui/react";
+import { Container, Heading, Text, Button } from "@chakra-ui/react";
 import useAuth from "../hooks/useAuth";
+import useLogout from "../hooks/useLogout";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
     const { auth } = useAuth();
+    const logout = useLogout();
+    const navigate = useNavigate();
+
+    const signoutHandler = async () => {
+        await logout();
+        navigate("/auth/signin");
+    };
 
     return (
         <Container
@@ -15,6 +24,7 @@ const HomePage = () => {
             <Heading>Home Page</Heading>
             <Text>If You're Reading This, You're Authenticated. </Text>
             <Text>Email: {auth.email} </Text>
+            <Button onClick={signoutHandler}>Logout</Button>
         </Container>
     );
 };

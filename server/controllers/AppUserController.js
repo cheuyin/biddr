@@ -35,7 +35,8 @@ export const PostAppUser = async (req, res) => {
     try {
         // Ensure that email does not already exist
         const emailExists = await QueryAppUserByEmail(email)
-        if (emailExists[0]) {
+
+        if (emailExists && emailExists[0]) {
            return res.status(400).json({error: "Email already exists"});
         }
 
@@ -44,6 +45,7 @@ export const PostAppUser = async (req, res) => {
         if (usernameExists[0]) {
            return res.status(400).json({error: "Username already exists"});
         }
+
 
         // If location and dateOfBirth are defined, we need to add tuple in LocationDateOfBirthIsLegal age.
         if (location && dateOfBirth) {

@@ -3,14 +3,14 @@
 import useAuth from "./useAuth";
 import axios from "../api/axios";
 
-const useRefreshToken = () => {
-    const { auth, setAuth } = useAuth();
+// Asks for a new access token from the backend if the client's refresh token hasn't expired
+// Update the client's saved access token
 
-    // Ask for a new access token from the backend if the client's refresh token hasn't expired
-    // Update access token to the response
+const useRefreshToken = () => {
+    const { setAuth } = useAuth();
 
     const response = async () => {
-        const response = await axios.get("/refresh", {
+        const response = await axios.get("/auth/refresh", {
             withCredentials: true,
         });
 

@@ -4,6 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 // This component wraps protected routes to ensure only authenticated users can access those routes
+// Unauthorized users are redirected to the sign-in page
 
 const RequireAuth = () => {
     const { auth } = useAuth();

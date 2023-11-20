@@ -6,6 +6,7 @@ import { jwtDecode } from "jwt-decode";
 const AuthContext = createContext({});
 
 // The global auth object has two fields: "email" and "accessToken"
+
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState({});
 
