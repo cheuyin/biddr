@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import useRefreshToken from "../hooks/useRefreshToken";
 import useAuth from "../hooks/useAuth";
+import BiddrLayout from "./BiddrLayout";
 
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +25,7 @@ const PersistLogin = () => {
         !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
     }, [auth?.accessToken, refresh]);
 
-    return <>{isLoading ? <p>Loading...</p> : <Outlet />}</>;
+    return <>{isLoading ? <BiddrLayout><p>Loading...</p></BiddrLayout> : <Outlet />}</>;
 };
 
 export default PersistLogin;
