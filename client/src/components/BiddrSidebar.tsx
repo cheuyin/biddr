@@ -96,7 +96,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           _hover={{
             bgGradient: "linear(to-l, #B2F5EA, cyan.400)",
             bgClip: "text",
-            animation: `${animation} 1s linear infinite`
+            // animation: `${animation} 1s linear infinite`
           }}>
           biddr.
         </Text>
@@ -201,7 +201,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       _hover={{
         bgGradient: "linear(to-l, #B2F5EA, cyan.400)",
         bgClip: "text",
-        animation: `${animation} 1s linear infinite`
+        // animation: `${animation} 1s linear infinite`
       }}>
         biddr.
       </Text>
