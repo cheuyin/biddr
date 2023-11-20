@@ -27,18 +27,17 @@ import {
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import { ReactText } from 'react'
-import SignUpForm from './SignUpForm'
 
 interface LinkItemProps {
   name: string
+  pageUrl: string
   icon: IconType
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome },
-  { name: 'My Communities', icon: FiUsers },
-  { name: 'My Wallets', icon: FiDollarSign },
-  { name: 'Messages', icon: FiMessageCircle },
-  { name: 'My Profile', icon: FiUser},
+  { name: 'Home', pageUrl: '/home', icon: FiHome },
+  { name: 'My Communities', pageUrl: '/communities', icon: FiUsers },
+  { name: 'My Wallets', pageUrl: '/wallets', icon: FiDollarSign },
+  { name: 'Messages', pageUrl: '/messages', icon: FiMessageCircle },
 ]
 
 export default function BiddrSidebar({ children }) {
@@ -60,6 +59,7 @@ export default function BiddrSidebar({ children }) {
       {/* mobilenav */}
       <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
+        {/* CONTENT GOES IN HERE */}
         {children}
       </Box>
     </Box>
@@ -101,23 +101,36 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} pageUrl={link.pageUrl} icon={link.icon}>
           {link.name}
         </NavItem>
       ))}
+      <Box
+        bg={useColorModeValue('white', 'gray.900')}
+        borderTop="1px"
+        borderTopColor={useColorModeValue('gray.200', 'gray.700')}
+        borderRight="1px"
+        borderRightColor={useColorModeValue('gray.200', 'gray.700')}
+        w={{ base: 'full', md: 60 }}
+        pos="absolute"
+        bottom="0px"
+        minH="5vh">
+          <NavItem key='My Profile' pageUrl='/profile' icon={FiUser}>My Profile</NavItem>
+      </Box>
     </Box>
   )
 }
 
 interface NavItemProps extends FlexProps {
+  pageUrl: string
   icon: IconType
   children: ReactText
 }
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ pageUrl, icon, children, ...rest }: NavItemProps) => {
   return (
     <Box
       as="a"
-      href="#"
+      href={pageUrl}
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}>
       <Flex
@@ -128,7 +141,8 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: '#B2F5EA',
+          // bg: '#B2F5EA',
+          bg: 'cyan.400',
           color: 'white',
         }}
         {...rest}>
