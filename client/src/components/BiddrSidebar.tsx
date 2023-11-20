@@ -87,6 +87,8 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between" >
         <Text
+          as="a"
+          href="/"
           fontSize="3xl"
           fontFamily="inter"
           fontWeight="bold"
@@ -190,6 +192,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       />
 
       <Text
+      as="a"
+      href="/"
       fontSize="3xl"
       ml="8"
       fontFamily="inter"
