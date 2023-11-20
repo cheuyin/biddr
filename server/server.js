@@ -9,14 +9,12 @@ import verifyJWT from "./middleware/verifyJWT.js";
 
 import CommunityRouter from "./routes/CommunityRouter.js";
 import AppUserRouter from "./routes/AppUserRouter.js";
-import UserRouter from "./routes/user.js";
 import WalletRouter from "./routes/WalletRouter.js";
-import RefreshTokenRouter from "./routes/RefreshTokenRouter.js";
-import LogoutRouter from "./routes/LogoutRouter.js";;
 import PostRouter from "./routes/PostRouter.js";
 import BidRouter from "./routes/BidRouter.js";
 import DonationRouter from "./routes/DonationRouter.js";
 import CommentRouter from "./routes/CommentRouter.js"
+import AuthRouter from "./routes/AuthRouter.js";
 
 // Tells the client whether their origin is allowed to make requests to the server
 app.use(credentials);
@@ -26,10 +24,8 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser()); // Middleware for cookies
 
-// Authentication / sign-up process
-app.use("/auth", UserRouter);
-app.use("/refresh", RefreshTokenRouter)
-app.use("/logout", LogoutRouter);
+// The authentication layer
+app.use("/auth", AuthRouter);
 
 app.use(verifyJWT);
 

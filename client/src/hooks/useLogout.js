@@ -12,7 +12,7 @@ const useLogout = () => {
     const logout = async () => {
         setAuth({});
         try {
-            await axios.put("/logout", null, {
+            await axios.put("/auth/logout", null, {
                 withCredentials: true,
             });
         } catch (error) {
