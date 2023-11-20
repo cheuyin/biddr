@@ -3,6 +3,9 @@
 import axios from "../api/axios";
 import useAuth from "./useAuth";
 
+// This hook returns a function for logging a user out. 
+// Typically is used for also directing a user back to the sign-in page.
+
 const useLogout = () => {
     const { setAuth } = useAuth();
 
