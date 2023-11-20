@@ -39,7 +39,7 @@ export const Signin = async (req, res) => {
         },
         process.env.JWT_ACCESS_TOKEN_KEY,
         {
-            expiresIn: 15, // Expires in 15 seconds (for testing purposes)
+            expiresIn: 15 * 60, // Expires in 15 minutes
         }
     );
     const refreshToken = jwt.sign(
@@ -113,7 +113,7 @@ export const Refresh = async (req, res) => {
                     email: decoded.email,
                 },
                 process.env.JWT_ACCESS_TOKEN_KEY,
-                { expiresIn: 15 } // Expires in 60 seconds (for testing purposes)
+                { expiresIn: 15 * 60 } // Expires in 15 minutes
             );
 
             return res.status(200).json({ accessToken });
