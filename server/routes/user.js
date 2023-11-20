@@ -6,10 +6,11 @@ import { QueryAppUserByEmail } from "../services/AppUserTable.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { SetRefreshTokenForUser } from "../services/RefreshTokenService.js";
+import { PostAppUser } from "../controllers/AppUserController.js";
 
 const router = express.Router();
 
-router.post("/signin", async (req, res, next) => {
+router.post("/signin", async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -81,5 +82,7 @@ router.post("/signin", async (req, res, next) => {
 
     return res.status(200).json({ message: "Passwords match!", accessToken });
 });
+
+router.post("/signup", PostAppUser);
 
 export default router;

@@ -1,12 +1,12 @@
 import express from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
 const app = express();
 
+import cors from "cors";
 import credentials from "./middleware/credentials.js";
 import corsOptions from "./config/corsOptions.js";
+import cookieParser from "cookie-parser";
+import verifyJWT from "./middleware/verifyJWT.js";
 
-import StudentRouter from "./routes/StudentRouter.js";
 import CommunityRouter from "./routes/CommunityRouter.js";
 import AppUserRouter from "./routes/AppUserRouter.js";
 import UserRouter from "./routes/user.js";
@@ -31,8 +31,9 @@ app.use("/auth", UserRouter);
 app.use("/refresh", RefreshTokenRouter)
 app.use("/logout", LogoutRouter);
 
+app.use(verifyJWT);
+
 // Everything past here requires the client to be authenticated 
-app.use("/api/students", StudentRouter);
 app.use("/api/communities", CommunityRouter);
 app.use("/api/wallets", WalletRouter);
 app.use("/api/users", AppUserRouter);
