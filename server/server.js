@@ -26,6 +26,12 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser()); // Middleware for cookies
 
+// Authentication / sign-up process
+app.use("/auth", UserRouter);
+app.use("/refresh", RefreshTokenRouter)
+app.use("/logout", LogoutRouter);
+
+// Everything past here requires the client to be authenticated 
 app.use("/api/students", StudentRouter);
 app.use("/api/communities", CommunityRouter);
 app.use("/api/wallets", WalletRouter);
@@ -34,9 +40,6 @@ app.use("/api/posts", PostRouter);
 app.use("/api/bids", BidRouter);
 app.use("/api/donations", DonationRouter);
 app.use("/api/comments", CommentRouter)
-app.use("/auth", UserRouter);
-app.use("/refresh", RefreshTokenRouter)
-app.use("/logout", LogoutRouter);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
