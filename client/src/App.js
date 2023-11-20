@@ -9,6 +9,11 @@ import PageNotFound from "./pages/PageNotFound.js";
 import RequireAuth from "./components/RequireAuth.js";
 import TestPrivatePage from "./pages/TestPrivatePage.js";
 import PersistLogin from "./components/PersistLogin.js";
+import BiddrLayout from "./components/BiddrLayout";
+import CommunitiesPage from "./pages/CommunitiesPage.js";
+import WalletsPage from "./pages/WalletsPage.js";
+import MessagesPage from "./pages/MessagesPage.js";
+import ProfilePage from "./pages/ProfilePage.js";
 
 function App() {
     return (
@@ -25,7 +30,11 @@ function App() {
                     {/* Protected routes  */}
                     <Route element={<PersistLogin />}>
                         <Route element={<RequireAuth />}>
-                            <Route path="/" element={<HomePage />} />
+                            <Route path="/" element={<BiddrLayout><HomePage /></BiddrLayout>} />
+                            <Route path="/communities" element={<BiddrLayout><CommunitiesPage /></BiddrLayout>} />
+                            <Route path="/wallets" element={<BiddrLayout><WalletsPage /></BiddrLayout>} />
+                            <Route path="/messages" element={<BiddrLayout><MessagesPage /></BiddrLayout>} />
+                            <Route path="/profile" element={<BiddrLayout><ProfilePage /></BiddrLayout>} />
                             <Route
                                 path="/private"
                                 element={<TestPrivatePage />}
