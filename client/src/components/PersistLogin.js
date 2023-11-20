@@ -4,6 +4,16 @@ import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import useRefreshToken from "../hooks/useRefreshToken";
 import useAuth from "../hooks/useAuth";
+import FullScreenSpinner from "./FullScreenSpinner";
+
+/*
+This component wraps around routes where you want the user session to persist (basically all the routes).
+This is how it works:
+- Page is loaded, and this component is mounted.
+- Checks if a token is stored in a user's cookies.
+- If a token exists, check if that token is valid. If so, allow access to that page.
+- Otherwise, proceed to logout. 
+*/
 
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +34,7 @@ const PersistLogin = () => {
         !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
     }, [auth?.accessToken, refresh]);
 
-    return <>{isLoading ? <p>Loading...</p> : <Outlet />}</>;
+    return <>{isLoading ? <FullScreenSpinner /> : <Outlet />}</>;
 };
 
 export default PersistLogin;
