@@ -34,7 +34,7 @@ interface LinkItemProps {
   icon: IconType
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', pageUrl: '/home', icon: FiHome },
+  { name: 'Home', pageUrl: '/', icon: FiHome },
   { name: 'My Communities', pageUrl: '/communities', icon: FiUsers },
   { name: 'My Wallets', pageUrl: '/wallets', icon: FiDollarSign },
   { name: 'Messages', pageUrl: '/messages', icon: FiMessageCircle },
