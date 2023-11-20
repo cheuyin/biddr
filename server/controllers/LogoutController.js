@@ -22,6 +22,8 @@ const LogoutController = async (req, res) => {
         if (result.length === 0) {
             res.clearCookie("jwt", {
                 httpOnly: true,
+                sameSite: "none",
+                secure: true, // Must be set to true!
                 maxAge: 24 * 60 * 60 * 1000,
             });
             return res.sendStatus(204); // Success response because token is already deleted
