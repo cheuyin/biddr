@@ -1,7 +1,7 @@
 // Template for sidebar from: https://chakra-templates.dev/navigation/sidebar
 'use client'
 
-import React, { ReactNode } from 'react'
+import React from 'react'
 import {
   IconButton,
   Box,
