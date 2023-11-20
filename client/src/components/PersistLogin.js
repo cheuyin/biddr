@@ -14,6 +14,7 @@ This is how it works:
 - If a token exists, check if that token is valid. If so, allow access to that page.
 - Otherwise, proceed to logout. 
 */
+import BiddrLayout from "./BiddrLayout";
 
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +35,7 @@ const PersistLogin = () => {
         !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
     }, [auth?.accessToken, refresh]);
 
-    return <>{isLoading ? <FullScreenSpinner /> : <Outlet />}</>;
+    return <>{isLoading ? <BiddrLayout><FullScreenSpinner /></BiddrLayout> : <Outlet />}</>;
 };
 
 export default PersistLogin;
