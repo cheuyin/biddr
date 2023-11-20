@@ -14,7 +14,6 @@ import CommunitiesPage from "./pages/CommunitiesPage.js";
 import WalletsPage from "./pages/WalletsPage.js";
 import MessagesPage from "./pages/MessagesPage.js";
 import ProfilePage from "./pages/ProfilePage.js";
-import BiddrLayout from "./components/BiddrLayout";
 
 function App() {
     return (

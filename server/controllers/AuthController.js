@@ -16,6 +16,7 @@ export const Signin = async (req, res) => {
     let user;
     try {
         user = await QueryAppUserByEmail(email);
+        user = user[0];
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
