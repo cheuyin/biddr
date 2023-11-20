@@ -9,7 +9,7 @@ export const QueryAppUserByEmail = async (email) => {
         const result = await query("SELECT * FROM AppUser WHERE email = $1", [
             email,
         ]);
-        return result;
+        return result[0];
     } catch (error) {
         throw error;
     }
