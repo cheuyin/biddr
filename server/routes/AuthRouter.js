@@ -2,11 +2,12 @@
 // I used this series by Dave Lee to learn how to implement the authentication system
 
 import express from "express";
-import { PostAppUser } from "../controllers/AppUserController.js";
+import { PostAppUser, GetLocationAgeOfMajorityValues } from "../controllers/AppUserController.js";
 import { Signin, Refresh, Logout } from "../controllers/AuthController.js";
 
 const router = express.Router();
 
+router.get("/locations", GetLocationAgeOfMajorityValues);
 router.post("/signin", Signin);
 router.post("/signup", PostAppUser);
 router.put("/logout", Logout);
