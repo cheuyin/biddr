@@ -11,7 +11,7 @@ import {
 /*
 List of functionality:
 X Create a chat with a name and list of initial users e.g. /api/chats
-Delete a chat
+Delete a chat - DELETE /api/chats/43
 X Get all the users in a chat, e.g. /api/chats/43/users
 X Get all messages in a chat e.g. /api/chats/43/messages
 - Send a message in a chat, e.g. /api/chats/32/messages

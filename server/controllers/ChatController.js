@@ -1,6 +1,10 @@
-import query from "../db.js";
-import { rawQuery } from "../db.js";
 import { QueryAppUserByEmail } from "../services/AppUserTable.js";
+import {
+    CreateChat,
+    CreateNewChatEngagement,
+    GetAllEmailsInChat,
+    GetMessages
+} from "../services/ChatTable.js";
 
 // Expects an array with at least one person that will be in this chat
 export const PostNewChat = async (req, res) => {
@@ -35,20 +39,13 @@ export const PostNewChat = async (req, res) => {
     }
 
     try {
-        const response = await rawQuery(
-            "INSERT INTO chat(chatname) VALUES ($1) RETURNING chatid;",
-            [chatName]
-        );
+        const response = await CreateChat(chatName);
 
         const insertedChatID = response.rows[0].chatid;
 
         // For each user, add that user to this newly created chat
-
         for (let userEmail of userEmails) {
-            await query(
-                "INSERT INTO EngagedIn(email, chatid) VALUES ($1, $2);",
-                [userEmail, insertedChatID]
-            );
+            await CreateNewChatEngagement(userEmail, insertedChatID);
         }
     } catch (err) {
         return res.sendStatus(400).json({ err: err.message });
@@ -61,11 +58,7 @@ export const PostNewChat = async (req, res) => {
 export const GetAllUsersInChat = async (req, res) => {
     const chatID = req.params.chatID;
     try {
-        const response = await query(
-            "SELECT email FROM EngagedIn WHERE chatID = $1",
-            [chatID]
-        );
-
+        const response = await GetAllEmailsInChat(chatID);
         const data = response.map((entry) => entry.email);
         res.status(200).json({ data: data });
     } catch (err) {
@@ -77,11 +70,7 @@ export const GetAllUsersInChat = async (req, res) => {
 export const GetAllMessagesInChat = async (req, res) => {
     const chatID = req.params.chatID;
     try {
-        const response = await query(
-            "SELECT messageid, email, text, timesent FROM privatemessage WHERE chatID = $1",
-            [chatID]
-        );
-
+        const response = await GetMessages(chatID);
         res.status(200).json({ data: response });
     } catch (err) {
         res.status(400).json({ error: err.message });
