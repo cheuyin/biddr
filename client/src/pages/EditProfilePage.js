@@ -8,9 +8,9 @@ import {
   FormErrorMessage,
   Heading,
   Input,
+  Select,
   Stack,
   useColorModeValue,
-  HStack,
   Avatar,
   AvatarBadge,
   IconButton,
@@ -28,6 +28,7 @@ export default function UserProfileEdit() {
     const { auth } = useAuth();
     const userEmail = auth.email;
     const [user, setUser] = useState({});
+    const [locations, setLocations] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [usernameErrors, setUsernameErrors] = useState(null);
@@ -55,7 +56,22 @@ export default function UserProfileEdit() {
                 console.error(err);
             }
         };
+
+        const getLocations = async () => {
+            try {
+                const response = await axiosPrivate.get("/auth/locations");
+                // Set locations state to a sorted list of all the locations
+                setLocations(
+                    response.data.sort((a, b) =>
+                        a.location.localeCompare(b.location)
+                    )
+                );
+            } catch (err) {
+                console.error(err);
+            }
+        };
         getUser();
+        getLocations();
     }, [user, usernameErrors]);
 
     const onSubmit = async (formData) => {
@@ -187,6 +203,26 @@ export default function UserProfileEdit() {
             />
             <FormErrorMessage>
                 {errors.bio?.message}
+            </FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={errors.location}>
+            <FormLabel htmlFor="location">Location</FormLabel>
+            <Select
+                id="location"
+                {...register("location", {
+                    required: "Please enter your location.",
+                })}
+                defaultValue={user.location}>
+                {locations.map((location) => (
+                    <option
+                        key={location.location + location.ageofmajority}
+                        value={location.location}>
+                        {location.location}
+                    </option>
+                        ))}
+            </Select>
+            <FormErrorMessage>
+                {errors.location?.message}
             </FormErrorMessage>
         </FormControl>
         <Stack marginTop="25px "spacing={6} direction={['column', 'row']}>

@@ -2,6 +2,7 @@
 
 import {
   Heading,
+  Icon,
   Avatar,
   Box,
   Center,
@@ -11,6 +12,7 @@ import {
   Badge,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { TfiLocationPin } from 'react-icons/tfi'
 
 import useAuth from '../hooks/useAuth'
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
@@ -54,7 +56,7 @@ export default function SocialProfileSimple() {
     }, [user]);
   return (<>
   {isLoading && <FullScreenSpinner/>}
-  {!isLoading && user &&
+  {!isLoading &&
     <Center py={6}>
       <Box
         maxW={'50vw'}
@@ -103,6 +105,16 @@ export default function SocialProfileSimple() {
             bg={bg2}
             fontWeight={'400'}>
             Joined: {user ? new Date(user.timejoined).toDateString() : "Loading..."}
+          </Badge>
+          <Badge
+            px={2}
+            py={1}
+            bg={bg2}
+            fontWeight={'400'}>
+            <Icon
+            as={TfiLocationPin}
+          />
+          { user ? user.location : "Loading..."}
           </Badge>
         </Stack>
 
