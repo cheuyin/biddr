@@ -3,7 +3,8 @@ import {
     CreateChat,
     CreateNewChatEngagement,
     GetAllEmailsInChat,
-    GetMessages
+    GetMessages,
+    DeleteChatByID,
 } from "../services/ChatTable.js";
 
 // Expects an array with at least one person that will be in this chat
@@ -48,10 +49,21 @@ export const PostNewChat = async (req, res) => {
             await CreateNewChatEngagement(userEmail, insertedChatID);
         }
     } catch (err) {
-        return res.sendStatus(400).json({ err: err.message });
+        return res.status(400).json({ error: err.message });
     }
 
     res.sendStatus(200);
+};
+
+// Deletes a chat. Should cascade and delete related EngagedIn and PrivateMessage tuples as well.
+export const DeleteChat = async (req, res) => {
+    const chatID = req.params.chatID;
+    try {
+        await DeleteChatByID(chatID);
+        return res.status(200).json({ message: "Successfully deleted chat." });
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
 };
 
 // Returns an array of email addresses that are part of a chat

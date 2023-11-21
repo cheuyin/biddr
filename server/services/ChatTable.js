@@ -17,6 +17,23 @@ export const CreateChat = async (chatName) => {
     }
 };
 
+export const DeleteChatByID = async (chatID) => {
+    try {
+        const response = await rawQuery("DELETE FROM chat WHERE chatid = $1 RETURNING chatid;", [
+            chatID,
+        ]);
+        
+        // Throw an error if no chat was deleted.
+        if (response.rows.length < 1) {
+            throw new Error(`Chat #${chatID} doesn't exist to be deleted.`);
+        }
+
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export const CreateNewChatEngagement = async (email, chatID) => {
     try {
         const response = await rawQuery(

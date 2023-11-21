@@ -6,6 +6,7 @@ import {
     GetAllUsersInChat,
     GetAllMessagesInChat,
     PostNewChat,
+    DeleteChat
 } from "../controllers/ChatController.js";
 
 /*
@@ -20,6 +21,7 @@ X Get all messages in a chat e.g. /api/chats/43/messages
 */
 
 router.post("/", PostNewChat);
+router.delete("/:chatID", DeleteChat);
 router.get("/:chatID/users", GetAllUsersInChat);
 router.get("/:chatID/messages", GetAllMessagesInChat);
 
