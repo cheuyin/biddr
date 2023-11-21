@@ -8,9 +8,15 @@ import {
   FormErrorMessage,
   Heading,
   Input,
+<<<<<<< HEAD
   Select,
   Stack,
   useColorModeValue,
+=======
+  Stack,
+  useColorModeValue,
+  HStack,
+>>>>>>> 13c63a9 (Created Profile/Edit Profile Pages)
   Avatar,
   AvatarBadge,
   IconButton,
@@ -28,7 +34,10 @@ export default function UserProfileEdit() {
     const { auth } = useAuth();
     const userEmail = auth.email;
     const [user, setUser] = useState({});
+<<<<<<< HEAD
     const [locations, setLocations] = useState([]);
+=======
+>>>>>>> 13c63a9 (Created Profile/Edit Profile Pages)
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [usernameErrors, setUsernameErrors] = useState(null);
@@ -44,11 +53,15 @@ export default function UserProfileEdit() {
 
     const backToProfileHandler = () => {
         navigate("/profile");
+<<<<<<< HEAD
     };
 
     const changePasswordHandler = () => {
         navigate("/profile/edit/password");
     };
+=======
+    }
+>>>>>>> 13c63a9 (Created Profile/Edit Profile Pages)
 
     useEffect(() => {
         const getUser = async () => {
@@ -60,6 +73,7 @@ export default function UserProfileEdit() {
                 console.error(err);
             }
         };
+<<<<<<< HEAD
 
         const getLocations = async () => {
             try {
@@ -77,6 +91,10 @@ export default function UserProfileEdit() {
         getUser();
         getLocations();
     }, [user, locations, usernameErrors]);
+=======
+        getUser();
+    }, [user, usernameErrors]);
+>>>>>>> 13c63a9 (Created Profile/Edit Profile Pages)
 
     const onSubmit = async (formData) => {
         setIsSubmitting(true);
@@ -197,7 +215,10 @@ export default function UserProfileEdit() {
             <Input
             type="text"
             maxLength="256"
+<<<<<<< HEAD
             placeholder='Type your bio here...'
+=======
+>>>>>>> 13c63a9 (Created Profile/Edit Profile Pages)
             defaultValue={user ? user.bio : ""}
             {...register("bio", {
                 maxLength: {
@@ -210,6 +231,7 @@ export default function UserProfileEdit() {
                 {errors.bio?.message}
             </FormErrorMessage>
         </FormControl>
+<<<<<<< HEAD
         <FormControl isInvalid={errors.location}>
             <FormLabel htmlFor="location">Location</FormLabel>
             <Select
@@ -246,6 +268,8 @@ export default function UserProfileEdit() {
         >
             Change Password
         </Button>
+=======
+>>>>>>> 13c63a9 (Created Profile/Edit Profile Pages)
         <Stack marginTop="25px "spacing={6} direction={['column', 'row']}>
             <Button
             onClick={backToProfileHandler}
@@ -264,10 +288,14 @@ export default function UserProfileEdit() {
             type="submit"
             _hover={{
                 bg: 'blue.500',
+<<<<<<< HEAD
             }}
             boxShadow={
                 '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
               }>
+=======
+            }}>
+>>>>>>> 13c63a9 (Created Profile/Edit Profile Pages)
             Save Changes
             </Button>
         </Stack>

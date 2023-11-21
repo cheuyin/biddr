@@ -13,7 +13,6 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import { TfiLocationPin } from 'react-icons/tfi'
-
 import useAuth from '../hooks/useAuth'
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
