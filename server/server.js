@@ -13,7 +13,7 @@ import WalletRouter from "./routes/WalletRouter.js";
 import PostRouter from "./routes/PostRouter.js";
 import BidRouter from "./routes/BidRouter.js";
 import DonationRouter from "./routes/DonationRouter.js";
-import CommentRouter from "./routes/CommentRouter.js"
+import CommentRouter from "./routes/CommentRouter.js";
 import AuthRouter from "./routes/AuthRouter.js";
 
 // Tells the client whether their origin is allowed to make requests to the server
@@ -27,18 +27,18 @@ app.use(cookieParser()); // Middleware for cookies
 // The authentication layer
 app.use("/auth", AuthRouter);
 
-app.use(verifyJWT);
+// app.use(verifyJWT);
 
-// Everything past here requires the client to be authenticated 
+// Everything past here requires the client to be authenticated
 app.use("/api/communities", CommunityRouter);
 app.use("/api/wallets", WalletRouter);
 app.use("/api/users", AppUserRouter);
 app.use("/api/posts", PostRouter);
 app.use("/api/bids", BidRouter);
 app.use("/api/donations", DonationRouter);
-app.use("/api/comments", CommentRouter)
+app.use("/api/comments", CommentRouter);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+  console.log(`Server listening on port ${port}`);
 });

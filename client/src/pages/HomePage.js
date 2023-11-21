@@ -1,32 +1,51 @@
-import { Container, Heading, Text, Button } from "@chakra-ui/react";
+import { Container, Heading, Text, Button, Card } from "@chakra-ui/react";
 import useAuth from "../hooks/useAuth";
 import useLogout from "../hooks/useLogout";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "../api/axios";
 
 const HomePage = () => {
-    const { auth } = useAuth();
-    const logout = useLogout();
-    const navigate = useNavigate();
+  const { auth } = useAuth();
+  const logout = useLogout();
+  const navigate = useNavigate();
 
-    const signoutHandler = async () => {
-        await logout();
-        navigate("/auth/signin");
-    };
+  const signoutHandler = async () => {
+    await logout();
+    navigate("/auth/signin");
+  };
 
-    return (
-        <Container
-            maxW="2xl"
-            centerContent
-            backgroundColor={"teal.100"}
-            p={4}
-            my={4}
-        >
-            <Heading>Home Page</Heading>
-            <Text>If You're Reading This, You're Authenticated. </Text>
-            <Text>Email: {auth.email} </Text>
-            <Button onClick={signoutHandler}>Logout</Button>
-        </Container>
-    );
+  const [posts, setPosts] = useState([]);
+
+  const getPosts = async () => {
+    try {
+      const response = await axios.get("/api/communities/beautiful/posts");
+      setPosts(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  return (
+    <Container
+      maxW="2xl"
+      centerContent
+      backgroundColor={"teal.100"}
+      p={4}
+      my={4}
+    >
+      <Heading>Home Page</Heading>
+      <Text>If You're Reading This, You're Authenticated. </Text>
+      <Text>Email: {auth.email} </Text>
+      <Button onClick={signoutHandler}>Logout</Button>
+      {posts.map((p) => (
+        <Card>{JSON.stringify(p)}</Card>
+      ))}
+    </Container>
+  );
 };
 
 export default HomePage;
