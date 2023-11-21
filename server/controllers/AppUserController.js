@@ -70,15 +70,15 @@ export const PostAppUser = async (req, res) => {
 
 export const ChangeAppUserInformation = async (req, res) => {
     const userEmail = req.params.email;
-    const { email, username, fullName, timeJoined } = req.body;
-    if(!email || !username || !fullName || !timeJoined) {
+    const { email, username, fullName } = req.body;
+    if(!email || !username || !fullName) {
         return res.status(400).json({error: "Missing fields"})
     }
     try {
         // Ensure that username does not already exist
         const usernameExists = await QueryAppUserByUsername(username)
-        if (usernameExists[0]) {
-           return res.status(400).json({error: "Username already exists"});
+        if (usernameExists[0] && usernameExists[0].email !== userEmail) {
+           return res.status(403).json({error: "Username already exists"});
         }
         await UpdateAppUser(userEmail, req.body);
         res.status(200).json({message: "Updated user successfully"});
