@@ -14,6 +14,7 @@ import CommunitiesPage from "./pages/CommunitiesPage.js";
 import WalletsPage from "./pages/WalletsPage.js";
 import MessagesPage from "./pages/MessagesPage.js";
 import ProfilePage from "./pages/ProfilePage.js";
+import EditProfilePage from "./pages/EditProfilePage.js"
 
 function App() {
     return (
@@ -35,6 +36,7 @@ function App() {
                             <Route path="/wallets" element={<BiddrLayout><WalletsPage /></BiddrLayout>} />
                             <Route path="/messages" element={<BiddrLayout><MessagesPage /></BiddrLayout>} />
                             <Route path="/profile" element={<BiddrLayout><ProfilePage /></BiddrLayout>} />
+                            <Route path="/profile/edit" element={<BiddrLayout><EditProfilePage /></BiddrLayout>}/>
                             <Route
                                 path="/private"
                                 element={<TestPrivatePage />}
