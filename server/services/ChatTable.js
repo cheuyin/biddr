@@ -60,6 +60,23 @@ export const GetAllEmailsInChat = async (chatID) => {
     }
 };
 
+export const DeleteUserFromChat = async (chatID, email) => {
+    try {
+        const response = await rawQuery(
+            "DELETE FROM engagedin WHERE chatid = $1 AND email = $2 RETURNING chatid;",
+            [chatID, email]
+        );
+        if (response.rows.length < 1) {
+            throw new Error(
+                `There was an error deleting user ${email} from chat #${chatID}.`
+            );
+        }
+        return response.rows;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export const GetMessages = async (chatID) => {
     try {
         const response = await query(

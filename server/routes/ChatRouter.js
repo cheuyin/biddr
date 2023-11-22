@@ -7,18 +7,21 @@ import {
     GetAllMessagesInChat,
     PostNewChat,
     DeleteChat,
-    SendMessage
+    SendMessage,
+    RemoveUserFromChat,
+    InviteUserToChat,
 } from "../controllers/ChatController.js";
 
 /*
 List of functionality:
-X Create a chat with a name and list of initial users e.g. /api/chats
+X Create a chat with a name and list of initial users e.g. POST /api/chats
 X Delete a chat - DELETE /api/chats/43
-X Get all the users in a chat, e.g. /api/chats/43/users
-X Get all messages in a chat e.g. /api/chats/43/messages
-- Send a message in a chat, e.g. /api/chats/32/messages
-- Add user to a chat e.g. /api/chats/43/users
-- Remove user from a chat e.g. /api/chats/43/users/gan@gmail.com
+X Get all the users in a chat, e.g. GET /api/chats/43/users
+X Get all messages in a chat e.g. GET /api/chats/43/messages
+X Send a message in a chat, e.g. POST /api/chats/32/messages
+- Get all the chats for a user, e.g. GET /api/chats/users/gan@gmail.com
+- Add user to a chat e.g. POST /api/chats/43/users
+- Remove user from a chat e.g. DELETE /api/chats/43/users/gan@gmail.com
 */
 
 router.post("/", PostNewChat);
@@ -26,5 +29,7 @@ router.delete("/:chatID", DeleteChat);
 router.get("/:chatID/users", GetAllUsersInChat);
 router.get("/:chatID/messages", GetAllMessagesInChat);
 router.post("/:chatID/messages", SendMessage);
+router.post("/:chatID/users", InviteUserToChat);
+router.delete("/:chatID/users/:email", RemoveUserFromChat);
 
 export default router;
