@@ -6,12 +6,10 @@ export const CreateChat = async (chatName) => {
             "INSERT INTO chat(chatname) VALUES ($1) RETURNING chatid;",
             [chatName]
         );
-
         if (response.rows.length < 1) {
             throw new Error("There was an error creating a new chat.");
         }
-
-        return response;
+        return response.rows;
     } catch (error) {
         throw error;
     }
@@ -19,16 +17,15 @@ export const CreateChat = async (chatName) => {
 
 export const DeleteChatByID = async (chatID) => {
     try {
-        const response = await rawQuery("DELETE FROM chat WHERE chatid = $1 RETURNING chatid;", [
-            chatID,
-        ]);
-        
+        const response = await rawQuery(
+            "DELETE FROM chat WHERE chatid = $1 RETURNING chatid;",
+            [chatID]
+        );
         // Throw an error if no chat was deleted.
         if (response.rows.length < 1) {
             throw new Error(`Chat #${chatID} doesn't exist to be deleted.`);
         }
-
-        return response;
+        return response.rows;
     } catch (error) {
         throw error;
     }
@@ -40,14 +37,12 @@ export const CreateNewChatEngagement = async (email, chatID) => {
             "INSERT INTO EngagedIn(email, chatid) VALUES ($1, $2) RETURNING email, chatid;",
             [email, chatID]
         );
-
         if (response.rows.length < 1) {
             throw new Error(
                 "There was an error creating a new engagedIn relationship."
             );
         }
-
-        return response;
+        return response.rows;
     } catch (error) {
         throw error;
     }
@@ -59,7 +54,6 @@ export const GetAllEmailsInChat = async (chatID) => {
             "SELECT email FROM EngagedIn WHERE chatid = $1",
             [chatID]
         );
-
         return response;
     } catch (error) {
         throw error;
@@ -73,6 +67,21 @@ export const GetMessages = async (chatID) => {
             [chatID]
         );
         return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const PostMessage = async (chatID, senderEmail, messageText) => {
+    try {
+        const response = await rawQuery(
+            "INSERT INTO privatemessage(email, chatid, text, timesent) VALUES ($1, $2, $3, CURRENT_TIMESTAMP) RETURNING messageid;",
+            [senderEmail, chatID, messageText]
+        );
+        if (response.rows.length < 1) {
+            throw new Error("There was an error creating a new message.");
+        }
+        return response.rows;
     } catch (error) {
         throw error;
     }
