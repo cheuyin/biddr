@@ -77,6 +77,23 @@ export const DeleteUserFromChat = async (chatID, email) => {
     }
 };
 
+export const AddUserToChat = async (chatID, email) => {
+    try {
+        const response = await rawQuery(
+            "INSERT INTO engagedin(email, chatid) VALUES ($1, $2) RETURNING chatid;",
+            [email, chatID]
+        );
+        if (response.rows.length < 1) {
+            throw new Error(
+                `There was an error adding user ${email} to chat #${chatID}.`
+            );
+        }
+        return response.rows;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export const GetMessages = async (chatID) => {
     try {
         const response = await query(

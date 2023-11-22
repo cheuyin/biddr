@@ -7,6 +7,7 @@ import {
     DeleteChatByID,
     PostMessage,
     DeleteUserFromChat,
+    AddUserToChat,
 } from "../services/ChatTable.js";
 
 // Expects an array with at least one person that will be in this chat
@@ -77,17 +78,25 @@ export const RemoveUserFromChat = async (req, res) => {
     const { chatID, email } = req.params;
     try {
         await DeleteUserFromChat(chatID, email);
-        return res
-            .status(200)
-            .json({
-                message: `Successfully deleted user ${email} from chat #${chatID}.`,
-            });
+        return res.status(200).json({
+            message: `Successfully deleted user ${email} from chat #${chatID}.`,
+        });
     } catch (err) {
         return res.status(400).json({ error: err.message });
     }
 };
 
-export const InviteUserToChat = async (req, res) => {};
+export const InviteUserToChat = async (req, res) => {
+    const { chatID, email } = req.params;
+    try {
+        await AddUserToChat(chatID, email);
+        return res.status(200).json({
+            message: `Successfully added user ${email} to chat #${chatID}.`,
+        });
+    } catch (err) {
+        return res.status(400).json({ error: err.message });
+    }
+};
 
 // Returns an array of all the messsages belonging to a chat
 export const GetAllMessagesInChat = async (req, res) => {
