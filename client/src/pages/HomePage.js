@@ -23,7 +23,9 @@ const HomePage = () => {
       const response = await axios.get(
         `/api/users/${auth.email}/subscribed-posts`
       );
-      setPosts(response.data);
+      if (response.data.length !== 0) {
+        setPosts(response.data);
+      }
     } catch (err) {
       console.log(err);
     }
