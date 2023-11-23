@@ -8,6 +8,7 @@ import {
     PostMessage,
     DeleteUserFromChat,
     AddUserToChat,
+    GetAllChatsForUserSorted,
 } from "../services/ChatTable.js";
 
 // Expects an array with at least one person that will be in this chat
@@ -38,9 +39,10 @@ export const PostNewChat = async (req, res) => {
             return res.status(400).json({ error: error.message });
         }
     }
+
     try {
         const response = await CreateChat(chatName);
-        const insertedChatID = response.rows[0].chatid;
+        const insertedChatID = response[0].chatid;
         // For each user, add that user to this newly created chat
         for (let userEmail of userEmails) {
             await CreateNewChatEngagement(userEmail, insertedChatID);
@@ -69,6 +71,17 @@ export const GetAllUsersInChat = async (req, res) => {
         const response = await GetAllEmailsInChat(chatID);
         const data = response.map((entry) => entry.email);
         return res.status(200).json({ data: data });
+    } catch (err) {
+        return res.status(400).json({ error: err.message });
+    }
+};
+
+// Returns all the chats that a user is in, sorted by the most recently sent message
+export const GetAllChatsForUser = async (req, res) => {
+    const { email } = req.params;
+    try {
+        const response = await GetAllChatsForUserSorted(email);
+        return res.status(200).json({ data: response });
     } catch (err) {
         return res.status(400).json({ error: err.message });
     }

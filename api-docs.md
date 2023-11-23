@@ -70,7 +70,11 @@
 ## Comment
 - Get Comment by ID: `http://localhost:8000/api/comments/1`
 - Get Comment by PostID: `http://localhost:8000/api/comments/post/1`
-- POST comment: `http://localhost:8000/api/comments/`
+- POST comment: `http://localhost:8000/api/comments/`SELECT chatid, chatname, timesent
+    FROM chat natural join engagedin natural join privatemessage
+    WHERE email = <user_email>
+    GROUP BY chatid
+    ORDER BY (SELECT MAX(timesent) FROM privatemessage) DESC
 
 ```json
 {
@@ -184,3 +188,29 @@ Note, this POST request return 422 error if price is not higher than existing bi
   "amount": 69.42
 }
 ```
+
+## Chats & Messages
+- POST Chat with a chatName and list of initial Users: `http://localhost:8000/api/chats`
+
+```json
+{
+  "chatName": "The Breakfast Club",
+  "userEmails": ["a@gmail.com", "b@gmail.com"]
+}
+```
+
+- DELETE a Chat: `http://localhost:8000/api/chats/25`
+- GET all Users in a Chat: `http://localhost:8000/api/chats/25/users`
+- GET all Messages in a Chat: `http://localhost:8000/api/chats/25/messages`
+- POST a Message in a Chat: `http://localhost:8000/api/chats/25/messages`
+
+```json
+{
+  "email": "a@gmail.com",
+  "text": "How are you doing?"
+}
+```
+
+- GET all the Chats for a User: `http://localhost:8000/api/chats/users/example@gmail.com`
+- POST User to a Chat: `http://localhost:8000/api/chats/25/users/example@gmail.com`
+- DELETE User from a Chat: `http://localhost:8000/api/chats/25/users/a@gmail.com`
