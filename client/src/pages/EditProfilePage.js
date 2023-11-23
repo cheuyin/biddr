@@ -44,7 +44,11 @@ export default function UserProfileEdit() {
 
     const backToProfileHandler = () => {
         navigate("/profile");
-    }
+    };
+
+    const changePasswordHandler = () => {
+        navigate("/profile/edit/password");
+    };
 
     useEffect(() => {
         const getUser = async () => {
@@ -72,7 +76,7 @@ export default function UserProfileEdit() {
         };
         getUser();
         getLocations();
-    }, [user, usernameErrors]);
+    }, [user, locations, usernameErrors]);
 
     const onSubmit = async (formData) => {
         setIsSubmitting(true);
@@ -193,6 +197,7 @@ export default function UserProfileEdit() {
             <Input
             type="text"
             maxLength="256"
+            placeholder='Type your bio here...'
             defaultValue={user ? user.bio : ""}
             {...register("bio", {
                 maxLength: {
@@ -212,7 +217,8 @@ export default function UserProfileEdit() {
                 {...register("location", {
                     required: "Please enter your location.",
                 })}
-                defaultValue={user.location}>
+                defaultValue={user.location}
+                placeholder='Select a location'>
                 {locations.map((location) => (
                     <option
                         key={location.location + location.ageofmajority}
@@ -225,6 +231,21 @@ export default function UserProfileEdit() {
                 {errors.location?.message}
             </FormErrorMessage>
         </FormControl>
+        <Button
+            onClick={changePasswordHandler}
+            bg='red.300'
+            color='white'
+            w="full"
+            marginTop="25px"
+            _hover={{
+                bg: 'red.400',
+            }}
+            boxShadow={
+                '0px 1px 25px -5px rgb(240 128 128 / 48%), 0 10px 10px -5px rgb(240 128 128/ 43%)'
+              }
+        >
+            Change Password
+        </Button>
         <Stack marginTop="25px "spacing={6} direction={['column', 'row']}>
             <Button
             onClick={backToProfileHandler}
@@ -243,7 +264,10 @@ export default function UserProfileEdit() {
             type="submit"
             _hover={{
                 bg: 'blue.500',
-            }}>
+            }}
+            boxShadow={
+                '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
+              }>
             Save Changes
             </Button>
         </Stack>

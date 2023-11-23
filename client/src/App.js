@@ -16,6 +16,7 @@ import MessagesPage from "./pages/MessagesPage.js";
 import ProfilePage from "./pages/ProfilePage.js";
 import PostPage from "./pages/PostPage.js";
 import EditProfilePage from "./pages/EditProfilePage.js"
+import EditPassword from "./pages/EditPassword.js";
 
 function App() {
   return (
