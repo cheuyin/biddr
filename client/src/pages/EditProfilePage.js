@@ -1,3 +1,4 @@
+// template for edit profile page found from: https://chakra-templates.dev/forms/authentication
 'use client'
 
 import {
