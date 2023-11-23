@@ -15,6 +15,7 @@ import WalletsPage from "./pages/WalletsPage.js";
 import MessagesPage from "./pages/MessagesPage.js";
 import ProfilePage from "./pages/ProfilePage.js";
 import EditProfilePage from "./pages/EditProfilePage.js"
+import EditPassword from "./pages/EditPassword.js";
 
 function App() {
     return (
@@ -37,6 +38,7 @@ function App() {
                             <Route path="/messages" element={<BiddrLayout><MessagesPage /></BiddrLayout>} />
                             <Route path="/profile" element={<BiddrLayout><ProfilePage /></BiddrLayout>} />
                             <Route path="/profile/edit" element={<BiddrLayout><EditProfilePage /></BiddrLayout>}/>
+                            <Route path="/profile/edit/password" element={<BiddrLayout><EditPassword /></BiddrLayout>}/>
                             <Route
                                 path="/private"
                                 element={<TestPrivatePage />}
