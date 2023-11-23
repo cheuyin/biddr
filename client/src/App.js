@@ -14,7 +14,10 @@ import CommunitiesPage from "./pages/CommunitiesPage.js";
 import WalletsPage from "./pages/WalletsPage.js";
 import MessagesPage from "./pages/MessagesPage.js";
 import ProfilePage from "./pages/ProfilePage.js";
+<<<<<<< HEAD
 import PostPage from "./pages/PostPage.js";
+=======
+>>>>>>> 1211e5acee83813c84d01674daea750c05d2c2a1
 import EditProfilePage from "./pages/EditProfilePage.js"
 import EditPassword from "./pages/EditPassword.js";
 
@@ -30,6 +33,7 @@ function App() {
             <Route path="signup" element={<SignUpForm />} />
           </Route>
 
+<<<<<<< HEAD
           {/* Protected routes  */}
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth />}>
@@ -100,6 +104,31 @@ function App() {
       </BrowserRouter>
     </ChakraProvider>
   );
+=======
+                    {/* Protected routes  */}
+                    <Route element={<PersistLogin />}>
+                        <Route element={<RequireAuth />}>
+                            <Route path="/" element={<BiddrLayout><HomePage /></BiddrLayout>} />
+                            <Route path="/communities" element={<BiddrLayout><CommunitiesPage /></BiddrLayout>} />
+                            <Route path="/wallets" element={<BiddrLayout><WalletsPage /></BiddrLayout>} />
+                            <Route path="/messages" element={<BiddrLayout><MessagesPage /></BiddrLayout>} />
+                            <Route path="/profile" element={<BiddrLayout><ProfilePage /></BiddrLayout>} />
+                            <Route path="/profile/edit" element={<BiddrLayout><EditProfilePage /></BiddrLayout>}/>
+                            <Route path="/profile/edit/password" element={<BiddrLayout><EditPassword /></BiddrLayout>}/>
+                            <Route
+                                path="/private"
+                                element={<TestPrivatePage />}
+                            />
+                        </Route>
+                    </Route>
+
+                    {/* Catches all invalid routes. */}
+                    <Route path="*" element={<PageNotFound />} />
+                </Routes>
+            </BrowserRouter>
+        </ChakraProvider>
+    );
+>>>>>>> 1211e5acee83813c84d01674daea750c05d2c2a1
 }
 
 export default App;
