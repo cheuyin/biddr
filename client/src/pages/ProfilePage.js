@@ -1,3 +1,4 @@
+// template for profile page found from: https://chakra-templates.dev/components/cards
 'use client'
 
 import {
