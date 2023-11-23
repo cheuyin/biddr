@@ -15,6 +15,7 @@ import BidRouter from "./routes/BidRouter.js";
 import DonationRouter from "./routes/DonationRouter.js";
 import CommentRouter from "./routes/CommentRouter.js"
 import AuthRouter from "./routes/AuthRouter.js";
+import ChatRouter from "./routes/ChatRouter.js";
 
 // Tells the client whether their origin is allowed to make requests to the server
 app.use(credentials);
@@ -27,7 +28,7 @@ app.use(cookieParser()); // Middleware for cookies
 // The authentication layer
 app.use("/auth", AuthRouter);
 
-app.use(verifyJWT);
+// app.use(verifyJWT); // Comment out this line if you don't want to protect routes yet
 
 // Everything past here requires the client to be authenticated 
 app.use("/api/communities", CommunityRouter);
@@ -37,6 +38,7 @@ app.use("/api/posts", PostRouter);
 app.use("/api/bids", BidRouter);
 app.use("/api/donations", DonationRouter);
 app.use("/api/comments", CommentRouter)
+app.use("/api/chats", ChatRouter)
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
