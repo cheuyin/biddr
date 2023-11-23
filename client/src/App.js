@@ -17,6 +17,7 @@ import ProfilePage from "./pages/ProfilePage.js";
 import PostPage from "./pages/PostPage.js";
 import CommunityPage from "./pages/CommunityPage.tsx";
 import EditProfilePage from "./pages/EditProfilePage.js"
+import EditPassword from "./pages/EditPassword.js";
 
 function App() {
   return (
