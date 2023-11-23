@@ -14,6 +14,7 @@ import CommunitiesPage from "./pages/CommunitiesPage.js";
 import WalletsPage from "./pages/WalletsPage.js";
 import MessagesPage from "./pages/MessagesPage.js";
 import ProfilePage from "./pages/ProfilePage.js";
+import PostPage from "./pages/PostPage.js";
 
 function App() {
   return (
@@ -67,6 +68,22 @@ function App() {
                 element={
                   <BiddrLayout>
                     <ProfilePage />
+                  </BiddrLayout>
+                }
+              />
+              <Route
+                path="/auction/:id"
+                element={
+                  <BiddrLayout>
+                    <PostPage type={"auction"} />
+                  </BiddrLayout>
+                }
+              />
+              <Route
+                path="/fundraiser/:id"
+                element={
+                  <BiddrLayout>
+                    <PostPage type={"fundraiser"} />
                   </BiddrLayout>
                 }
               />

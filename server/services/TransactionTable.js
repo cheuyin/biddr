@@ -11,9 +11,10 @@ export const QueryBid = async (bidId) => {
 
 export const QueryAllBidsForAuction = async (auctionId) => {
   try {
-    const result = await query("SELECT * FROM bid WHERE postId = $1", [
-      auctionId,
-    ]);
+    const result = await query(
+      "SELECT * FROM bid WHERE postId = $1 ORDER BY timeCreated DESC",
+      [auctionId]
+    );
     return result;
   } catch (error) {
     throw error;
@@ -23,7 +24,7 @@ export const QueryAllBidsForAuction = async (auctionId) => {
 export const QueryAllBidsForWallet = async (walletName, email) => {
   try {
     const result = await query(
-      "SELECT * FROM bid WHERE walletName = $1 AND email = $2",
+      "SELECT * FROM bid WHERE walletName = $1 AND email = $2 ORDER BY timeCreated DESC",
       [walletName, email]
     );
     return result;
@@ -82,9 +83,10 @@ export const QueryDonation = async (donationId) => {
 
 export const QueryAllDonationsForFundraiser = async (donationId) => {
   try {
-    const result = await query("SELECT * FROM donation WHERE postId = $1", [
-      donationId,
-    ]);
+    const result = await query(
+      "SELECT * FROM donation WHERE postId = $1 ORDER BY timeCreated DESC",
+      [donationId]
+    );
     return result;
   } catch (error) {
     throw error;
@@ -94,7 +96,7 @@ export const QueryAllDonationsForFundraiser = async (donationId) => {
 export const QueryAllDonationsForWallet = async (walletName, email) => {
   try {
     const result = await query(
-      "SELECT * FROM donation WHERE walletName = $1 AND email = $2",
+      "SELECT * FROM donation WHERE walletName = $1 AND email = $2 ORDER BY timeCreated DESC",
       [walletName, email]
     );
     return result;

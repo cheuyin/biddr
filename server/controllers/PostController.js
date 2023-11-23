@@ -6,7 +6,8 @@ import {
   QueryPostsInCommunity,
   CreateLikes,
   DeleteLikes,
-  CountLikes
+  CountLikes,
+  QueryHomepagePostsForEmail,
 } from "../services/PostTable.js";
 
 export const GetPost = async (req, res) => {
@@ -17,6 +18,18 @@ export const GetPost = async (req, res) => {
     return res.status(200).json(data);
   } catch (err) {
     return res.send(err.toString());
+  }
+};
+
+export const GetHomepagePostsForEmail = async (req, res) => {
+  const email = req.params.email;
+  try {
+    const data = await QueryHomepagePostsForEmail(email);
+    return res.status(200).json(data);
+  } catch (err) {
+    return res.status(400).json({
+      error: "hmm, very sussy homepage. So sussy I can't return it for ya",
+    });
   }
 };
 
@@ -111,11 +124,11 @@ export const PostLikes = async (req, res) => {
   const postId = req.params.postId;
   const { email } = req.body;
   if (!email || !postId) {
-    return res.status(400).json({error: "Missing fields"});
+    return res.status(400).json({ error: "Missing fields" });
   }
   try {
     await CreateLikes(email, postId);
-    return res.status(200).json({message: "User successfully liked post"});
+    return res.status(200).json({ message: "User successfully liked post" });
   } catch (err) {
     return res.send(err.toString());
   }
@@ -126,7 +139,7 @@ export const DeleteLikeOnPost = async (req, res) => {
   const email = req.params.email;
   try {
     await DeleteLikes(email, postId);
-    return res.status(200).json({message: "User successfully disliked post"})
+    return res.status(200).json({ message: "User successfully disliked post" });
   } catch (err) {
     return res.send(err.toString());
   }
@@ -140,4 +153,4 @@ export const GetNumLikesOnPost = async (req, res) => {
   } catch (err) {
     return res.send(err.toString());
   }
-}
+};
