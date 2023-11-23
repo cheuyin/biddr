@@ -21,7 +21,7 @@ const pool = new Pool({
     database: process.env.DB_NAME,
     ssl: {
         rejectUnauthorized: false,
-    }
+    },
 });
 
 export default async function query(text, params) {
@@ -33,3 +33,16 @@ export default async function query(text, params) {
         client.release();
     }
 }
+
+// This instance of the query function returns the entire response, not just the rows
+export const rawQuery = async (text, params) => {
+    const client = await pool.connect();
+    try {
+        const result = await client.query(text, params);
+        return result;
+    } catch (err) {
+        throw err;
+    } finally {
+        client.release();
+    }
+};
