@@ -13,7 +13,7 @@ import WalletRouter from "./routes/WalletRouter.js";
 import PostRouter from "./routes/PostRouter.js";
 import BidRouter from "./routes/BidRouter.js";
 import DonationRouter from "./routes/DonationRouter.js";
-import CommentRouter from "./routes/CommentRouter.js"
+import CommentRouter from "./routes/CommentRouter.js";
 import AuthRouter from "./routes/AuthRouter.js";
 import ChatRouter from "./routes/ChatRouter.js";
 
@@ -30,7 +30,7 @@ app.use("/auth", AuthRouter);
 
 // app.use(verifyJWT); // Comment out this line if you don't want to protect routes yet
 
-// Everything past here requires the client to be authenticated 
+// Everything past here requires the client to be authenticated
 app.use("/api/communities", CommunityRouter);
 app.use("/api/wallets", WalletRouter);
 app.use("/api/users", AppUserRouter);
@@ -42,5 +42,5 @@ app.use("/api/chats", ChatRouter)
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+  console.log(`Server listening on port ${port}`);
 });
