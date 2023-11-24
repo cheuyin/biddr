@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { Container, Heading, Text } from "@chakra-ui/react";
+import { Container, Heading, Grid, GridItem } from "@chakra-ui/react";
 import useAuth from "../hooks/useAuth";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import MessagesView from "../components/MessagesView";
+import ChatPane from "../components/ChatPane";
 
 const MessagesPage = () => {
     const { auth } = useAuth();
     const axiosPrivate = useAxiosPrivate();
-    const [chatNames, setChatNames] = useState([]);
-
-    console.log(auth.email);
+    const [chats, setChats] = useState([]);
+    const [selectedChatID, setSelectedChatID] = useState(0);
 
     useEffect(() => {
         const getChatData = async () => {
@@ -17,7 +18,7 @@ const MessagesPage = () => {
                     const response = await axiosPrivate.get(
                         "/api/chats/users/" + auth.email
                     );
-                    setChatNames(response.data.data);
+                    setChats(response.data.data);
                 } catch (error) {
                     console.log(error);
                 }
@@ -26,12 +27,27 @@ const MessagesPage = () => {
         getChatData();
     }, [auth.email, axiosPrivate]);
 
+    const onChatClick = (chatID) => {
+        setSelectedChatID(chatID);
+    };
+
     return (
-        <Container maxW="100%" height={'90vh'} centerContent backgroundColor={"teal.100"}>
-            <Heading>Chats </Heading>
-            {chatNames.map((chat) => (
-                <Text key={chat.chatid}>{chat.chatname}</Text>
-            ))}
+        <Container maxW="100%" height={"90vh"}>
+            <Grid
+                gridTemplateColumns={"minmax(200px, 1fr) 3fr"}
+                bgColor={"white"}
+                height={"100%"}
+                gridGap={4}
+                p={4}
+            >
+                <GridItem borderRight={"2px"} borderColor={"gray.200"} p={3}>
+                    <ChatPane chats={chats} onClick={onChatClick} />
+                </GridItem>
+                <GridItem>
+                    <MessagesView chatID={selectedChatID} />
+                    <Heading>Select Chat {selectedChatID}</Heading>
+                </GridItem>
+            </Grid>
         </Container>
     );
 };
