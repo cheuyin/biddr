@@ -29,6 +29,9 @@ export default async function query(text, params) {
     try {
         const result = await client.query(text, params);
         return result.rows;
+    } catch (error) {
+        console.log("Error in query() in db.js: ", error);
+        throw error;
     } finally {
         client.release();
     }

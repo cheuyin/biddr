@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { Box, Text } from "@chakra-ui/react";
+import Message from "./Message";
 
 const MessagesView = ({ chatID }) => {
     const axiosPrivate = useAxiosPrivate();
@@ -21,9 +22,15 @@ const MessagesView = ({ chatID }) => {
     }, [chatID, axiosPrivate]);
 
     return (
-        <Box minHeight="100%" backgroundColor={"yellow.200"}>
+        <Box minHeight="100%" p={4}>
             {messages.map((message) => (
-                <Text key={message.messageid}>{message.text}</Text>
+                <Message
+                    key={message.messageid}
+                    timesent={message.timesent}
+                    text={message.text}
+                    email={message.email}
+                    fullname={message.fullname}
+                />
             ))}
         </Box>
     );

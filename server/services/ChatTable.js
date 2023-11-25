@@ -118,10 +118,13 @@ export const AddUserToChat = async (chatID, email) => {
     }
 };
 
+// Returns all messages in a chat, including the sender's full name
 export const GetMessages = async (chatID) => {
     try {
         const response = await query(
-            "SELECT messageid, email, text, timesent FROM privatemessage WHERE chatid = $1;",
+            `SELECT messageid, fullname, email, text, timesent 
+             FROM privatemessage natural join appuser 
+             WHERE chatid = $1;`,
             [chatID]
         );
         return response;
