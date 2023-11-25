@@ -12,19 +12,18 @@ const MessagesView = ({ chatID }) => {
                 const response = await axiosPrivate.get(
                     "/api/chats/" + chatID + "/messages"
                 );
-                console.log(response.data)
                 setMessages(response.data.data);
             } catch (error) {
                 console.log(error);
             }
         };
         fetchMessages();
-    }, [chatID]);
+    }, [chatID, axiosPrivate]);
 
     return (
-        <Box minHeight="100%" backgroundColor={"orange"}>
+        <Box minHeight="100%" backgroundColor={"yellow.200"}>
             {messages.map((message) => (
-                <Text>{message.text}</Text>
+                <Text key={message.messageid}>{message.text}</Text>
             ))}
         </Box>
     );

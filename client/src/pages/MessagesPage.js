@@ -45,7 +45,6 @@ const MessagesPage = () => {
                 </GridItem>
                 <GridItem>
                     <MessagesView chatID={selectedChatID} />
-                    <Heading>Select Chat {selectedChatID}</Heading>
                 </GridItem>
             </Grid>
         </Container>

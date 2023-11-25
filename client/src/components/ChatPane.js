@@ -3,7 +3,7 @@ import ChatTab from "./ChatTab";
 
 const ChatPane = ({ chats, onClick }) => {
     return (
-        <Box minHeight={"100%"} backgroundColor={"green"}>
+        <Box minHeight={"100%"}>
             {chats.map((chat) => (
                 <ChatTab
                     key={chat.chatid}
