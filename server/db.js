@@ -25,6 +25,10 @@ const pool = new Pool({
     idleTimeoutMillis: 20000,
 });
 
+pool.on("error", (error) => {
+    console.error("Pool connection error:", error);
+});
+
 // Help from: https://github.com/brianc/node-postgres/issues/2112#issuecomment-591027787
 export default async function query(text, params) {
     const client = await pool.connect();

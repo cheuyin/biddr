@@ -23,7 +23,7 @@ const Message = ({ timesent, fullname, text, sentByUser }) => {
             <Box
                 w="fit-content"
                 maxW="50%"
-                backgroundColor={sentByUser ? "green.100" : "blue.100" }
+                backgroundColor={sentByUser ? "green.200" : "cyan.200" }
                 p={4}
                 ml={sentByUser ? "auto" : 0}    
                 borderRadius={"xl"}

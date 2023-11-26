@@ -3,14 +3,15 @@ import { Box, Text } from "@chakra-ui/react";
 const ChatTab = ({ chatName, chatID, onClick, selected }) => {
     return (
         <Box
-            backgroundColor={"orange.50"}
+            backgroundColor={selected ? "gray.700" : "white"}
+            color={selected ? "white" : "gray.700"}
             p={4}
             mb={4}
             w={"100%"}
-            shadow={selected ? "outline" : "md"}
-            borderRadius={"3"}
+            shadow={"md"}
+            borderRadius={"xl"}
             onClick={() => onClick(chatID)}
-            _hover={{ cursor: "pointer", backgroundColor: "gray.200" }}
+            _hover={{ cursor: "pointer", shadow: "lg"}}
         >
             <Text>{chatName}</Text>
         </Box>

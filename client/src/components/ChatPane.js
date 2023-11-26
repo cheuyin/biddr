@@ -3,11 +3,11 @@ import ChatTab from "./ChatTab";
 
 const ChatPane = ({ chats, onClick, selectedChatID }) => {
     return (
-        <Box height={"100%"} px={4}>
+        <Box height={"100%"} px={4} borderRadius={12}>
             <Heading
                 textAlign="center"
                 fontSize={"2xl"}
-                pb={3}
+                pb={10}
                 color="gray.400"
             >
                 Conversations
