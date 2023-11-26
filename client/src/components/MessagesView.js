@@ -41,12 +41,12 @@ const MessagesView = ({ chatID }) => {
 
     return (
         <Flex
-            minHeight="100%"
+            height='85vh'
             p={4}
-            backgroundColor={"orange.200"}
-            flexDirection={"column"}
+            flexDirection={'column'}
+            justifyContent={'space-between'}
         >
-            <Box flexGrow={1}>
+            <Box flex={1} overflowY={'auto'}>
                 {messages.map((message) => (
                     <Message
                         key={message.messageid}
@@ -58,7 +58,7 @@ const MessagesView = ({ chatID }) => {
                 ))}
             </Box>
 
-            <Box flexGrow={0} backgroundColor={"white"} w={"80%"} mx="auto">
+            <Box backgroundColor={"white"} w={"80%"} mt={4} mx="auto" borderRadius="lg" boxShadow={'md'}>
                 <form onSubmit={handleSubmit}>
                     <Input
                         name="newMessage"

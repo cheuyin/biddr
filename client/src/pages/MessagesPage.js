@@ -18,7 +18,7 @@ const MessagesPage = () => {
                     const response = await axiosPrivate.get(
                         "/api/chats/users/" + auth.email
                     );
-                    console.log(response.data.data)
+                    console.log(response.data.data);
                     setChats(response.data.data);
                 } catch (error) {
                     console.log(error);
@@ -49,7 +49,11 @@ const MessagesPage = () => {
                 py={4}
             >
                 <GridItem borderRight={"2px"} borderColor={"gray.200"} p={3}>
-                    <ChatPane chats={chats} onClick={onChatClick} />
+                    <ChatPane
+                        chats={chats}
+                        onClick={onChatClick}
+                        selectedChatID={selectedChatID}
+                    />
                 </GridItem>
                 <GridItem>
                     <MessagesView chatID={selectedChatID} />

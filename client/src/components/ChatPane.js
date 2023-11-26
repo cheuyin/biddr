@@ -1,10 +1,15 @@
 import { Box, Text, Heading } from "@chakra-ui/react";
 import ChatTab from "./ChatTab";
 
-const ChatPane = ({ chats, onClick }) => {
+const ChatPane = ({ chats, onClick, selectedChatID }) => {
     return (
-        <Box minHeight={"100%"} px={4}>
-            <Heading textAlign="center" fontSize={"2xl"} pb={3} color="gray.400">
+        <Box height={"100%"} px={4}>
+            <Heading
+                textAlign="center"
+                fontSize={"2xl"}
+                pb={3}
+                color="gray.400"
+            >
                 Conversations
             </Heading>
             {chats.map((chat) => (
@@ -13,6 +18,7 @@ const ChatPane = ({ chats, onClick }) => {
                     chatID={chat.chatid}
                     chatName={chat.chatname}
                     onClick={onClick}
+                    selected={selectedChatID === chat.chatid}
                 />
             ))}
         </Box>
