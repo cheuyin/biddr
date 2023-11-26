@@ -1,9 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
-import useAuth from "../hooks/useAuth";
 
-const Message = ({ timesent, email, fullname, text }) => {
-    const { auth } = useAuth();
-
+const Message = ({ timesent, fullname, text, sentByUser }) => {
     const date = new Date(timesent);
     const options = {
         weekday: "long",
@@ -18,18 +15,24 @@ const Message = ({ timesent, email, fullname, text }) => {
     );
 
     return (
-        <Box mb={4}>
+        <Box
+            mb={4}
+            textAlign={sentByUser ? "right" : "left"}
+        >
             <Text color="gray.600">{fullname}</Text>
             <Box
-                w="max-content"
+                w="fit-content"
                 maxW="50%"
-                backgroundColor={"blue.200"}
+                backgroundColor={sentByUser ? "green.100" : "blue.100" }
                 p={4}
-                borderRadius={'xl'}
+                ml={sentByUser ? "auto" : 0}    
+                borderRadius={"xl"}
             >
                 <Text>{text}</Text>
             </Box>
-            <Text fontSize='xs' fontStyle={'italic'}>{formattedDate}</Text>
+            <Text fontSize="xs" fontStyle={"italic"}>
+                {formattedDate}
+            </Text>
         </Box>
     );
 };

@@ -54,6 +54,7 @@ const MessagesView = ({ chatID }) => {
                         text={message.text}
                         email={message.email}
                         fullname={message.fullname}
+                        sentByUser={auth.email === message.email}
                     />
                 ))}
             </Box>

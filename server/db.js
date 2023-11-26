@@ -3,7 +3,7 @@ import { config } from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import pkg from "pg";
-const { Pool } = pkg;
+const { Pool, Client } = pkg;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -22,8 +22,10 @@ const pool = new Pool({
     ssl: {
         rejectUnauthorized: false,
     },
+    idleTimeoutMillis: 20000,
 });
 
+// Help from: https://github.com/brianc/node-postgres/issues/2112#issuecomment-591027787
 export default async function query(text, params) {
     const client = await pool.connect();
     try {
@@ -43,8 +45,9 @@ export const rawQuery = async (text, params) => {
     try {
         const result = await client.query(text, params);
         return result;
-    } catch (err) {
-        throw err;
+    } catch (error) {
+        console.log("Error in rawQuery() in db.js: ", error);
+        throw error;
     } finally {
         client.release();
     }
