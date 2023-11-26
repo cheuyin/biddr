@@ -18,6 +18,7 @@ const MessagesPage = () => {
                     const response = await axiosPrivate.get(
                         "/api/chats/users/" + auth.email
                     );
+                    console.log(response.data.data)
                     setChats(response.data.data);
                 } catch (error) {
                     console.log(error);
@@ -32,13 +33,20 @@ const MessagesPage = () => {
     };
 
     return (
-        <Container maxW="100%" height={"90vh"}>
+        <Container
+            boxShadow={"lg"}
+            maxW="100%"
+            height={"90vh"}
+            backgroundColor={"white"}
+            borderRadius={"lg"}
+            p={0}
+        >
             <Grid
                 gridTemplateColumns={"minmax(200px, 1fr) 3fr"}
-                bgColor={"white"}
+                width="100%"
                 height={"100%"}
                 gridGap={4}
-                p={4}
+                py={4}
             >
                 <GridItem borderRight={"2px"} borderColor={"gray.200"} p={3}>
                     <ChatPane chats={chats} onClick={onChatClick} />

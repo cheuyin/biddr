@@ -62,20 +62,16 @@ export const GetAllEmailsInChat = async (chatID) => {
 
 // Get all the chats a user belongs to, sorted by the most recently sent message
 export const GetAllChatsForUserSorted = async (email) => {
-    // TODO
-
-    // Ordered by most recently sent message
-    /*
-    Something like this:
-    SELECT chatid, chatname, timesent
-    FROM chat natural join engagedin natural left outer join privatemessage
-    WHERE email = <user_email>
-    ORDER BY timesent
-    */
-
+    // Order the chats by the most recently sent message.
     try {
         const response = await query(
-            "SELECT chatid, chatname, timesent FROM chat natural join engagedin natural left outer join privatemessage WHERE email = $1 ORDER BY timesent;",
+            `SELECT chatid, chatname
+             FROM chat NATURAL LEFT OUTER JOIN privatemessage
+             GROUP BY chatid
+             HAVING chatid IN (SELECT chatid 
+                               FROM chat NATURAL JOIN engagedin 
+                               WHERE email = $1) 
+             ORDER BY MAX(timesent) DESC;`,
             [email]
         );
         return response;
@@ -124,7 +120,8 @@ export const GetMessages = async (chatID) => {
         const response = await query(
             `SELECT messageid, fullname, email, text, timesent 
              FROM privatemessage natural join appuser 
-             WHERE chatid = $1;`,
+             WHERE chatid = $1
+             ORDER BY timesent ASC;`,
             [chatID]
         );
         return response;

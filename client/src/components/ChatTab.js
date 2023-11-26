@@ -3,7 +3,7 @@ import { Box, Text } from "@chakra-ui/react";
 const ChatTab = ({ chatName, chatID, onClick }) => {
     return (
         <Box
-            backgroundColor={"white"}
+            backgroundColor={"orange.50"}
             p={4}
             mb={4}
             w={"100%"}
