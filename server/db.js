@@ -11,9 +11,9 @@ const __dirname = dirname(__filename);
 config({
     override: true,
     path: path.join(__dirname, ".env.development"),
-});
+}); 
 
-const pool = new Pool({
+let pool = new Pool({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     host: process.env.DB_HOST,
@@ -27,6 +27,17 @@ const pool = new Pool({
 
 pool.on("error", (error) => {
     console.error("Pool connection error:", error);
+    pool = new Pool({
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        database: process.env.DB_NAME,
+        ssl: {
+            rejectUnauthorized: false,
+        },
+        idleTimeoutMillis: 20000,
+    });
 });
 
 // Help from: https://github.com/brianc/node-postgres/issues/2112#issuecomment-591027787

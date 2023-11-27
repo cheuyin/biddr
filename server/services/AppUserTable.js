@@ -57,7 +57,7 @@ export const GetLocationDateOfBirthIsLegalAge = async (
 // Used to get all locations to display on sign-up form.
 export const GetAllLocationAgeOfMajority = async () => {
     try {
-        const result = await query("SELECT * FROM LocationAgeOfMajority");
+        const result = await query("SELECT * FROM LocationAgeOfMajority ORDER BY location;");
         return result;
     } catch (error) {
         throw error;

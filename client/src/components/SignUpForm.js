@@ -32,11 +32,7 @@ const SignUpForm = () => {
             try {
                 const response = await axios.get("/auth/locations");
                 // Set locations state to a sorted list of all the locations
-                setLocations(
-                    response.data.sort((a, b) =>
-                        a.location.localeCompare(b.location)
-                    )
-                );
+                setLocations(response.data);
             } catch (err) {
                 console.error(err);
             }

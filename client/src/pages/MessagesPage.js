@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Heading, Grid, GridItem } from "@chakra-ui/react";
+import { Container, Grid, GridItem } from "@chakra-ui/react";
 import useAuth from "../hooks/useAuth";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import MessagesView from "../components/MessagesView";
@@ -11,25 +11,36 @@ const MessagesPage = () => {
     const [chats, setChats] = useState([]);
     const [selectedChatID, setSelectedChatID] = useState(0);
 
-    useEffect(() => {
-        const getChatData = async () => {
-            if (auth.email) {
-                try {
-                    const response = await axiosPrivate.get(
-                        "/api/chats/users/" + auth.email
-                    );
-                    console.log(response.data.data);
-                    setChats(response.data.data);
-                } catch (error) {
-                    console.log(error);
-                }
+    const getChatData = async () => {
+        if (auth.email) {
+            try {
+                const response = await axiosPrivate.get(
+                    "/api/chats/users/" + auth.email
+                );
+                console.log(response.data.data);
+                setChats(response.data.data);
+            } catch (error) {
+                console.log(error);
             }
-        };
+        }
+    };
+
+    useEffect(() => {
         getChatData();
     }, [auth.email, axiosPrivate]);
 
     const onChatClick = (chatID) => {
         setSelectedChatID(chatID);
+    };
+
+    const onChatDelete = async (chatID) => {
+        try {
+            await axiosPrivate.delete("/api/chats/" + chatID);
+            getChatData();
+        } catch (error) {
+            console.log(error);
+            alert(`Error: Chat #${chatID} couldn't be deleted.`);
+        }
     };
 
     return (
@@ -53,6 +64,7 @@ const MessagesPage = () => {
                         chats={chats}
                         onClick={onChatClick}
                         selectedChatID={selectedChatID}
+                        onChatDelete={onChatDelete}
                     />
                 </GridItem>
                 <GridItem>

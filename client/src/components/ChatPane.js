@@ -1,21 +1,22 @@
-import { Box, Center, Heading, Button } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import ChatTab from "./ChatTab";
 
-const ChatPane = ({ chats, onClick, selectedChatID }) => {
+const ChatPane = ({ chats, onClick, selectedChatID, onChatDelete }) => {
     return (
         <Box height={"100%"} px={4} borderRadius={12}>
             <Heading
                 textAlign="center"
                 fontSize={"2xl"}
                 color="gray.400"
+                marginBottom={4}
             >
                 Conversations
             </Heading>
-            <Center my={6}>
+            {/* <Center my={6}>
                 <Button mx={"auto"}>
                     Create Group Chat
                 </Button>
-            </Center>
+            </Center> */}
             {chats.map((chat) => (
                 <ChatTab
                     key={chat.chatid}
@@ -23,6 +24,7 @@ const ChatPane = ({ chats, onClick, selectedChatID }) => {
                     chatName={chat.chatname}
                     onClick={onClick}
                     selected={selectedChatID === chat.chatid}
+                    onChatDelete={onChatDelete}
                 />
             ))}
         </Box>
