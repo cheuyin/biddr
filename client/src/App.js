@@ -15,6 +15,7 @@ import WalletsPage from "./pages/WalletsPage.js";
 import MessagesPage from "./pages/MessagesPage.js";
 import ProfilePage from "./pages/ProfilePage.js";
 import PostPage from "./pages/PostPage.js";
+import CommunityPage from "./pages/CommunityPage.tsx";
 
 function App() {
   return (
@@ -68,6 +69,14 @@ function App() {
                 element={
                   <BiddrLayout>
                     <ProfilePage />
+                  </BiddrLayout>
+                }
+              />
+              <Route
+                path="/community/:name"
+                element={
+                  <BiddrLayout>
+                    <CommunityPage />
                   </BiddrLayout>
                 }
               />
