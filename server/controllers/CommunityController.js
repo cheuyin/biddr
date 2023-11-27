@@ -23,9 +23,9 @@ export const PutCommunity = async (req, res) => {
   }
   try {
     await UpdateCommunity(communityName, email, longName, description);
-    res.status(200).json({ message: "Updated community" });
+    return res.status(200).json({ message: "Updated community" });
   } catch (err) {
-    res.send(err.toString());
+    return res.status(400).json({ error: err.toString() });
   }
 };
 
@@ -36,12 +36,12 @@ export const PostCommunity = async (req, res) => {
   }
   try {
     await CreateCommunity(communityName, req.body);
-    res.status(200).json({ message: "Created community" });
+    return res.status(200).json({ message: "Created community" });
   } catch (err) {
     if (err.code == 23505) {
-      res.status(409).json({ message: "It already exists🙀😱🤯😮" });
+      return res.status(409).json({ message: "It already exists🙀😱🤯😮" });
     }
-    res.send(err.toString());
+    return res.status(400).json({ error: err.toString() });
   }
 };
 
@@ -49,9 +49,9 @@ export const DeleteCommunity = async (req, res) => {
   const communityName = req.params.name;
   try {
     await BanishCommunity(communityName);
-    res.status(200).json({ message: "Community destroyed" });
+    return res.status(200).json({ message: "Community destroyed" });
   } catch (err) {
-    res.send(err.toString());
+    return res.status(400).json({ error: err.toString() });
   }
 };
 
@@ -62,9 +62,9 @@ export const UserJoinCommunity = async (req, res) => {
   }
   try {
     await CreateJoin(communityName, email);
-    res.status(201).json({ message: "Successfully joined!" });
+    return res.status(201).json({ message: "Successfully joined!" });
   } catch (err) {
-    res.send(err.toString());
+    return res.status(400).json({ error: err.toString() });
   }
 };
 
@@ -75,10 +75,10 @@ export const UserLeaveCommunity = async (req, res) => {
   }
   try {
     await RemoveJoin(communityName, email);
-    res
+    return res
       .status(201)
       .json({ message: "Good for you, not the best community, eh" });
   } catch (err) {
-    res.send(err.toString());
+    return res.status(400).json({ error: err.toString() });
   }
 };
