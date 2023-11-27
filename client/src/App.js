@@ -16,6 +16,8 @@ import MessagesPage from "./pages/MessagesPage.js";
 import ProfilePage from "./pages/ProfilePage.js";
 import PostPage from "./pages/PostPage.js";
 import CommunityPage from "./pages/CommunityPage.tsx";
+import EditProfilePage from "./pages/EditProfilePage.js"
+import EditPassword from "./pages/EditPassword.js";
 
 function App() {
   return (
@@ -96,10 +98,12 @@ function App() {
                   </BiddrLayout>
                 }
               />
+              <Route path="/profile" element={<BiddrLayout><ProfilePage /></BiddrLayout>} />
+              <Route path="/profile/edit" element={<BiddrLayout><EditProfilePage /></BiddrLayout>}/>
+              <Route path="/profile/edit/password" element={<BiddrLayout><EditPassword /></BiddrLayout>}/>
               <Route path="/private" element={<TestPrivatePage />} />
             </Route>
           </Route>
-
           {/* Catches all invalid routes. */}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
