@@ -16,9 +16,12 @@ import MessagesPage from "./pages/MessagesPage.js";
 import ProfilePage from "./pages/ProfilePage.js";
 import PostPage from "./pages/PostPage.js";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import CommunityPage from "./pages/CommunityPage.tsx";
 =======
 >>>>>>> 6b04642 (Added route for editProfile page)
+=======
+>>>>>>> c6cfaa49b9ec75bcb46f69dad278477af3ab324b
 import EditProfilePage from "./pages/EditProfilePage.js"
 import EditPassword from "./pages/EditPassword.js";
 
