@@ -3,6 +3,7 @@ import useAuth from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import axios from "../api/axios";
 import Community from "../components/communities/Community.tsx";
+import CommunitySearch from "../components/communities/CommunitySearch.tsx";
 
 const CommunitiesPage = () => {
   const { auth } = useAuth();
@@ -41,6 +42,18 @@ const CommunitiesPage = () => {
           <Community row={index} com={com} />
         ))}
       </Grid>
+      <Container
+        maxW="2xl"
+        centerContent
+        backgroundColor={"gray.100"}
+        p={4}
+        my={4}
+      >
+        <Heading>Search Community Section</Heading>
+        <Text>Build a select query</Text>
+        <Text></Text>
+      </Container>
+      <CommunitySearch />
     </>
   );
 };
