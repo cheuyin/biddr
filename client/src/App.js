@@ -16,96 +16,108 @@ import MessagesPage from "./pages/MessagesPage.js";
 import ProfilePage from "./pages/ProfilePage.js";
 import PostPage from "./pages/PostPage.js";
 import CommunityPage from "./pages/CommunityPage.tsx";
+import SearchPage from "./pages/SearchPage.js";
 
 function App() {
-  return (
-    <ChakraProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* Authentication pages */}
-          <Route path="/auth" element={<AuthPage />}>
-            <Route path="" element={<Navigate to="signin" />} />
-            <Route path="signin" element={<SignInForm />} />
-            <Route path="signup" element={<SignUpForm />} />
-          </Route>
+    return (
+        <ChakraProvider>
+            <BrowserRouter>
+                <Routes>
+                    {/* Authentication pages */}
+                    <Route path="/auth" element={<AuthPage />}>
+                        <Route path="" element={<Navigate to="signin" />} />
+                        <Route path="signin" element={<SignInForm />} />
+                        <Route path="signup" element={<SignUpForm />} />
+                    </Route>
 
-          {/* Protected routes  */}
-          <Route element={<PersistLogin />}>
-            <Route element={<RequireAuth />}>
-              <Route
-                path="/"
-                element={
-                  <BiddrLayout>
-                    <HomePage />
-                  </BiddrLayout>
-                }
-              />
-              <Route
-                path="/communities"
-                element={
-                  <BiddrLayout>
-                    <CommunitiesPage />
-                  </BiddrLayout>
-                }
-              />
-              <Route
-                path="/wallets"
-                element={
-                  <BiddrLayout>
-                    <WalletsPage />
-                  </BiddrLayout>
-                }
-              />
-              <Route
-                path="/messages"
-                element={
-                  <BiddrLayout>
-                    <MessagesPage />
-                  </BiddrLayout>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <BiddrLayout>
-                    <ProfilePage />
-                  </BiddrLayout>
-                }
-              />
-              <Route
-                path="/community/:name"
-                element={
-                  <BiddrLayout>
-                    <CommunityPage />
-                  </BiddrLayout>
-                }
-              />
-              <Route
-                path="/auction/:id"
-                element={
-                  <BiddrLayout>
-                    <PostPage type={"auction"} />
-                  </BiddrLayout>
-                }
-              />
-              <Route
-                path="/fundraiser/:id"
-                element={
-                  <BiddrLayout>
-                    <PostPage type={"fundraiser"} />
-                  </BiddrLayout>
-                }
-              />
-              <Route path="/private" element={<TestPrivatePage />} />
-            </Route>
-          </Route>
+                    {/* Protected routes  */}
+                    <Route element={<PersistLogin />}>
+                        <Route element={<RequireAuth />}>
+                            <Route
+                                path="/"
+                                element={
+                                    <BiddrLayout>
+                                        <HomePage />
+                                    </BiddrLayout>
+                                }
+                            />
+                            <Route
+                                path="/communities"
+                                element={
+                                    <BiddrLayout>
+                                        <CommunitiesPage />
+                                    </BiddrLayout>
+                                }
+                            />
+                            <Route
+                                path="/wallets"
+                                element={
+                                    <BiddrLayout>
+                                        <WalletsPage />
+                                    </BiddrLayout>
+                                }
+                            />
+                            <Route
+                                path="/messages"
+                                element={
+                                    <BiddrLayout>
+                                        <MessagesPage />
+                                    </BiddrLayout>
+                                }
+                            />
+                            <Route
+                                path="/profile"
+                                element={
+                                    <BiddrLayout>
+                                        <ProfilePage />
+                                    </BiddrLayout>
+                                }
+                            />
+                            <Route
+                                path="/community/:name"
+                                element={
+                                    <BiddrLayout>
+                                        <CommunityPage />
+                                    </BiddrLayout>
+                                }
+                            />
+                            <Route
+                                path="/auction/:id"
+                                element={
+                                    <BiddrLayout>
+                                        <PostPage type={"auction"} />
+                                    </BiddrLayout>
+                                }
+                            />
+                            <Route
+                                path="/fundraiser/:id"
+                                element={
+                                    <BiddrLayout>
+                                        <PostPage type={"fundraiser"} />
+                                    </BiddrLayout>
+                                }
+                            />
+                            <Route
+                                path="/search"
+                                element={
+                                    <BiddrLayout>
+                                        <SearchPage />
+                                    </BiddrLayout>
+                                }
+                            />
+                            <Route
+                                path="/private"
+                                element={<TestPrivatePage />}
+                            />
+                        </Route>
+                    </Route>
 
-          {/* Catches all invalid routes. */}
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </ChakraProvider>
-  );
+                    {/* Catches all invalid routes. */}
+                    <Route path="*" element={<PageNotFound />} />
+                </Routes>
+            </BrowserRouter>
+        </ChakraProvider>
+    );
 }
 
 export default App;

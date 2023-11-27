@@ -24,6 +24,7 @@ import {
   FiDollarSign,
   FiUsers,
   FiUser,
+  FiSearch
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import { ReactText } from 'react'
@@ -38,6 +39,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'My Communities', pageUrl: '/communities', icon: FiUsers },
   { name: 'My Wallets', pageUrl: '/wallets', icon: FiDollarSign },
   { name: 'Messages', pageUrl: '/messages', icon: FiMessageCircle },
+  { name: 'Search', pageUrl: '/search', icon: FiSearch },
 ]
 
 export default function BiddrSidebar({ children }) {
