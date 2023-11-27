@@ -16,6 +16,7 @@ import DonationRouter from "./routes/DonationRouter.js";
 import CommentRouter from "./routes/CommentRouter.js";
 import AuthRouter from "./routes/AuthRouter.js";
 import ChatRouter from "./routes/ChatRouter.js";
+import SearchRouter from "./routes/SearchRouter.js";
 
 // Tells the client whether their origin is allowed to make requests to the server
 app.use(credentials);
@@ -39,6 +40,7 @@ app.use("/api/bids", BidRouter);
 app.use("/api/donations", DonationRouter);
 app.use("/api/comments", CommentRouter)
 app.use("/api/chats", ChatRouter)
+app.use("/api/search", SearchRouter);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
