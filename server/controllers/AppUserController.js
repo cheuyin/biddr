@@ -70,15 +70,28 @@ export const PostAppUser = async (req, res) => {
 
 export const ChangeAppUserInformation = async (req, res) => {
     const userEmail = req.params.email;
-    const { email, username, fullName, timeJoined } = req.body;
-    if(!email || !username || !fullName || !timeJoined) {
+    const { email, username, fullName, location } = req.body;
+    if(!email || !username || !fullName || !location) {
         return res.status(400).json({error: "Missing fields"})
     }
     try {
         // Ensure that username does not already exist
         const usernameExists = await QueryAppUserByUsername(username)
-        if (usernameExists[0]) {
-           return res.status(400).json({error: "Username already exists"});
+        if (usernameExists[0] && usernameExists[0].email !== userEmail) {
+           return res.status(403).json({error: "Username already exists"});
+        }
+        // Search for and create new tuple in locationDateOfBirthIsLegal age (if it doesn't already exist) for new location.
+        const user = await QueryAppUserByEmail(userEmail);
+        if (user[0].location !== location) {
+            const dateOfBirth = user[0].dateofbirth;
+            const tupleExists = await GetLocationDateOfBirthIsLegalAge(location, dateOfBirth)
+            if(!tupleExists[0]) {
+                const locationAgeOfMajority = await GetLocationAgeOfMajority(location);
+                const ageOfMajority = locationAgeOfMajority[0].ageofmajority;
+                const userAge = getAge(dateOfBirth);
+                const isLegalAge = userAge >= ageOfMajority;
+                await CreateLocationDateOfBirthIsLegalAge(location, dateOfBirth, isLegalAge);
+            }
         }
         await UpdateAppUser(userEmail, req.body);
         res.status(200).json({message: "Updated user successfully"});

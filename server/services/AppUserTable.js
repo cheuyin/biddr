@@ -122,17 +122,10 @@ PUT
 export const UpdateAppUser = async (email, data) => {
     try {
         return await query(
-            "UPDATE AppUser SET username = $1, profilePicture = $2, fullName = $3, timeJoined = $4, bio = $5, dateOfBirth = $6, location = $7 WHERE email = $8",
-            [
-                data.username,
-                data.profilePicture,
-                data.fullName,
-                data.timeJoined,
-                data.bio,
-                data.dateOfBirth,
-                data.location,
-                email,
-            ]
+            // "UPDATE AppUser SET username = $1, profilePicture = $2, fullName = $3, bio = $4, WHERE email = $5",
+            // [data.username, data.profilePicture, data.fullName, data.bio, email]
+            "UPDATE AppUser SET username = $1, fullName = $2, bio = $3, location = $4 WHERE email = $5",
+            [data.username, data.fullName, data.bio, data.location, email]
         );
     } catch (error) {
         throw error;
