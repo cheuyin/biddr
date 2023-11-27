@@ -82,13 +82,13 @@ export default function UserProfileEdit() {
     const onSubmit = async (formData) => {
         setIsSubmitting(true);
 
-        const { email, username, fullName, bio } = formData;
+        const { email, username, fullName, location, bio } = formData;
         console.log(formData)
 
         try {
             await axiosPrivate.put(
                 `/api/users/${email}`,
-                { username, fullName, bio, email }
+                { username, fullName, bio, location, email }
             );
             alert("Successfully updated user!");
             navigate("/profile");

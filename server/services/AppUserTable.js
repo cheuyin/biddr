@@ -124,8 +124,8 @@ export const UpdateAppUser = async (email, data) => {
         return await query(
             // "UPDATE AppUser SET username = $1, profilePicture = $2, fullName = $3, bio = $4, WHERE email = $5",
             // [data.username, data.profilePicture, data.fullName, data.bio, email]
-            "UPDATE AppUser SET username = $1, fullName = $2, bio = $3 WHERE email = $4",
-            [data.username, data.fullName, data.bio, email]
+            "UPDATE AppUser SET username = $1, fullName = $2, bio = $3, location = $4 WHERE email = $5",
+            [data.username, data.fullName, data.bio, data.location, email]
         );
     } catch (error) {
         throw error;
