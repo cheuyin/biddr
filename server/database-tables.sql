@@ -1,5 +1,22 @@
--- CREATION OF BIDDR. DATABASE TABLES
+-- DROP TABLES (IF THEY EXIST) TO RESET DATABASE
+DROP TABLE IF EXISTS Likes;
+DROP TABLE IF EXISTS EngagedIn;
+DROP TABLE IF EXISTS Joins;
+DROP TABLE IF EXISTS PrivateMessage;
+DROP TABLE IF EXISTS Chat;
+DROP TABLE IF EXISTS Comment;
+DROP TABLE IF EXISTS Donation;
+DROP TABLE IF EXISTS Bid;
+DROP TABLE IF EXISTS Fundraiser;
+DROP TABLE IF EXISTS Auction;
+DROP TABLE IF EXISTS Post;
+DROP TABLE IF EXISTS Community;
+DROP TABLE IF EXISTS Wallet;
+DROP TABLE IF EXISTS AppUser;
+DROP TABLE IF EXISTS LocationDateOfBirthLegalAge;
+DROP TABLE IF EXISTS LocationAgeOfMajority;
 
+-- CREATION OF BIDDR. DATABASE TABLES
 CREATE TABLE LocationAgeOfMajority(
     location VARCHAR(32) PRIMARY KEY,
     ageOfMajority INT NOT NULL
@@ -300,3 +317,13 @@ INSERT INTO Likes VALUES ('cgarza@example.org', 5);
 INSERT INTO Likes VALUES ('harrislatasha@example.org', 7);
 INSERT INTO Likes VALUES ('rwalter@example.org', 2);
 INSERT INTO Likes VALUES ('rwalter@example.org', 10);
+
+#Re-align serial values in tables with "id" primary key.
+SELECT setval(pg_get_serial_sequence('post', 'postid'), COALESCE(max(postid) + 1, 1)) FROM Post;
+SELECT setval(pg_get_serial_sequence('auction', 'postid'), COALESCE(max(postid) + 1, 1)) FROM Auction;
+SELECT setval(pg_get_serial_sequence('fundraiser', 'postid'), COALESCE(max(postid) + 1, 1)) FROM Fundraiser;
+SELECT setval(pg_get_serial_sequence('bid', 'bidid'), COALESCE(max(bidid) + 1, 1)) FROM Bid;
+SELECT setval(pg_get_serial_sequence('donation', 'donationid'), COALESCE(max(donationid) + 1, 1)) FROM Donation;
+SELECT setval(pg_get_serial_sequence('comment', 'commentid'), COALESCE(max(commentid) + 1, 1)) FROM Comment;
+SELECT setval(pg_get_serial_sequence('chat', 'chatid'), COALESCE(max(chatid) + 1, 1)) FROM Chat;
+SELECT setval(pg_get_serial_sequence('privatemessage', 'messageid'), COALESCE(max(messageid) + 1, 1)) FROM PrivateMessage;
