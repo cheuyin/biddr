@@ -1,8 +1,10 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
 
-const ChatTab = ({ chatName, chatID, onClick, selected }) => {
+const ChatTab = ({ chatName, chatID, onClick, selected, onChatDelete}) => {    
     return (
-        <Box
+        <Flex
             backgroundColor={selected ? "gray.700" : "white"}
             color={selected ? "white" : "gray.700"}
             p={4}
@@ -11,10 +13,13 @@ const ChatTab = ({ chatName, chatID, onClick, selected }) => {
             shadow={"md"}
             borderRadius={"xl"}
             onClick={() => onClick(chatID)}
-            _hover={{ cursor: "pointer", shadow: "lg"}}
+            _hover={{ cursor: "pointer", shadow: "lg" }}
+            justifyContent={"space-between"}
+            alignItems={"center"}
         >
             <Text>{chatName}</Text>
-        </Box>
+            <IconButton onClick={() => onChatDelete(chatID)} icon={<DeleteIcon />} />
+        </Flex>
     );
 };
 
