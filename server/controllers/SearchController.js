@@ -28,3 +28,17 @@ export const GetAllAttributesForTable = async (req, res) => {
         return res.status(400).json({ error: error.message });
     }
 };
+
+export const GetSelectAttributesForTable = async (req, res) => {
+    const { tableName } = req.params;
+    const attributes = Object.values(req.query);
+
+    try {
+        const response = await query(
+            "SELECT " + attributes.join(", ") + " FROM " + tableName
+        );
+        return res.status(200).json({ data: response });
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+};
