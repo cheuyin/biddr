@@ -17,11 +17,13 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import StatusPopup from '../components/StatusPopup';
 
 export default function EditPassword() {
     const { auth } = useAuth();
     const userEmail = auth.email;
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [popupMessage, setpopUpMessage] = useState({})
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const bg = useColorModeValue('white', 'gray.700');
@@ -47,16 +49,15 @@ export default function EditPassword() {
                 `/api/users/${userEmail}/password`,
                 { password, email }
             );
-            alert("Successfully updated user password!");
-            navigate("/profile/edit");
+            setpopUpMessage({message: "Successfully changed password!", isError: false})
         } catch (error) {
             console.log(error)
-            if(error.response?.status === 403) {
-            } else {
-                alert(error.response?.data?.error);
-            }
+            setpopUpMessage({message: error.response?.data?.error, isError: true})
         } finally {
             setIsSubmitting(false);
+            setTimeout(() => {
+                setpopUpMessage({});
+            }, 5000);
         }
     };
 
@@ -154,6 +155,7 @@ export default function EditPassword() {
         </Stack>
       </form>
     </Stack>
+    {popupMessage.message && <StatusPopup message={popupMessage.message} isError={popupMessage.isError}/>}
   </Flex>
   )
 }
