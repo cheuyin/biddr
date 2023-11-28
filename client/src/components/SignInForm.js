@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 import useAuth from "../hooks/useAuth";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import StatusPopup from "./StatusPopup";
 
 const SignInForm = () => {
     const {
@@ -22,6 +23,7 @@ const SignInForm = () => {
         formState: { errors },
     } = useForm();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [popupMessage, setpopUpMessage] = useState({});
     const { setAuth } = useAuth();
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
@@ -36,7 +38,7 @@ const SignInForm = () => {
             });
 
             if (!response.data.accessToken) {
-                throw new Error("Access token not recieved");
+                throw new Error("Access token not received");
             }
 
             setAuth({
@@ -45,9 +47,13 @@ const SignInForm = () => {
 
             navigate("/");
         } catch (error) {
-            alert(error.message || error);
+            console.log(error);
+            setpopUpMessage({message: error.response?.data?.error || error.message || error, isError: true});
         } finally {
             setIsSubmitting(false);
+            setTimeout(() => {
+                setpopUpMessage({})
+            }, 5000);
         }
     };
 
@@ -108,6 +114,7 @@ const SignInForm = () => {
                     Submit
                 </Button>
             </form>
+            {popupMessage.message && <StatusPopup message={popupMessage.message} isError={popupMessage.isError} />}
         </>
     );
 };
