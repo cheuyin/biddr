@@ -128,10 +128,14 @@ const CommunitySearch = ({ joined, reload, email }) => {
           bg="gray.200"
           p="4"
         >
-          <Select width="10%" value={searchQuery[0]} onChange={onChangeType}>
-            <option value="and">AND</option>
-            <option value="or">OR</option>
-          </Select>
+          {query.length === 0 ? (
+            <Text width="10%">Add criteria: </Text>
+          ) : (
+            <Select width="10%" value={searchQuery[0]} onChange={onChangeType}>
+              <option value="and">AND</option>
+              <option value="or">OR</option>
+            </Select>
+          )}
           <Select
             width="20%"
             value={searchQuery[1]}
