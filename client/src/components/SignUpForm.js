@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import StatusPopup from "./StatusPopup";
 
 const SignUpForm = () => {
     const {
@@ -24,6 +25,7 @@ const SignUpForm = () => {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [locations, setLocations] = useState([]);
+    const [popupMessage, setpopUpMessage] = useState({});
     const navigate = useNavigate();
 
     // For the drop-down menu for location, pull from the database for the list of locations.
@@ -54,13 +56,17 @@ const SignUpForm = () => {
                     "Content-Type": "application/json",
                 }
             );
-            alert("Successful sign up!");
-            navigate("/auth/signin");
+            setpopUpMessage({message: "Successful sign up!", isError: false});
+            setTimeout(() => {
+                navigate("/auth/signin");
+            }, 1500);
         } catch (error) {
-            console.log(error);
-            alert(error.response?.data?.error);
+            setpopUpMessage({message: error.response?.data?.error || error.message || error, isError: true});
         } finally {
             setIsSubmitting(false);
+            setTimeout(() => {
+                setpopUpMessage({})
+            }, 5000);
         }
     };
 
@@ -226,6 +232,7 @@ const SignUpForm = () => {
                     Submit
                 </Button>
             </form>
+            {popupMessage.message && <StatusPopup message={popupMessage.message} isError={popupMessage.isError} />}
         </>
     );
 };
