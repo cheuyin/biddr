@@ -48,6 +48,11 @@ const HomePage = () => {
       const response = await axios.get(`/api/users/${auth.email}/communities`);
       if(response.data.length !== 0) {
         setCommunities(response.data);
+        let selected = {};
+        response.data.map((community) => {
+          selected[community.communityname] = true;
+        });
+        setSelectedCommunities(selected);
       }
     } catch (err) {
       console.log(err);
@@ -103,7 +108,7 @@ const HomePage = () => {
                 <CheckboxGroup flexDirection="column" gap={2}>
                   <Flex flexDirection="column" gap={2}>
                   {communities.map((com, index) => (
-                  <Checkbox key={com.communityname} onChange={(e) => {
+                  <Checkbox isChecked={selectedCommunities[com.communityname] === true} key={com.communityname} onChange={(e) => {
                     setSelectedCommunities((prevState) => {
                       const newState = {...prevState}
                       newState[com.communityname] = e.target.checked;
