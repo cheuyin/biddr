@@ -8,6 +8,7 @@ import {
   DeleteLikes,
   CountLikes,
   QueryHomepagePostsForEmail,
+  QueryFilteredPostsForEmail,
 } from "../services/PostTable.js";
 
 export const GetPost = async (req, res) => {
@@ -25,6 +26,19 @@ export const GetHomepagePostsForEmail = async (req, res) => {
   const email = req.params.email;
   try {
     const data = await QueryHomepagePostsForEmail(email);
+    return res.status(200).json(data);
+  } catch (err) {
+    return res.status(400).json({
+      error: "hmm, very sussy homepage. So sussy I can't return it for ya",
+    });
+  }
+};
+
+export const GetFilteredPostsForEmail = async (req, res) => {
+  const email = req.params.email;
+  const communities = Object.values(req.query);
+  try {
+    const data = await QueryFilteredPostsForEmail(email, communities);
     return res.status(200).json(data);
   } catch (err) {
     return res.status(400).json({

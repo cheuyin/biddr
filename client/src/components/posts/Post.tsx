@@ -46,7 +46,7 @@ const Post = ({ post }) => {
       <CardBody>
         <Stack mt="0" spacing="3">
           <HStack>
-            <Heading size="md">{post.title}</Heading>
+            <Heading overflow='scroll' size="md">{post.title}</Heading>
             <Text color="gray.500">•</Text>
             <Text color="gray.500">{timeAgo(post.timeposted)}</Text>
           </HStack>
