@@ -3,11 +3,13 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { Box, Text, Input, Flex } from "@chakra-ui/react";
 import Message from "./Message";
 import useAuth from "../hooks/useAuth";
+import StatusPopup from "./StatusPopup";
 
 const MessagesView = ({ chatID }) => {
     const axiosPrivate = useAxiosPrivate();
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
+    const [popupMessage, setpopUpMessage] = useState({});
     const { auth } = useAuth();
 
     useEffect(() => {
@@ -35,7 +37,12 @@ const MessagesView = ({ chatID }) => {
             await fetchMessages();
             setNewMessage("");
         } catch (error) {
-            alert("Error! Message Not Sent.");
+            console.log(error);
+            setpopUpMessage({message: "Message not sent.", isError: true});
+        } finally {
+            setTimeout(() => {
+                setpopUpMessage({});
+            }, 5000);
         }
     };
 
@@ -70,6 +77,7 @@ const MessagesView = ({ chatID }) => {
                     />
                 </form>
             </Box>
+            {popupMessage.message && <StatusPopup message={popupMessage.message} isError={popupMessage.isError}/>}
         </Flex>
     );
 };
