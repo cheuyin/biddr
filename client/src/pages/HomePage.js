@@ -29,6 +29,7 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [communities, setCommunities] = useState([]);
   const [selectedCommunities, setSelectedCommunities] = useState({});
+  const [emptyHomepage, setEmptyHomepage] = useState(true);
 
   const getPosts = async () => {
     try {
@@ -36,6 +37,7 @@ const HomePage = () => {
         `/api/users/${auth.email}/subscribed-posts`
       );
       if (response.data.length !== 0) {
+        setEmptyHomepage(false);
         setPosts(response.data);
       }
     } catch (err) {
@@ -71,6 +73,7 @@ const HomePage = () => {
           params: selected,
         }
       );
+      setEmptyHomepage(response.data.length === 0);
       setPosts(response.data);
     } catch(error) {
       console.log(error);
@@ -131,6 +134,17 @@ const HomePage = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      {emptyHomepage &&
+        <Container
+        maxW="2xl"
+        centerContent
+        p={4}
+        my={4}
+      >
+        <Heading color={'grey'}>There are no posts to display :(</Heading>
+        <Text color={'grey'}>Join a Community or Filter Communities To See Posts</Text>
+      </Container>
+      }
     </>
   );
 };

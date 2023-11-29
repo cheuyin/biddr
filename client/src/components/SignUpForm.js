@@ -59,7 +59,7 @@ const SignUpForm = () => {
             setpopUpMessage({message: "Successful sign up!", isError: false});
             setTimeout(() => {
                 navigate("/auth/signin");
-            }, 1500);
+            }, 3000);
         } catch (error) {
             setpopUpMessage({message: error.response?.data?.error || error.message || error, isError: true});
         } finally {
