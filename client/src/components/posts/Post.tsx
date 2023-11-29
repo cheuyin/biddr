@@ -29,8 +29,6 @@ const Post = ({ post }) => {
   };
 
   const handleClick = (event) => {
-    console.log("Box!");
-
     event.stopPropagation();
     navigate(`/${post.type}/${post.postid}`);
   };

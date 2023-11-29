@@ -71,3 +71,26 @@ export const RemoveJoin = async (name, email) => {
     return error;
   }
 };
+
+export const FilterCommunities = async (queries) => {
+  let template = `SELECT * FROM community`;
+  if (queries.length > 0) {
+    template = template.concat(" ", "WHERE");
+  }
+  queries.forEach((item, index) => {
+    if (index !== 0) {
+      template = template.concat(" ", item.type);
+    }
+    template = template.concat(" ", `${item.attribute} = $${index + 1}`);
+  });
+  try {
+    return await query(
+      template,
+      queries.map((item) => {
+        return item.value;
+      })
+    );
+  } catch (error) {
+    return error;
+  }
+};

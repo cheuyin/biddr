@@ -2,7 +2,10 @@ import express from "express";
 
 const router = express.Router();
 
-import { GetCommunityByName } from "../controllers/CommunityController.js";
+import {
+  GetCommunityByName,
+  SearchCommunities,
+} from "../controllers/CommunityController.js";
 import { PutCommunity } from "../controllers/CommunityController.js";
 import { PostCommunity } from "../controllers/CommunityController.js";
 import { DeleteCommunity } from "../controllers/CommunityController.js";
@@ -17,5 +20,6 @@ router.delete("/:name", DeleteCommunity);
 router.post("/join", UserJoinCommunity);
 router.post("/leave", UserLeaveCommunity);
 router.get("/:name/posts", GetMostRecentPostsInCommunity);
+router.post("/search", SearchCommunities);
 
 export default router;

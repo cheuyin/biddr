@@ -84,17 +84,14 @@ const CommunityPage = () => {
   };
 
   const lnchange = (event) => {
-    console.log(event.target.value);
     setLn(event.target.value);
   };
 
   const descChange = (event) => {
-    console.log(event.target.value);
     setDesc(event.target.value);
   };
 
   const emailChange = (event) => {
-    console.log(event.target.value);
     setEmail(event.target.value);
   };
 

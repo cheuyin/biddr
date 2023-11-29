@@ -3,11 +3,13 @@ import useAuth from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import axios from "../api/axios";
 import Community from "../components/communities/Community.tsx";
+import CommunitySearch from "../components/communities/CommunitySearch.tsx";
 
 const CommunitiesPage = () => {
   const { auth } = useAuth();
 
   const [communities, setCommunities] = useState([]);
+  const communityIds = communities.map((com) => com.communityname);
 
   const getPosts = async () => {
     try {
@@ -38,9 +40,31 @@ const CommunitiesPage = () => {
       </Container>
       <Grid templateColumns="repeat(5, 1fr)" gap={6}>
         {communities.map((com, index) => (
-          <Community row={index} com={com} />
+          <Community
+            row={index}
+            com={com}
+            joined={communityIds.includes(com.communityname)}
+            reload={getPosts}
+            email={auth.email}
+          />
         ))}
       </Grid>
+      <Container
+        maxW="2xl"
+        centerContent
+        backgroundColor={"gray.100"}
+        p={4}
+        my={4}
+      >
+        <Heading>Search Community Section</Heading>
+        <Text>Find your next community!</Text>
+        <Text></Text>
+      </Container>
+      <CommunitySearch
+        joined={communityIds}
+        reload={getPosts}
+        email={auth.email}
+      />
     </>
   );
 };
