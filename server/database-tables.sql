@@ -40,6 +40,7 @@ CREATE TABLE AppUser(
     bio VARCHAR(512),
     dateOfBirth DATE,
     location VARCHAR(32),
+    refreshtoken VARCHAR(256),
     FOREIGN KEY(location, dateOfBirth) REFERENCES LocationDateOfBirthLegalAge(location, dateOfBirth)
 );
 
@@ -162,16 +163,41 @@ CREATE TABLE Likes(
     FOREIGN KEY (postID) REFERENCES Post(postID)
 );
 
-INSERT INTO LocationAgeOfMajority VALUES ('Liechtenstein', 22);
-INSERT INTO LocationAgeOfMajority VALUES ('Eritrea', 20);
-INSERT INTO LocationAgeOfMajority VALUES ('Ukraine', 21);
-INSERT INTO LocationAgeOfMajority VALUES ('Nicaragua', 18);
-INSERT INTO LocationAgeOfMajority VALUES ('Christmas Island', 17);
-INSERT INTO LocationAgeOfMajority VALUES ('Turkmenistan', 18);
-INSERT INTO LocationAgeOfMajority VALUES ('Yemen', 21);
-INSERT INTO LocationAgeOfMajority VALUES ('Northern Mariana Islands', 18);
-INSERT INTO LocationAgeOfMajority VALUES ('Korea', 19);
-INSERT INTO LocationAgeOfMajority VALUES ('Romania', 20);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Liechtenstein', 22);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Eritrea', 20);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Ukraine', 21);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Nicaragua', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Christmas Island', 17);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Turkmenistan', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Yemen', 21);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Northern Mariana Islands', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Korea', 19);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Romania', 20);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('China', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('India', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('United States', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Indonesia', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Brazil', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Bangladesh', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Russia', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Japan', 20);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Pakistan', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Mexico', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Philippines', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Vietnam', 16);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Germany', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Iran', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Turkey', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('United Kingdom', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Thailand', 20);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('France', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Italy', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Egypt', 21);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('South Korea', 19);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Kenya', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Spain', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Colombia', 18);
+INSERT INTO LocationAgeOfMajority (location, ageofmajority) VALUES ('Canada', 19);
 INSERT INTO LocationDateOfBirthLegalAge VALUES ('Christmas Island', '1988-02-28', True);
 INSERT INTO LocationDateOfBirthLegalAge VALUES ('Romania', '2018-09-15', False);
 INSERT INTO LocationDateOfBirthLegalAge VALUES ('Korea', '2020-12-13', False);
@@ -318,7 +344,7 @@ INSERT INTO Likes VALUES ('harrislatasha@example.org', 7);
 INSERT INTO Likes VALUES ('rwalter@example.org', 2);
 INSERT INTO Likes VALUES ('rwalter@example.org', 10);
 
-#Re-align serial values in tables with "id" primary key.
+--Re-align serial values in tables with "id" primary key.
 SELECT setval(pg_get_serial_sequence('post', 'postid'), COALESCE(max(postid) + 1, 1)) FROM Post;
 SELECT setval(pg_get_serial_sequence('auction', 'postid'), COALESCE(max(postid) + 1, 1)) FROM Auction;
 SELECT setval(pg_get_serial_sequence('fundraiser', 'postid'), COALESCE(max(postid) + 1, 1)) FROM Fundraiser;

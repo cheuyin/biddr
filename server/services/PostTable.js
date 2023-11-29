@@ -56,6 +56,35 @@ export const QueryHomepagePostsForEmail = async (email) => {
   }
 };
 
+export const QueryFilteredPostsForEmail = async (email, communities) => {
+  try {
+    const communitiesString = "'" + communities.join("' OR communityName = '") + "'";
+    const result = await query(
+      `SELECT p.*,
+        CASE
+          WHEN EXISTS (SELECT 1 FROM auction a WHERE a.postId = p.postId) THEN 'auction'
+          WHEN EXISTS (SELECT 1 FROM fundraiser f WHERE f.postId = p.postId) THEN 'fundraiser'
+          ELSE 'unknown' 
+        END AS type,
+        COALESCE(MAX(b.amount), 0) AS maxBid,
+        COALESCE(SUM(d.amount), 0) AS sumDonations,
+        COALESCE(COUNT(b) + COUNT(d), 0) AS totalTransactions
+      FROM post p
+      LEFT JOIN bid b ON p.postId = b.postId
+      LEFT JOIN donation d ON p.postId = d.postId
+      WHERE p.communityName IN 
+      (SELECT communityName
+      FROM joins
+      WHERE email = '${email}' AND communityName = ${communitiesString})
+      GROUP BY p.postId
+      ORDER BY timePosted DESC
+      `);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const QueryPostsInCommunity = async (name) => {
   try {
     const result = await query(

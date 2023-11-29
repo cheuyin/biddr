@@ -9,12 +9,14 @@ import {
 } from "../controllers/AppUserController.js";
 import {
   GetHomepagePostsForEmail,
+  GetFilteredPostsForEmail,
   GetMostRecentPostsByUser,
 } from "../controllers/PostController.js";
 const router = express.Router();
 
 router.get("/:email", GetAppUserByEmail);
 router.get("/:email/subscribed-posts", GetHomepagePostsForEmail);
+router.get("/:email/filtered-posts", GetFilteredPostsForEmail);
 router.post("/", PostAppUser);
 router.get("/:postedEmail/posts", GetMostRecentPostsByUser);
 router.put("/:email", ChangeAppUserInformation);
