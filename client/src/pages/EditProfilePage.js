@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import FullScreenSpinner from '../components/FullScreenSpinner';
+import StatusPopup from '../components/StatusPopup';
 
 export default function UserProfileEdit() {
     const { auth } = useAuth();
@@ -33,6 +34,7 @@ export default function UserProfileEdit() {
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [usernameErrors, setUsernameErrors] = useState(null);
+    const [popupMessage, setpopUpMessage] = useState({});
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const bg = useColorModeValue('white', 'gray.700');
@@ -77,7 +79,7 @@ export default function UserProfileEdit() {
         };
         getUser();
         getLocations();
-    }, [user, locations, usernameErrors]);
+    }, [user, locations, usernameErrors, popupMessage]);
 
     const onSubmit = async (formData) => {
         setIsSubmitting(true);
@@ -90,17 +92,16 @@ export default function UserProfileEdit() {
                 `/api/users/${email}`,
                 { username, fullName, bio, location, email }
             );
-            alert("Successfully updated user!");
-            navigate("/profile");
+            setpopUpMessage({message: "Successfully updated user!", isError: false})
         } catch (error) {
+            console.log("Hello");
             console.log(error)
-            if(error.response?.status === 403) {
-                setUsernameErrors("Username already exists");
-            } else {
-                alert(error.response?.data?.message);
-            }
+            setpopUpMessage({message: `${error.response?.data?.error}`, isError: true})
         } finally {
             setIsSubmitting(false);
+            setTimeout(() => {
+                setpopUpMessage({});
+            }, 5000);
         }
     };
 
@@ -274,8 +275,8 @@ export default function UserProfileEdit() {
         </Stack>
       </form>
     </Stack>
-  </Flex>
-    }
+    {popupMessage.message && <StatusPopup message={popupMessage.message} isError={popupMessage.isError}/>}
+  </Flex>}
     </>
   )
 }

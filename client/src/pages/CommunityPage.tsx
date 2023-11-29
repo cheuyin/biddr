@@ -12,6 +12,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "../api/axios";
 import PostList from "../components/posts/PostList.tsx";
+import StatusPopup from "../components/StatusPopup";
 
 const CommunityPage = () => {
   const { name } = useParams();
@@ -22,6 +23,7 @@ const CommunityPage = () => {
   const [communityName, setCname] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDesc] = useState("");
+  const [popupMessage, setpopUpMessage] = useState<any>({});
 
   const [posts, setPosts] = useState([]);
 
@@ -70,10 +72,14 @@ const CommunityPage = () => {
       setCname(response.data[0].communityname);
       setEmail(response.data[0].email);
       setDesc(response.data[0].description);
+      setpopUpMessage({message: "Successfully updated community information!", isError: false});
     } catch (err) {
-      alert(err.response.data.error || err.message || err);
+      setpopUpMessage({message: err.response.data.error || err.message || err, isError: true});
     } finally {
       setEditing(false);
+      setTimeout(() => {
+        setpopUpMessage({});
+      }, 5000)
     }
   };
 
@@ -134,6 +140,7 @@ const CommunityPage = () => {
         </ButtonGroup>
       </Container>
       <PostList posts={posts} />
+      {popupMessage.message && <StatusPopup message={popupMessage.message} isError={popupMessage.isError}/>}
     </>
   );
 };
