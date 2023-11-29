@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import Community from "./Community.tsx";
 import axios from "../../api/axios.js";
+import StatusPopup from "../StatusPopup.js";
 
 const CommunitySearch = ({ joined, reload, email }) => {
   const [searchQuery, setSearchQuery] = useState<any[]>([
@@ -24,6 +25,7 @@ const CommunitySearch = ({ joined, reload, email }) => {
   ]);
   const [query, setQuery] = useState<any[]>([]);
   const [communities, setCommunities] = useState([]);
+  const [popupMessage, setpopUpMessage] = useState<any>(false);
 
   const getPosts = async () => {
     try {
@@ -31,8 +33,16 @@ const CommunitySearch = ({ joined, reload, email }) => {
         queries: query,
       });
       setCommunities(response.data);
+      setpopUpMessage({ message: "Successful search", isError: false });
     } catch (err) {
-      console.log(err);
+      setpopUpMessage({
+        message: err.response?.data?.error || err.message || err,
+        isError: true,
+      });
+    } finally {
+      setTimeout(() => {
+        setpopUpMessage(false);
+      }, 5000);
     }
   };
 
@@ -147,6 +157,7 @@ const CommunitySearch = ({ joined, reload, email }) => {
         <Grid templateColumns="repeat(5, 1fr)" gap={6}>
           {communities.map((com: any, index) => (
             <Community
+              key={index}
               com={com}
               joined={joined.includes(com.communityname)}
               reload={reload}
@@ -155,6 +166,12 @@ const CommunitySearch = ({ joined, reload, email }) => {
           ))}
         </Grid>
       </Box>
+      {popupMessage && (
+        <StatusPopup
+          message={popupMessage.message}
+          isError={popupMessage.isError}
+        />
+      )}
     </>
   );
 };
