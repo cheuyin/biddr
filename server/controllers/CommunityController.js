@@ -1,4 +1,7 @@
-import { QueryCommunityByName } from "../services/CommunityTable.js";
+import {
+  FilterCommunities,
+  QueryCommunityByName,
+} from "../services/CommunityTable.js";
 import { UpdateCommunity } from "../services/CommunityTable.js";
 import { CreateCommunity } from "../services/CommunityTable.js";
 import { BanishCommunity } from "../services/CommunityTable.js";
@@ -78,6 +81,37 @@ export const UserLeaveCommunity = async (req, res) => {
     return res
       .status(201)
       .json({ message: "Good for you, not the best community, eh" });
+  } catch (err) {
+    return res.status(400).json({ error: err.toString() });
+  }
+};
+
+export const SearchCommunities = async (req, res) => {
+  const { queries } = req.body;
+  const attributes = ["communityname", "email", "longname"];
+  const types = ["and", "or"];
+  const unsafe = queries.some((item) => {
+    if (!item.attribute || !item.value || !item.type) {
+      // return res.status(400).json({ error: "malformed query" });
+      return true;
+    }
+    if (!attributes.includes(item.attribute.toLowerCase())) {
+      // return res.status(400).json({ error: "Do not sql inject pls" });
+      return true;
+    }
+    if (!types.includes(item.type.toLowerCase())) {
+      // return res.status(400).json({ error: "Do not sql inject pls" });
+      return true;
+    }
+    return false;
+  });
+
+  if (unsafe) {
+    return res.status(400).json({ error: "Do not sql inject pls" });
+  }
+  try {
+    const data = await FilterCommunities(queries);
+    return res.status(200).json(data);
   } catch (err) {
     return res.status(400).json({ error: err.toString() });
   }
