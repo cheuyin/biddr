@@ -88,19 +88,16 @@ export const UserLeaveCommunity = async (req, res) => {
 
 export const SearchCommunities = async (req, res) => {
   const { queries } = req.body;
-  const attributes = ["communityname", "email", "longname"];
+  const attributes = ["communityname", "email", "longname", "description"];
   const types = ["and", "or"];
   const unsafe = queries.some((item) => {
     if (!item.attribute || !item.value || !item.type) {
-      // return res.status(400).json({ error: "malformed query" });
       return true;
     }
     if (!attributes.includes(item.attribute.toLowerCase())) {
-      // return res.status(400).json({ error: "Do not sql inject pls" });
       return true;
     }
     if (!types.includes(item.type.toLowerCase())) {
-      // return res.status(400).json({ error: "Do not sql inject pls" });
       return true;
     }
     return false;

@@ -83,8 +83,6 @@ export const FilterCommunities = async (queries) => {
     }
     template = template.concat(" ", `${item.attribute} = $${index + 1}`);
   });
-  console.log(template);
-  // console.log("HERE");
   try {
     return await query(
       template,
