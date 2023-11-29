@@ -42,3 +42,19 @@ export const GetSelectAttributesForTable = async (req, res) => {
         return res.status(400).json({ error: error.message });
     }
 };
+
+// This function returns a list of users that are engaged in every group chat.
+export const GetUsersInAllChats = async (req, res) => {
+    try {
+        const response = await query(`SELECT email, fullname
+                                      FROM appuser 
+                                      WHERE NOT EXISTS (SELECT chatid
+                                                        FROM chat
+                                                        EXCEPT (SELECT chatid
+                                                                FROM engagedin
+                                                                WHERE engagedin.email = appuser.email))`);
+        return res.status(200).json({ data: response });
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+};

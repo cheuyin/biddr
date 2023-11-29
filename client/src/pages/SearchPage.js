@@ -11,6 +11,7 @@ import {
     CheckboxGroup,
     Flex,
     Button,
+    Center,
 } from "@chakra-ui/react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import {
@@ -31,6 +32,7 @@ const SearchPage = () => {
     const [allAttributesForTable, setAllAttributesForTable] = useState([]);
     const [selectedAttributes, setSelectedAttributes] = useState({});
     const [results, setResults] = useState([]);
+    const [usersInAllChats, setUsersInAllChats] = useState([]);
     const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
@@ -92,105 +94,157 @@ const SearchPage = () => {
         setResults([]);
     };
 
+    const handleGetUsersInAllChats = async () => {
+        try {
+            const response = await axiosPrivate.get("/api/search/division");
+            setUsersInAllChats(response.data.data);
+        } catch (e) {
+            alert(e.message);
+        }
+    };
+
     return (
-        <Container
-            boxShadow={"lg"}
-            maxW="100%"
-            height={"90vh"}
-            backgroundColor={"white"}
-        >
-            <Box height={"100%"} p={4}>
-                <Heading textAlign={"center"} mb={4}>
-                    Projection
-                </Heading>
-                <Box mb={6}>
-                    <Heading as="h2" fontSize={"xl"} mb={4}>
-                        Tables
+        <>
+            <Container
+                boxShadow={"lg"}
+                maxW="100%"
+                height={"90vh"}
+                backgroundColor={"white"}
+                mb={10}
+            >
+                <Box height={"100%"} p={4}>
+                    <Heading textAlign={"center"} mb={4}>
+                        Projection: Search Tables & Attributes
                     </Heading>
-                    <RadioGroup
-                        value={selectedTable}
-                        onChange={handleTableSelect}
-                        display={"flex"}
-                        gap={6}
-                        flexWrap={'wrap'}
-                    >
-                        {tables.map((table) => (
-                            <Radio
-                                key={table.table_name}
-                                value={table.table_name}
-                            >
-                                {table.table_name}
-                            </Radio>
-                        ))}
-                    </RadioGroup>
-                </Box>
-                <Box mb={6}>
-                    <Heading as="h2" fontSize={"xl"} mb={4}>
-                        Attributes
-                    </Heading>
-                    <CheckboxGroup>
-                        <Flex gap={6} flexWrap={'wrap'}>
-                            {allAttributesForTable.map((attribute) => (
-                                <Checkbox
-                                    key={attribute.column_name}
-                                    onChange={(e) =>
-                                        setSelectedAttributes((prevState) => {
-                                            const newState = {
-                                                ...prevState,
-                                            };
-                                            newState[attribute.column_name] =
-                                                e.target.checked;
-                                            return newState;
-                                        })
-                                    }
+                    <Box mb={6}>
+                        <Heading as="h2" fontSize={"xl"} mb={4}>
+                            Tables
+                        </Heading>
+                        <RadioGroup
+                            value={selectedTable}
+                            onChange={handleTableSelect}
+                            display={"flex"}
+                            gap={6}
+                            flexWrap={"wrap"}
+                        >
+                            {tables.map((table) => (
+                                <Radio
+                                    key={table.table_name}
+                                    value={table.table_name}
                                 >
-                                    {attribute.column_name}
-                                </Checkbox>
+                                    {table.table_name}
+                                </Radio>
                             ))}
-                            {Object.keys(selectedAttributes).some(
-                                (key) => selectedAttributes[key]
-                            ) ? (
-                                <Button onClick={handleAttributeSearch}>
-                                    Search
-                                </Button>
-                            ) : null}
-                        </Flex>
-                    </CheckboxGroup>
+                        </RadioGroup>
+                    </Box>
+                    <Box mb={6}>
+                        <Heading as="h2" fontSize={"xl"} mb={4}>
+                            Attributes
+                        </Heading>
+                        <CheckboxGroup>
+                            <Flex gap={6} flexWrap={"wrap"}>
+                                {allAttributesForTable.map((attribute) => (
+                                    <Checkbox
+                                        key={attribute.column_name}
+                                        onChange={(e) =>
+                                            setSelectedAttributes(
+                                                (prevState) => {
+                                                    const newState = {
+                                                        ...prevState,
+                                                    };
+                                                    newState[
+                                                        attribute.column_name
+                                                    ] = e.target.checked;
+                                                    return newState;
+                                                }
+                                            )
+                                        }
+                                    >
+                                        {attribute.column_name}
+                                    </Checkbox>
+                                ))}
+                                {Object.keys(selectedAttributes).some(
+                                    (key) => selectedAttributes[key]
+                                ) ? (
+                                    <Button onClick={handleAttributeSearch}>
+                                        Search
+                                    </Button>
+                                ) : null}
+                            </Flex>
+                        </CheckboxGroup>
+                    </Box>
+                    <Box mb={6}>
+                        <Heading as="h2" fontSize={"xl"} mb={4}>
+                            Results
+                        </Heading>
+                        <TableContainer height={"30vh"} overflowY={"auto"}>
+                            <Table variant={"striped"}>
+                                <Thead>
+                                    <Tr>
+                                        {results.length > 0 &&
+                                            Object.keys(results[0]).map(
+                                                (columnName) => (
+                                                    <Th key={columnName}>
+                                                        {columnName}
+                                                    </Th>
+                                                )
+                                            )}
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
+                                    {results.map((result, index) => (
+                                        <Tr key={index}>
+                                            {Object.values(result).map(
+                                                (value) => (
+                                                    <Td key={value}>
+                                                        {value?.toString()}
+                                                    </Td>
+                                                )
+                                            )}
+                                        </Tr>
+                                    ))}
+                                </Tbody>
+                            </Table>
+                        </TableContainer>
+                    </Box>
                 </Box>
-                <Box mb={6}>
-                    <Heading as="h2" fontSize={"xl"} mb={4}>
-                        Results
+            </Container>
+            <Container
+                boxShadow={"lg"}
+                maxW="100%"
+                height={"90vh"}
+                backgroundColor={"white"}
+            >
+                <Box height={"100%"} p={4}>
+                    <Heading textAlign={"center"} mb={4}>
+                        Division: Find Users in All Group Chats
                     </Heading>
-                    <TableContainer height={"30vh"} overflowY={"auto"}>
-                        <Table variant={'striped'}>
+                    <Center>
+                        <Button onClick={handleGetUsersInAllChats}>
+                            Search
+                        </Button>
+                    </Center>
+                    <TableContainer>
+                        <Table>
                             <Thead>
                                 <Tr>
-                                    {results.length > 0 &&
-                                        Object.keys(results[0]).map(
-                                            (columnName) => (
-                                                <Th key={columnName}>
-                                                    {columnName}
-                                                </Th>
-                                            )
-                                        )}
+                                    <Td>Full Name</Td>
+                                    <Td>Email</Td>
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                {results.map((result, index) => (
-                                    <Tr key={index}>
-                                        {Object.values(result).map(
-                                            (value) => (
-                                                <Td key={value}>{value?.toString()}</Td>
-                                            )
-                                        )}
+                                {usersInAllChats.map((user) => (
+                                    <Tr key={user.email}>
+                                        <Td>{user.fullname}</Td>
+                                        <Td>{user.email}</Td>
                                     </Tr>
                                 ))}
                             </Tbody>
                         </Table>
                     </TableContainer>
                 </Box>
-            </Box>
-        </Container>
+            </Container>
+        </>
     );
 };
 
