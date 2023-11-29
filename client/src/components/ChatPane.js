@@ -3,7 +3,7 @@ import ChatTab from "./ChatTab";
 
 const ChatPane = ({ chats, onClick, selectedChatID, onChatDelete }) => {
     return (
-        <Box height={"100%"} px={4} borderRadius={12}>
+        <Box height={"80vh"} overflowY='auto' px={4} borderRadius={12}>
             <Heading
                 textAlign="center"
                 fontSize={"2xl"}
