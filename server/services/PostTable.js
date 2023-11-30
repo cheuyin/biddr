@@ -3,7 +3,6 @@ import query from "../db.js";
 export const QueryPost = async (postId) => {
   try {
     const result = await query(
-      // TODO Switch to LEFT OUTER JOIN for Oracle-based
       `SELECT p.*,
         CASE
           WHEN EXISTS (SELECT 1 FROM auction a WHERE a.postId = p.postId) THEN 'auction'
@@ -14,8 +13,8 @@ export const QueryPost = async (postId) => {
         COALESCE(SUM(d.amount), 0) AS sumDonations,
         COALESCE(COUNT(b) + COUNT(d), 0) AS totalTransactions
       FROM post p
-      LEFT JOIN bid b ON p.postId = b.postId
-      LEFT JOIN donation d ON p.postId = d.postId
+      LEFT OUTER JOIN bid b ON p.postId = b.postId
+      LEFT OUTER JOIN donation d ON p.postId = d.postId
       WHERE p.postId = $1
       GROUP BY p.postId`,
       [postId]
@@ -39,8 +38,8 @@ export const QueryHomepagePostsForEmail = async (email) => {
         COALESCE(SUM(d.amount), 0) AS sumDonations,
         COALESCE(COUNT(b) + COUNT(d), 0) AS totalTransactions
       FROM post p
-      LEFT JOIN bid b ON p.postId = b.postId
-      LEFT JOIN donation d ON p.postId = d.postId
+      LEFT OUTER JOIN bid b ON p.postId = b.postId
+      LEFT OUTER JOIN donation d ON p.postId = d.postId
       WHERE p.communityName IN 
       (SELECT DISTINCT c.communityName
       FROM joins c
@@ -58,7 +57,8 @@ export const QueryHomepagePostsForEmail = async (email) => {
 
 export const QueryFilteredPostsForEmail = async (email, communities) => {
   try {
-    const communitiesString = "'" + communities.join("' OR communityName = '") + "'";
+    const communitiesString =
+      "'" + communities.join("' OR communityName = '") + "'";
     const result = await query(
       `SELECT p.*,
         CASE
@@ -70,15 +70,16 @@ export const QueryFilteredPostsForEmail = async (email, communities) => {
         COALESCE(SUM(d.amount), 0) AS sumDonations,
         COALESCE(COUNT(b) + COUNT(d), 0) AS totalTransactions
       FROM post p
-      LEFT JOIN bid b ON p.postId = b.postId
-      LEFT JOIN donation d ON p.postId = d.postId
+      LEFT OUTER JOIN bid b ON p.postId = b.postId
+      LEFT OUTER JOIN donation d ON p.postId = d.postId
       WHERE p.communityName IN 
       (SELECT communityName
       FROM joins
       WHERE email = '${email}' AND communityName = ${communitiesString})
       GROUP BY p.postId
       ORDER BY timePosted DESC
-      `);
+      `
+    );
     return result;
   } catch (error) {
     throw error;
@@ -98,8 +99,8 @@ export const QueryPostsInCommunity = async (name) => {
         COALESCE(SUM(d.amount), 0) AS sumDonations,
         COALESCE(COUNT(b) + COUNT(d), 0) AS totalTransactions
       FROM post p
-      LEFT JOIN bid b ON p.postId = b.postId
-      LEFT JOIN donation d ON p.postId = d.postId
+      LEFT OUTER JOIN bid b ON p.postId = b.postId
+      LEFT OUTER JOIN donation d ON p.postId = d.postId
       WHERE communityName = $1 
       GROUP BY p.postId
       ORDER BY timePosted DESC
