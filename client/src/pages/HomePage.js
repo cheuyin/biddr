@@ -19,8 +19,7 @@ import useAuth from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import axios, { axiosPrivate } from "../api/axios";
 import PostList from "../components/posts/PostList.tsx";
-import FullScreenSpinner from "../components/FullScreenSpinner";
-import Community from "../components/communities/Community.tsx";
+import StatusPopup from '../components/StatusPopup';
 
 const HomePage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -30,6 +29,7 @@ const HomePage = () => {
   const [communities, setCommunities] = useState([]);
   const [selectedCommunities, setSelectedCommunities] = useState({});
   const [emptyHomepage, setEmptyHomepage] = useState(true);
+  const [popupMessage, setPopupMessage] = useState(false);
 
   const getPosts = async () => {
     try {
@@ -75,8 +75,13 @@ const HomePage = () => {
       );
       setEmptyHomepage(response.data.length === 0);
       setPosts(response.data);
+      setPopupMessage({message: "Successfully filtered posts!", isError: false});
     } catch(error) {
-      console.log(error);
+      setPopupMessage({message: error.response?.data?.error, isError: true});
+    } finally {
+      setTimeout(() => {
+        setPopupMessage(false);
+      }, 5000);
     }
   };
 
@@ -134,6 +139,7 @@ const HomePage = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      {popupMessage && <StatusPopup message={popupMessage.message} isError={popupMessage.isError} />}
       {emptyHomepage &&
         <Container
         maxW="2xl"
