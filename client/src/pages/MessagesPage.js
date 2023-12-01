@@ -20,7 +20,6 @@ const MessagesPage = () => {
                 const response = await axiosPrivate.get(
                     "/api/chats/users/" + auth.email
                 );
-                console.log(response.data.data);
                 setChats(response.data.data);
             } catch (error) {
                 console.log(error);
