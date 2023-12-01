@@ -71,9 +71,10 @@ export const GetAllChatsForUserSorted = async (email) => {
              HAVING chatid IN (SELECT chatid 
                                FROM chat NATURAL JOIN engagedin 
                                WHERE email = $1) 
-             ORDER BY MAX(timesent) DESC;`,
+             ORDER BY COALESCE(MAX(timesent), '1900-01-01') DESC;`,
             [email]
         );
+        console.log(response)
         return response;
     } catch (error) {
         throw error;
