@@ -222,6 +222,7 @@ INSERT INTO AppUser VALUES ('hallmatthew@example.org', 'foot', NULL, 'Derrick Br
 INSERT INTO AppUser VALUES ('jeffreyreeves@example.org', 'wear', NULL, 'Robert Woods', '87db52446d964090b4b7c862fc590b0c', '1980-05-09T14:54:17', 'free anything send', '2018-09-15', 'Romania');
 INSERT INTO AppUser VALUES ('inallchats1@gmail.com', 'inallchats1', NULL, 'Bruce Wayne', '$2b$10$tiEHk3V5QNF2zTo6LAOJReDCPYX1ooQsHDGV6Ua3auPWQuZXyPhy.', '1980-05-09T14:54:17', 'I am awesome.', '2023-10-19', 'Italy');
 INSERT INTO AppUser VALUES ('inallchats2@gmail.com', 'inallchats2', NULL, 'Peter Parker', '$2b$10$79sOg3lpH2Geda7DF6qRE.t14P64QRilDjMrs7ufs.K.5KujBk9la', '1980-05-09T14:54:17', 'I am very chill.', '2023-08-09', 'Nicaragua');
+INSERT INTO AppUser VALUES ('sunnynie@example.com', 'sunnynie', NULL, 'Sunny Nie', '$2b$10$Q5/mRRTG2rlH8kJPrMYLTeY5s1aueCSPk2XmSbhOcufyPMsGG5rsa', '2000-05-09T14:54:17', 'Sunny acc', '2023-08-09', 'Nicaragua');
 INSERT INTO Wallet VALUES ('help involve', 'chris36@example.net', 0.68);
 INSERT INTO Wallet VALUES ('them computer', 'cgarza@example.org', 5.4);
 INSERT INTO Wallet VALUES ('much seven', 'harrislatasha@example.org', 94.05);

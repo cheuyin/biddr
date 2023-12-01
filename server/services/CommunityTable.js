@@ -23,7 +23,6 @@ export const UpdateCommunity = async (
       "UPDATE Community SET email = $1, longName = $2, description = $3 WHERE communityName = $4",
       [email, longName, description, communityName]
     );
-    // return 0;
   } catch (error) {
     throw error;
   }
