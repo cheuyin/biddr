@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   Card,
@@ -8,9 +8,9 @@ import {
   GridItem,
   Heading,
   Text,
-} from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import axios from "../../api/axios";
+} from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import axios from '../../api/axios';
 
 const Community = ({ com, joined, reload, email }) => {
   const navigate = useNavigate();
@@ -58,10 +58,10 @@ const Community = ({ com, joined, reload, email }) => {
       <Divider />
       <CardFooter>
         <Button
-          colorScheme={joined ? "gray" : "blue"}
+          colorScheme={joined ? 'gray' : 'blue'}
           onClick={handleJoinLeave}
         >
-          {joined ? "Leave" : "Join"}
+          {joined ? 'Leave' : 'Join'}
         </Button>
       </CardFooter>
     </Card>

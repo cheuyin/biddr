@@ -1,13 +1,13 @@
-import express from "express";
+import express from 'express';
 
 const router = express.Router();
 
 import {
   GetDonation,
   PostDonation,
-} from "../controllers/TransactionController.js";
+} from '../controllers/TransactionController.js';
 
-router.post("/", PostDonation);
-router.get("/:donationId", GetDonation);
+router.post('/', PostDonation);
+router.get('/:donationId', GetDonation);
 
 export default router;

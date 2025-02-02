@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   Card,
@@ -9,12 +9,12 @@ import {
   Heading,
   Stack,
   Text,
-} from "@chakra-ui/react";
-import { DateTime } from "luxon";
-import { useNavigate } from "react-router-dom";
+} from '@chakra-ui/react';
+import { DateTime } from 'luxon';
+import { useNavigate } from 'react-router-dom';
 
 const Post = ({ post }) => {
-  const buttonLabel = post.type === "auction" ? "Bid" : "Donate";
+  const buttonLabel = post.type === 'auction' ? 'Bid' : 'Donate';
   const navigate = useNavigate();
 
   const timeAgo = (dateString) => {
@@ -44,7 +44,9 @@ const Post = ({ post }) => {
       <CardBody>
         <Stack mt="0" spacing="3">
           <HStack>
-            <Heading overflow='scroll' size="md">{post.title}</Heading>
+            <Heading overflow="scroll" size="md">
+              {post.title}
+            </Heading>
             <Text color="gray.500">•</Text>
             <Text color="gray.500">{timeAgo(post.timeposted)}</Text>
           </HStack>

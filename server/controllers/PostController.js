@@ -9,7 +9,7 @@ import {
   CountLikes,
   QueryHomepagePostsForEmail,
   QueryFilteredPostsForEmail,
-} from "../services/PostTable.js";
+} from '../services/PostTable.js';
 
 export const GetPost = async (req, res) => {
   const postId = req.params.postId;
@@ -90,14 +90,14 @@ export const PostPost = async (req, res) => {
     !title ||
     !value
   ) {
-    return res.status(400).json({ error: "Ur missing something yeah" });
+    return res.status(400).json({ error: 'Ur missing something yeah' });
   }
-  if (type !== "auction" && type !== "fundraiser") {
+  if (type !== 'auction' && type !== 'fundraiser') {
     return res
       .status(400)
-      .json({ error: "so is it an auction or a fundraiser huh?" });
+      .json({ error: 'so is it an auction or a fundraiser huh?' });
   }
-  const currentDate = new Date().toISOString().replace(/\.\d*Z/, "");
+  const currentDate = new Date().toISOString().replace(/\.\d*Z/, '');
   try {
     await CreatePost(
       type,
@@ -110,12 +110,12 @@ export const PostPost = async (req, res) => {
       text,
       title,
       image,
-      value
+      value,
     );
-    return res.status(200).json({ message: "Created new Post" });
+    return res.status(200).json({ message: 'Created new Post' });
   } catch (err) {
     if (err.code == 23505) {
-      return res.status(409).json({ message: "That post already exists!" });
+      return res.status(409).json({ message: 'That post already exists!' });
     }
     return res.send(err.toString());
   }
@@ -124,7 +124,7 @@ export const DeletePost = async (req, res) => {
   const postId = req.params.postId;
   try {
     await CancelPost(postId);
-    return res.status(200).json({ message: "Post is now gone" });
+    return res.status(200).json({ message: 'Post is now gone' });
   } catch (err) {
     return res.send(err.toString());
   }
@@ -138,11 +138,11 @@ export const PostLikes = async (req, res) => {
   const postId = req.params.postId;
   const { email } = req.body;
   if (!email || !postId) {
-    return res.status(400).json({ error: "Missing fields" });
+    return res.status(400).json({ error: 'Missing fields' });
   }
   try {
     await CreateLikes(email, postId);
-    return res.status(200).json({ message: "User successfully liked post" });
+    return res.status(200).json({ message: 'User successfully liked post' });
   } catch (err) {
     return res.send(err.toString());
   }
@@ -153,7 +153,7 @@ export const DeleteLikeOnPost = async (req, res) => {
   const email = req.params.email;
   try {
     await DeleteLikes(email, postId);
-    return res.status(200).json({ message: "User successfully disliked post" });
+    return res.status(200).json({ message: 'User successfully disliked post' });
   } catch (err) {
     return res.send(err.toString());
   }

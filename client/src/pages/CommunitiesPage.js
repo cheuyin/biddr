@@ -1,9 +1,9 @@
-import { Container, Grid, Heading, Text } from "@chakra-ui/react";
-import useAuth from "../hooks/useAuth";
-import { useEffect, useState } from "react";
-import axios from "../api/axios";
-import Community from "../components/communities/Community.tsx";
-import CommunitySearch from "../components/communities/CommunitySearch.tsx";
+import { Container, Grid, Heading, Text } from '@chakra-ui/react';
+import useAuth from '../hooks/useAuth';
+import { useEffect, useState } from 'react';
+import axios from '../api/axios';
+import Community from '../components/communities/Community.tsx';
+import CommunitySearch from '../components/communities/CommunitySearch.tsx';
 
 const CommunitiesPage = () => {
   const { auth } = useAuth();
@@ -30,7 +30,7 @@ const CommunitiesPage = () => {
       <Container
         maxW="2xl"
         centerContent
-        backgroundColor={"teal.100"}
+        backgroundColor={'teal.100'}
         p={4}
         my={4}
       >
@@ -52,7 +52,7 @@ const CommunitiesPage = () => {
       <Container
         maxW="2xl"
         centerContent
-        backgroundColor={"gray.100"}
+        backgroundColor={'gray.100'}
         p={4}
         my={4}
       >

@@ -16,7 +16,7 @@ import {
   QueryAllDonationsForFundraiser,
   QueryAllDonationsForWallet,
   CreateDonation,
-} from "../services/TransactionTable.js";
+} from '../services/TransactionTable.js';
 
 export const GetBid = async (req, res) => {
   const bidId = req.params.bidId;
@@ -37,7 +37,7 @@ export const GetAllBidsForAuction = async (req, res) => {
   } catch (err) {
     return res
       .status(400)
-      .json({ error: "The bids are secret. jk, u did something wrong" });
+      .json({ error: 'The bids are secret. jk, u did something wrong' });
   }
 };
 
@@ -49,7 +49,7 @@ export const GetAllBidsForWallet = async (req, res) => {
     return res.status(200).json(data);
   } catch (err) {
     return res.status(400).json({
-      error: "this wallet is private, mr irs. jk, u did something wrong",
+      error: 'this wallet is private, mr irs. jk, u did something wrong',
     });
   }
 };
@@ -74,7 +74,7 @@ export const PostBid = async (req, res) => {
     });
   }
 
-  const currentDate = new Date().toISOString().replace(/\.\d*Z/, "");
+  const currentDate = new Date().toISOString().replace(/\.\d*Z/, '');
   const highestBid = await QueryHighestBidForAuction(postId);
   if (amount <= highestBid) {
     return res.status(422).json({
@@ -85,7 +85,7 @@ export const PostBid = async (req, res) => {
     await CreateBid(walletName, email, postId, amount, currentDate);
     return res
       .status(200)
-      .json({ message: "Wealthy I see. Your bid is in good hands" });
+      .json({ message: 'Wealthy I see. Your bid is in good hands' });
   } catch (err) {
     return res.status(400).send(err.toString());
   }
@@ -110,7 +110,7 @@ export const GetAllDonationsForFundraiser = async (req, res) => {
   } catch (err) {
     return res
       .status(400)
-      .json({ error: "The donations are secret. jk, u did something wrong" });
+      .json({ error: 'The donations are secret. jk, u did something wrong' });
   }
 };
 
@@ -122,7 +122,7 @@ export const GetAllDonationsForWallet = async (req, res) => {
     return res.status(200).json(data);
   } catch (err) {
     return res.status(400).json({
-      error: "this wallet is private, mr irs. jk, u did something wrong",
+      error: 'this wallet is private, mr irs. jk, u did something wrong',
     });
   }
 };
@@ -135,13 +135,13 @@ export const PostDonation = async (req, res) => {
     });
   }
 
-  const currentDate = new Date().toISOString().replace(/\.\d*Z/, "");
+  const currentDate = new Date().toISOString().replace(/\.\d*Z/, '');
 
   try {
     await CreateDonation(walletName, email, postId, amount, currentDate);
     return res
       .status(200)
-      .json({ message: "Wealthy I see. Your donation is in good hands" });
+      .json({ message: 'Wealthy I see. Your donation is in good hands' });
   } catch (err) {
     return res.status(400).send(err.toString());
   }

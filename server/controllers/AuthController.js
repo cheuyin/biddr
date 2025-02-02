@@ -1,14 +1,14 @@
-import { QueryAppUserByEmail } from "../services/AppUserTable.js";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { SetRefreshTokenForUser } from "../services/RefreshTokenService.js";
-import { GetEmailByRefreshToken } from "../services/RefreshTokenService.js";
+import { QueryAppUserByEmail } from '../services/AppUserTable.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { SetRefreshTokenForUser } from '../services/RefreshTokenService.js';
+import { GetEmailByRefreshToken } from '../services/RefreshTokenService.js';
 
 export const Signin = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ error: "Email or password not provided" });
+    return res.status(400).json({ error: 'Email or password not provided' });
   }
 
   let user;
@@ -22,13 +22,13 @@ export const Signin = async (req, res) => {
   if (!user) {
     return res
       .status(404)
-      .json({ error: "User with that email does not exist." });
+      .json({ error: 'User with that email does not exist.' });
   }
 
   const isCorrectPassword = bcrypt.compareSync(password, user.hashedpassword);
 
   if (!isCorrectPassword) {
-    return res.status(401).json({ error: "Password is incorrect." });
+    return res.status(401).json({ error: 'Password is incorrect.' });
   }
 
   // create the json web tokens
@@ -39,7 +39,7 @@ export const Signin = async (req, res) => {
     process.env.JWT_ACCESS_TOKEN_KEY,
     {
       expiresIn: 15 * 60, // Expires in 15 minutes
-    }
+    },
   );
   const refreshToken = jwt.sign(
     {
@@ -47,8 +47,8 @@ export const Signin = async (req, res) => {
     },
     process.env.JWT_REFRESH_TOKEN_KEY,
     {
-      expiresIn: "3d",
-    }
+      expiresIn: '3d',
+    },
   );
 
   // save a new refresh token in the appuser database table whenever a user logs in
@@ -56,7 +56,7 @@ export const Signin = async (req, res) => {
     await SetRefreshTokenForUser(user.email, refreshToken);
   } catch (error) {
     return res.status(500).json({
-      error: "There was an error saving refresh tokens in the database.",
+      error: 'There was an error saving refresh tokens in the database.',
       message: error.message,
     });
   }
@@ -66,14 +66,14 @@ export const Signin = async (req, res) => {
         - send a refresh token to the client via http cookies
         - send the access token to the client via a json response
     */
-  res.cookie("jwt", refreshToken, {
+  res.cookie('jwt', refreshToken, {
     httpOnly: true,
-    sameSite: "none",
+    sameSite: 'none',
     secure: true, // Must be set to true if we use sameSite: "none"
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
   });
 
-  return res.status(200).json({ message: "Passwords match!", accessToken });
+  return res.status(200).json({ message: 'Passwords match!', accessToken });
 };
 
 // Source: https://www.youtube.com/watch?v=favjC6EKFgw (32:12)
@@ -112,11 +112,11 @@ export const Refresh = async (req, res) => {
           email: decoded.email,
         },
         process.env.JWT_ACCESS_TOKEN_KEY,
-        { expiresIn: 15 * 60 } // Expires in 15 minutes
+        { expiresIn: 15 * 60 }, // Expires in 15 minutes
       );
 
       return res.status(200).json({ accessToken });
-    }
+    },
   );
 };
 
@@ -134,9 +134,9 @@ export const Logout = async (req, res) => {
     const result = await GetEmailByRefreshToken(refreshToken);
     // If no token exists in the database (already deleted), then clear client cookies and send success response
     if (result.length === 0) {
-      res.clearCookie("jwt", {
+      res.clearCookie('jwt', {
         httpOnly: true,
-        sameSite: "none",
+        sameSite: 'none',
         secure: true, // Must be set to true!
         maxAge: 24 * 60 * 60 * 1000,
       });
@@ -154,9 +154,9 @@ export const Logout = async (req, res) => {
   }
 
   // Clear client cookies when refresh token is successfully deleted
-  res.clearCookie("jwt", {
+  res.clearCookie('jwt', {
     httpOnly: true,
-    sameSite: "none",
+    sameSite: 'none',
     secure: true, // Must be set to true!
     maxAge: 24 * 60 * 60 * 1000,
   });

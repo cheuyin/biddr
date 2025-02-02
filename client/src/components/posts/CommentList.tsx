@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Box, Text } from "@chakra-ui/react";
-import { DateTime } from "luxon";
+import React, { useEffect, useState } from 'react';
+import { Box, Text } from '@chakra-ui/react';
+import { DateTime } from 'luxon';
 
 const Comment = ({ comment }) => {
   return (
@@ -23,7 +23,7 @@ const CommentList = ({ comments }) => {
         ? comments.map((comment, index) => (
             <Comment key={index} comment={comment} />
           ))
-        : "No comments yet"}
+        : 'No comments yet'}
     </>
   );
 };

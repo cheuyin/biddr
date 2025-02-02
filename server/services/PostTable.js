@@ -1,4 +1,4 @@
-import query from "../db.js";
+import query from '../db.js';
 
 export const QueryPost = async (postId) => {
   try {
@@ -17,7 +17,7 @@ export const QueryPost = async (postId) => {
       LEFT OUTER JOIN donation d ON p.postId = d.postId
       WHERE p.postId = $1
       GROUP BY p.postId`,
-      [postId]
+      [postId],
     );
     return result[0];
   } catch (error) {
@@ -47,7 +47,7 @@ export const QueryHomepagePostsForEmail = async (email) => {
       GROUP BY p.postId
       ORDER BY timePosted DESC
       `,
-      [email]
+      [email],
     );
     return result;
   } catch (error) {
@@ -78,7 +78,7 @@ export const QueryFilteredPostsForEmail = async (email, communities) => {
       WHERE email = '${email}' AND communityName = ${communitiesString})
       GROUP BY p.postId
       ORDER BY timePosted DESC
-      `
+      `,
     );
     return result;
   } catch (error) {
@@ -105,7 +105,7 @@ export const QueryPostsInCommunity = async (name) => {
       GROUP BY p.postId
       ORDER BY timePosted DESC
       `,
-      [name]
+      [name],
     );
     return result;
   } catch (error) {
@@ -116,8 +116,8 @@ export const QueryPostsInCommunity = async (name) => {
 export const QueryPostsByUser = async (postedEmail) => {
   try {
     const result = await query(
-      "SELECT * FROM post WHERE postedEmail = $1 ORDER BY timePosted DESC",
-      [postedEmail]
+      'SELECT * FROM post WHERE postedEmail = $1 ORDER BY timePosted DESC',
+      [postedEmail],
     );
     return result;
   } catch (error) {
@@ -136,11 +136,11 @@ export const CreatePost = async (
   text,
   title,
   image,
-  value
+  value,
 ) => {
   try {
     const post = await query(
-      "INSERT INTO Post (postedEmail, walletName, walletEmail, communityName, timePosted, expiryTime, text, image, title) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING postId",
+      'INSERT INTO Post (postedEmail, walletName, walletEmail, communityName, timePosted, expiryTime, text, image, title) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING postId',
       [
         postedEmail,
         walletName,
@@ -151,17 +151,17 @@ export const CreatePost = async (
         text,
         image,
         title,
-      ]
+      ],
     );
     const postId = post[0].postid;
 
-    if (type === "auction") {
-      return query("INSERT INTO auction (postId, minBid) VALUES ($1, $2)", [
+    if (type === 'auction') {
+      return query('INSERT INTO auction (postId, minBid) VALUES ($1, $2)', [
         postId,
         value,
       ]);
     } else {
-      return query("INSERT INTO fundraiser (postId, goal) VALUES ($1, $2)", [
+      return query('INSERT INTO fundraiser (postId, goal) VALUES ($1, $2)', [
         postId,
         value,
       ]);
@@ -172,7 +172,7 @@ export const CreatePost = async (
 };
 export const CancelPost = async (postId) => {
   try {
-    return await query("DELETE FROM Post WHERE postId = $1", [postId]);
+    return await query('DELETE FROM Post WHERE postId = $1', [postId]);
   } catch (error) {
     throw error;
   }
@@ -184,7 +184,7 @@ LIKES TABLE
 
 export const CreateLikes = async (email, postId) => {
   try {
-    await query("INSERT INTO Likes (email, postId) VALUES ($1, $2)", [
+    await query('INSERT INTO Likes (email, postId) VALUES ($1, $2)', [
       email,
       postId,
     ]);
@@ -195,7 +195,7 @@ export const CreateLikes = async (email, postId) => {
 
 export const DeleteLikes = async (email, postId) => {
   try {
-    await query("DELETE FROM Likes WHERE email = $1 and postId = $2", [
+    await query('DELETE FROM Likes WHERE email = $1 and postId = $2', [
       email,
       postId,
     ]);
@@ -207,8 +207,8 @@ export const DeleteLikes = async (email, postId) => {
 export const CountLikes = async (postId) => {
   try {
     const numLikes = await query(
-      "SELECT count(email) FROM Likes WHERE postId = $1",
-      [postId]
+      'SELECT count(email) FROM Likes WHERE postId = $1',
+      [postId],
     );
     return numLikes;
   } catch (error) {

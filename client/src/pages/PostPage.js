@@ -5,13 +5,13 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-} from "@chakra-ui/react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import Post from "../components/posts/Post.tsx";
-import { useEffect, useState } from "react";
-import axios from "../api/axios";
-import CommentList from "../components/posts/CommentList.tsx";
-import TransactionList from "../components/posts/TransactionList.tsx";
+} from '@chakra-ui/react';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import Post from '../components/posts/Post.tsx';
+import { useEffect, useState } from 'react';
+import axios from '../api/axios';
+import CommentList from '../components/posts/CommentList.tsx';
+import TransactionList from '../components/posts/TransactionList.tsx';
 const PostPage = ({ type }) => {
   const { id } = useParams();
 
@@ -32,7 +32,7 @@ const PostPage = ({ type }) => {
   const getHistoricTransactions = async () => {
     try {
       const response = await axios.get(
-        `/api/posts/${id}/${type === "auction" ? "bids" : "donations"}`
+        `/api/posts/${id}/${type === 'auction' ? 'bids' : 'donations'}`,
       );
       setTransactions(response.data);
     } catch (err) {
@@ -66,7 +66,7 @@ const PostPage = ({ type }) => {
       <Tabs variant="enclosed">
         <TabList colorScheme="blue">
           <Tab>Comments</Tab>
-          <Tab>{type === "auction" ? "Bid" : "Donation"} History</Tab>
+          <Tab>{type === 'auction' ? 'Bid' : 'Donation'} History</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>

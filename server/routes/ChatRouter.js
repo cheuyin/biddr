@@ -1,17 +1,17 @@
-import express from "express";
+import express from 'express';
 
 const router = express.Router();
 
 import {
-    GetAllUsersInChat,
-    GetAllMessagesInChat,
-    PostNewChat,
-    DeleteChat,
-    SendMessage,
-    RemoveUserFromChat,
-    InviteUserToChat,
-    GetAllChatsForUser,
-} from "../controllers/ChatController.js";
+  GetAllUsersInChat,
+  GetAllMessagesInChat,
+  PostNewChat,
+  DeleteChat,
+  SendMessage,
+  RemoveUserFromChat,
+  InviteUserToChat,
+  GetAllChatsForUser,
+} from '../controllers/ChatController.js';
 
 /*
 List of functionality:
@@ -25,13 +25,13 @@ X Add user to a chat e.g. POST /api/chats/43/users
 X Remove user from a chat e.g. DELETE /api/chats/43/users/gan@gmail.com
 */
 
-router.post("/", PostNewChat);
-router.delete("/:chatID", DeleteChat);
-router.get("/:chatID/users", GetAllUsersInChat);
-router.get("/users/:email", GetAllChatsForUser);
-router.get("/:chatID/messages", GetAllMessagesInChat);
-router.post("/:chatID/messages", SendMessage);
-router.post("/:chatID/users/:email", InviteUserToChat);
-router.delete("/:chatID/users/:email", RemoveUserFromChat);
+router.post('/', PostNewChat);
+router.delete('/:chatID', DeleteChat);
+router.get('/:chatID/users', GetAllUsersInChat);
+router.get('/users/:email', GetAllChatsForUser);
+router.get('/:chatID/messages', GetAllMessagesInChat);
+router.post('/:chatID/messages', SendMessage);
+router.post('/:chatID/users/:email', InviteUserToChat);
+router.delete('/:chatID/users/:email', RemoveUserFromChat);
 
 export default router;

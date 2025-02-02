@@ -5,24 +5,24 @@ import {
   Heading,
   Input,
   Text,
-} from "@chakra-ui/react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import React from "react";
+} from '@chakra-ui/react';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import React from 'react';
 
-import { useEffect, useState } from "react";
-import axios from "../api/axios";
-import PostList from "../components/posts/PostList.tsx";
-import StatusPopup from "../components/StatusPopup";
+import { useEffect, useState } from 'react';
+import axios from '../api/axios';
+import PostList from '../components/posts/PostList.tsx';
+import StatusPopup from '../components/StatusPopup';
 
 const CommunityPage = () => {
   const { name } = useParams();
 
   const [com, setCommunityInfo] = useState<any>(null);
   const [isEditing, setEditing] = useState(false);
-  const [longName, setLn] = useState("");
-  const [communityName, setCname] = useState("");
-  const [email, setEmail] = useState("");
-  const [description, setDesc] = useState("");
+  const [longName, setLn] = useState('');
+  const [communityName, setCname] = useState('');
+  const [email, setEmail] = useState('');
+  const [description, setDesc] = useState('');
   const [popupMessage, setpopUpMessage] = useState<any>({});
 
   const [posts, setPosts] = useState([]);
@@ -72,14 +72,20 @@ const CommunityPage = () => {
       setCname(response.data[0].communityname);
       setEmail(response.data[0].email);
       setDesc(response.data[0].description);
-      setpopUpMessage({message: "Successfully updated community information!", isError: false});
+      setpopUpMessage({
+        message: 'Successfully updated community information!',
+        isError: false,
+      });
     } catch (err) {
-      setpopUpMessage({message: err.response.data.error || err.message || err, isError: true});
+      setpopUpMessage({
+        message: err.response.data.error || err.message || err,
+        isError: true,
+      });
     } finally {
       setEditing(false);
       setTimeout(() => {
         setpopUpMessage({});
-      }, 5000)
+      }, 5000);
     }
   };
 
@@ -106,7 +112,7 @@ const CommunityPage = () => {
       <Container
         maxW="2xl"
         centerContent
-        backgroundColor={"teal.100"}
+        backgroundColor={'teal.100'}
         p={4}
         my={4}
       >
@@ -131,13 +137,18 @@ const CommunityPage = () => {
         )}
         <ButtonGroup>
           <Button onClick={() => setEditing(!isEditing)}>
-            {isEditing ? "Cancel" : "Edit"}
+            {isEditing ? 'Cancel' : 'Edit'}
           </Button>
-          {isEditing ? <Button onClick={updateCommunity}>Save</Button> : ""}
+          {isEditing ? <Button onClick={updateCommunity}>Save</Button> : ''}
         </ButtonGroup>
       </Container>
       <PostList posts={posts} />
-      {popupMessage.message && <StatusPopup message={popupMessage.message} isError={popupMessage.isError}/>}
+      {popupMessage.message && (
+        <StatusPopup
+          message={popupMessage.message}
+          isError={popupMessage.isError}
+        />
+      )}
     </>
   );
 };

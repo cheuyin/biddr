@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Box, HStack, Heading, Text, VStack } from "@chakra-ui/react";
-import { DateTime } from "luxon";
+import React, { useEffect, useState } from 'react';
+import { Box, HStack, Heading, Text, VStack } from '@chakra-ui/react';
+import { DateTime } from 'luxon';
 
 const Transaction = ({ transaction, type }) => {
   return (
@@ -25,7 +25,7 @@ const TransactionList = ({ transactions, type }) => {
         ? transactions.map((transaction, index) => (
             <Transaction key={index} transaction={transaction} type={type} />
           ))
-        : `Be the first ${type === "auction" ? "bid" : "donation"}!`}
+        : `Be the first ${type === 'auction' ? 'bid' : 'donation'}!`}
     </>
   );
 };

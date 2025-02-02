@@ -1,22 +1,22 @@
-import express from "express";
+import express from 'express';
 const app = express();
 
-import cors from "cors";
-import credentials from "./middleware/credentials.js";
-import corsOptions from "./config/corsOptions.js";
-import cookieParser from "cookie-parser";
-import verifyJWT from "./middleware/verifyJWT.js";
+import cors from 'cors';
+import credentials from './middleware/credentials.js';
+import corsOptions from './config/corsOptions.js';
+import cookieParser from 'cookie-parser';
+import verifyJWT from './middleware/verifyJWT.js';
 
-import CommunityRouter from "./routes/CommunityRouter.js";
-import AppUserRouter from "./routes/AppUserRouter.js";
-import WalletRouter from "./routes/WalletRouter.js";
-import PostRouter from "./routes/PostRouter.js";
-import BidRouter from "./routes/BidRouter.js";
-import DonationRouter from "./routes/DonationRouter.js";
-import CommentRouter from "./routes/CommentRouter.js";
-import AuthRouter from "./routes/AuthRouter.js";
-import ChatRouter from "./routes/ChatRouter.js";
-import SearchRouter from "./routes/SearchRouter.js";
+import CommunityRouter from './routes/CommunityRouter.js';
+import AppUserRouter from './routes/AppUserRouter.js';
+import WalletRouter from './routes/WalletRouter.js';
+import PostRouter from './routes/PostRouter.js';
+import BidRouter from './routes/BidRouter.js';
+import DonationRouter from './routes/DonationRouter.js';
+import CommentRouter from './routes/CommentRouter.js';
+import AuthRouter from './routes/AuthRouter.js';
+import ChatRouter from './routes/ChatRouter.js';
+import SearchRouter from './routes/SearchRouter.js';
 
 // Tells the client whether their origin is allowed to make requests to the server
 app.use(credentials);
@@ -27,20 +27,20 @@ app.use(express.json());
 app.use(cookieParser()); // Middleware for cookies
 
 // The authentication layer
-app.use("/auth", AuthRouter);
+app.use('/auth', AuthRouter);
 
 // app.use(verifyJWT); // Comment out this line if you don't want to protect routes yet
 
 // Everything past here requires the client to be authenticated
-app.use("/api/communities", CommunityRouter);
-app.use("/api/wallets", WalletRouter);
-app.use("/api/users", AppUserRouter);
-app.use("/api/posts", PostRouter);
-app.use("/api/bids", BidRouter);
-app.use("/api/donations", DonationRouter);
-app.use("/api/comments", CommentRouter)
-app.use("/api/chats", ChatRouter)
-app.use("/api/search", SearchRouter);
+app.use('/api/communities', CommunityRouter);
+app.use('/api/wallets', WalletRouter);
+app.use('/api/users', AppUserRouter);
+app.use('/api/posts', PostRouter);
+app.use('/api/bids', BidRouter);
+app.use('/api/donations', DonationRouter);
+app.use('/api/comments', CommentRouter);
+app.use('/api/chats', ChatRouter);
+app.use('/api/search', SearchRouter);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {

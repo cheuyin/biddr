@@ -1,7 +1,7 @@
 // Template for sidebar from: https://chakra-templates.dev/navigation/sidebar
-'use client'
+'use client';
 
-import React from 'react'
+import React from 'react';
 import {
   IconButton,
   Box,
@@ -16,7 +16,7 @@ import {
   BoxProps,
   FlexProps,
   // keyframes,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 import {
   FiHome,
   FiMenu,
@@ -24,15 +24,15 @@ import {
   FiDollarSign,
   FiUsers,
   FiUser,
-  FiSearch
-} from 'react-icons/fi'
-import { IconType } from 'react-icons'
-import { ReactText } from 'react'
+  FiSearch,
+} from 'react-icons/fi';
+import { IconType } from 'react-icons';
+import { ReactText } from 'react';
 
 interface LinkItemProps {
-  name: string
-  pageUrl: string
-  icon: IconType
+  name: string;
+  pageUrl: string;
+  icon: IconType;
 }
 const LinkItems: Array<LinkItemProps> = [
   { name: 'Home', pageUrl: '/', icon: FiHome },
@@ -40,21 +40,25 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'My Wallets', pageUrl: '/wallets', icon: FiDollarSign },
   { name: 'Messages', pageUrl: '/messages', icon: FiMessageCircle },
   { name: 'Search', pageUrl: '/search', icon: FiSearch },
-]
+];
 
 export default function BiddrSidebar({ children }) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   window.addEventListener('resize', onClose);
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
-      <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
+      <SidebarContent
+        onClose={() => onClose}
+        display={{ base: 'none', md: 'block' }}
+      />
       <Drawer
         isOpen={isOpen}
         placement="left"
         onClose={onClose}
         returnFocusOnClose={false}
         onOverlayClick={onClose}
-        size="full">
+        size="full"
+      >
         <DrawerContent>
           <SidebarContent onClose={onClose} />
         </DrawerContent>
@@ -66,11 +70,11 @@ export default function BiddrSidebar({ children }) {
         {children}
       </Box>
     </Box>
-  )
+  );
 }
 
 interface SidebarProps extends BoxProps {
-  onClose: () => void
+  onClose: () => void;
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
@@ -87,20 +91,22 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       w={{ base: 'full', md: 60 }}
       pos="fixed"
       h="full"
-      {...rest}>
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between" >
+      {...rest}
+    >
+      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text
           as="a"
           href="/"
           fontSize="3xl"
           fontFamily="inter"
           fontWeight="bold"
-          backgroundSize= "200% auto"
+          backgroundSize="200% auto"
           _hover={{
-            bgGradient: "linear(to-l, #B2F5EA, cyan.400)",
-            bgClip: "text",
+            bgGradient: 'linear(to-l, #B2F5EA, cyan.400)',
+            bgClip: 'text',
             // animation: `${animation} 1s linear infinite`
-          }}>
+          }}
+        >
           biddr.
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
@@ -119,17 +125,20 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         w={{ base: 'full', md: 60 }}
         pos="absolute"
         bottom="0px"
-        minH="5vh">
-          <NavItem key='My Profile' pageUrl='/profile' icon={FiUser}>My Profile</NavItem>
+        minH="5vh"
+      >
+        <NavItem key="My Profile" pageUrl="/profile" icon={FiUser}>
+          My Profile
+        </NavItem>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
 interface NavItemProps extends FlexProps {
-  pageUrl: string
-  icon: IconType
-  children: ReactText
+  pageUrl: string;
+  icon: IconType;
+  children: ReactText;
 }
 const NavItem = ({ pageUrl, icon, children, ...rest }: NavItemProps) => {
   return (
@@ -137,7 +146,8 @@ const NavItem = ({ pageUrl, icon, children, ...rest }: NavItemProps) => {
       as="a"
       href={pageUrl}
       style={{ textDecoration: 'none' }}
-      _focus={{ boxShadow: 'none' }}>
+      _focus={{ boxShadow: 'none' }}
+    >
       <Flex
         align="center"
         p="4"
@@ -147,10 +157,11 @@ const NavItem = ({ pageUrl, icon, children, ...rest }: NavItemProps) => {
         cursor="pointer"
         _hover={{
           // bg: '#B2F5EA',
-          bgGradient: "linear(to-l, #B2F5EA, cyan.400)",
+          bgGradient: 'linear(to-l, #B2F5EA, cyan.400)',
           color: 'white',
         }}
-        {...rest}>
+        {...rest}
+      >
         {icon && (
           <Icon
             mr="4"
@@ -164,11 +175,11 @@ const NavItem = ({ pageUrl, icon, children, ...rest }: NavItemProps) => {
         {children}
       </Flex>
     </Box>
-  )
-}
+  );
+};
 
 interface MobileProps extends FlexProps {
-  onOpen: () => void
+  onOpen: () => void;
 }
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   // const animation = keyframes`
@@ -186,7 +197,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       borderBottomWidth="1px"
       borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
       justifyContent="flex-start"
-      {...rest}>
+      {...rest}
+    >
       <IconButton
         variant="outline"
         onClick={onOpen}
@@ -194,20 +206,21 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         icon={<FiMenu />}
       />
       <Text
-      as="a"
-      href="/"
-      fontSize="3xl"
-      ml="8"
-      fontFamily="inter"
-      fontWeight="bold"
-      backgroundSize= "200% auto"
-      _hover={{
-        bgGradient: "linear(to-l, #B2F5EA, cyan.400)",
-        bgClip: "text",
-        // animation: `${animation} 1s linear infinite`
-      }}>
+        as="a"
+        href="/"
+        fontSize="3xl"
+        ml="8"
+        fontFamily="inter"
+        fontWeight="bold"
+        backgroundSize="200% auto"
+        _hover={{
+          bgGradient: 'linear(to-l, #B2F5EA, cyan.400)',
+          bgClip: 'text',
+          // animation: `${animation} 1s linear infinite`
+        }}
+      >
         biddr.
       </Text>
     </Flex>
-  )
-}
+  );
+};

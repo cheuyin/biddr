@@ -1,5 +1,5 @@
 // template for edit password page found from: https://chakra-templates.dev/forms/authentication
-'use client'
+'use client';
 
 import {
   Button,
@@ -11,151 +11,156 @@ import {
   Stack,
   useColorModeValue,
   Heading,
-} from '@chakra-ui/react'
-import useAuth from '../hooks/useAuth'
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+} from '@chakra-ui/react';
+import useAuth from '../hooks/useAuth';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import StatusPopup from '../components/StatusPopup';
 
 export default function EditPassword() {
-    const { auth } = useAuth();
-    const userEmail = auth.email;
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [popupMessage, setpopUpMessage] = useState({})
-    const axiosPrivate = useAxiosPrivate();
-    const navigate = useNavigate();
-    const bg = useColorModeValue('white', 'gray.700');
+  const { auth } = useAuth();
+  const userEmail = auth.email;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [popupMessage, setpopUpMessage] = useState({});
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+  const bg = useColorModeValue('white', 'gray.700');
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-    const backToEditProfileHandler = () => {
-        navigate("/profile/edit");
+  const backToEditProfileHandler = () => {
+    navigate('/profile/edit');
+  };
+
+  const onSubmit = async (formData) => {
+    setIsSubmitting(true);
+
+    const { password } = formData;
+    const email = userEmail;
+
+    try {
+      await axiosPrivate.put(`/api/users/${userEmail}/password`, {
+        password,
+        email,
+      });
+      setpopUpMessage({
+        message: 'Successfully changed password!',
+        isError: false,
+      });
+    } catch (error) {
+      console.log(error);
+      setpopUpMessage({ message: error.response?.data?.error, isError: true });
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => {
+        setpopUpMessage({});
+      }, 5000);
     }
-
-    const onSubmit = async (formData) => {
-        setIsSubmitting(true);
-
-        const { password } = formData;
-        const email = userEmail;
-
-        try {
-            await axiosPrivate.put(
-                `/api/users/${userEmail}/password`,
-                { password, email }
-            );
-            setpopUpMessage({message: "Successfully changed password!", isError: false})
-        } catch (error) {
-            console.log(error)
-            setpopUpMessage({message: error.response?.data?.error, isError: true})
-        } finally {
-            setIsSubmitting(false);
-            setTimeout(() => {
-                setpopUpMessage({});
-            }, 5000);
-        }
-    };
+  };
 
   return (
-    <Flex
-    minH={'100vh'}
-    align={'center'}
-    justify={'center'}>
-    <Stack
-      spacing={4}
-      w={'full'}
-      maxW={'md'}
-      bg={bg}
-      rounded={'xl'}
-      boxShadow={'lg'}
-      p={6}
-      my={12}>
+    <Flex minH={'100vh'} align={'center'} justify={'center'}>
+      <Stack
+        spacing={4}
+        w={'full'}
+        maxW={'md'}
+        bg={bg}
+        rounded={'xl'}
+        boxShadow={'lg'}
+        p={6}
+        my={12}
+      >
         <Heading lineHeight={1.1} fontSize={{ base: '2xl', sm: '3xl' }}>
-            Change Password
+          Change Password
         </Heading>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl id="password" isInvalid={errors.password}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormControl id="password" isInvalid={errors.password}>
             <FormLabel>New Password</FormLabel>
             <Input
-            type="password"
-            placeholder='Enter new password here...'
-            {...register("password", {
-                required: "Please enter a new password.",
+              type="password"
+              placeholder="Enter new password here..."
+              {...register('password', {
+                required: 'Please enter a new password.',
                 minLength: {
-                    value: 8,
-                    message:
-                        "Your password must be at least 8 characters long.",
+                  value: 8,
+                  message: 'Your password must be at least 8 characters long.',
                 },
                 maxLength: {
-                    value: 24,
-                    message:
-                        "Your password cannot be more than 24 characters long.",
+                  value: 24,
+                  message:
+                    'Your password cannot be more than 24 characters long.',
                 },
-            })}
+              })}
             />
-            <FormErrorMessage>
-                {errors.password?.message}
-            </FormErrorMessage>
-        </FormControl>
-        <FormControl id="confirmPassword" isInvalid={errors.confirmPassword}>
+            <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+          </FormControl>
+          <FormControl id="confirmPassword" isInvalid={errors.confirmPassword}>
             <FormLabel>Confirm New Password</FormLabel>
             <Input
-            type="password"
-            placeholder='Confirm new password here...'
-            {...register("confirmPassword", {
-                required: "Please confirm new password.",
+              type="password"
+              placeholder="Confirm new password here..."
+              {...register('confirmPassword', {
+                required: 'Please confirm new password.',
                 validate: {
-                    validateSame: (value, formValues) => value === formValues.password || "Passwords do not match"
+                  validateSame: (value, formValues) =>
+                    value === formValues.password || 'Passwords do not match',
                 },
                 minLength: {
-                    value: 8,
-                    message:
-                        "Your password must be at least 8 characters long.",
+                  value: 8,
+                  message: 'Your password must be at least 8 characters long.',
                 },
                 maxLength: {
-                    value: 24,
-                    message:
-                        "Your password cannot be more than 24 characters long.",
+                  value: 24,
+                  message:
+                    'Your password cannot be more than 24 characters long.',
                 },
-            })}
+              })}
             />
             <FormErrorMessage>
-                {errors.confirmPassword?.message}
+              {errors.confirmPassword?.message}
             </FormErrorMessage>
-        </FormControl>
-        <Stack marginTop="25px "spacing={6} direction={['column', 'row']}>
+          </FormControl>
+          <Stack marginTop="25px " spacing={6} direction={['column', 'row']}>
             <Button
-            onClick={backToEditProfileHandler}
-            // bg={'red.400'}
-            // color={'white'}
-            w="full">
-            Back To Edit Profile
+              onClick={backToEditProfileHandler}
+              // bg={'red.400'}
+              // color={'white'}
+              w="full"
+            >
+              Back To Edit Profile
             </Button>
             <Button
-            bg={'blue.400'}
-            color={'white'}
-            w="full"
-            isLoading={isSubmitting}
-            loadingText="Submitting"
-            spinnerPlacement="start"
-            type="submit"
-            _hover={{
+              bg={'blue.400'}
+              color={'white'}
+              w="full"
+              isLoading={isSubmitting}
+              loadingText="Submitting"
+              spinnerPlacement="start"
+              type="submit"
+              _hover={{
                 bg: 'blue.500',
-            }}
-            boxShadow={
+              }}
+              boxShadow={
                 '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
-              }>
-            Change Password
+              }
+            >
+              Change Password
             </Button>
-        </Stack>
-      </form>
-    </Stack>
-    {popupMessage.message && <StatusPopup message={popupMessage.message} isError={popupMessage.isError}/>}
-  </Flex>
-  )
+          </Stack>
+        </form>
+      </Stack>
+      {popupMessage.message && (
+        <StatusPopup
+          message={popupMessage.message}
+          isError={popupMessage.isError}
+        />
+      )}
+    </Flex>
+  );
 }
