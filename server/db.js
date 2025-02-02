@@ -19,9 +19,6 @@ let pool = new Pool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     database: process.env.DB_NAME,
-    ssl: {
-        rejectUnauthorized: false,
-    },
     idleTimeoutMillis: 20000,
 });
 
@@ -33,9 +30,6 @@ pool.on("error", (error) => {
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
         database: process.env.DB_NAME,
-        ssl: {
-            rejectUnauthorized: false,
-        },
         idleTimeoutMillis: 20000,
     });
 });
