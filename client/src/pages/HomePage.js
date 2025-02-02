@@ -95,14 +95,11 @@ const HomePage = () => {
       <Container
         maxW="2xl"
         centerContent
-        backgroundColor={"teal.100"}
         p={4}
         my={4}
       >
         <Heading>Home Page</Heading>
-        <Text>If You're Reading This, You're Authenticated. </Text>
-        <Text>Email: {auth.email} </Text>
-        <Button onClick={onOpen}>Filter Posts</Button>
+        <Button mt={4} onClick={onOpen} colorScheme='blue' textColor={'white'}>Filter Posts</Button>
       </Container>
       <PostList posts={posts} />
       <Modal onClose={onClose} isOpen={isOpen} closeOnOverlayClick={false} isCentered>
